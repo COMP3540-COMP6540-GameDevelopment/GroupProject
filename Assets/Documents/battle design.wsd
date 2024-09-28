@@ -1,0 +1,137 @@
+@startuml battle design
+scale 2
+
+class BattleObject {
+    +String name
+    +String description
+    +int hp
+    +int maxHp
+    +int level
+    +int damage
+    +int defense
+    +int initiative
+    +int exp
+    +int gold
+
+}
+
+class Monster {
+
+}
+
+Monster : Slime, Skeleton, MonsterKing
+
+class Hero {
+
+}
+
+Hero : Player
+
+interface Wanderable {
+    +void WanderAround()
+}
+
+interface AutoAttackable {
+    +void Attack(Battleable Hero)
+}
+
+interface Battleable {
+    +void CommenceBattle(Hero hero, Monster monster)
+}
+
+interface Rewardable {
+    +void UpdateResult()
+    +LevelUp()
+}
+
+class BattleManager <<singleton>> {
+    +Bool isBattleOver
+    -int currentTurn
+    -List<Battleable> battleObjects
+    -List<Battleable> actionSequence
+    -List<Monster> killed
+
+    -void ReceiveBattleObjects()
+    -void CreateBattleGround()
+    -void MoveCameraToBattleGround()
+    -void InitializeTurn()
+    -void RemoveEnemy(Battleable enemy)
+    -void DestroyBattleGround()
+    -void MoveCameraToMainMap()
+    -void DestroyMonsterOnMap()
+    
+}
+
+Hero -> BattleManager : CommenceBattle()
+
+' note bottom of BattleManager
+'     RemoveEnemy(): removes the given enemy in battleObjects.
+    
+'     CommenceBattle() Calls multiple private methods in the given order:
+'     - ReceiveBattleObjects(): adds hero and monster to BattleObjects, set IsBattleOver to False
+'     - CreateBattleGround(): creates the battleground
+'     - MoveCameraToBattleGround(): moves the camera to the battleground.
+'     - InitializeTurn(): sort battleObjects in respect to initiative in descend order.
+    
+'     currentTurn = 1
+'     while(true) {
+'         // everybody acts sequencially
+'         for (Battleable currentInAction: actionSequence) {
+'             if(currentInAction instanceof Monster) {
+'                 // monster auto attacks on Hero
+'                 Attack(Battleable Hero)
+'                 // check if hero still alive
+'                 if (Hero is dead)  gameOver()
+'             } else {
+'                 // determine behavior based on player input
+'                 PlayerAction()
+'                 if (one enemy is killed) {
+'                     // enemy killed, remove that emeny in the sequence
+'                     RemoveBattleable(Battleable enemy)
+'                     killed.append(enemy)
+'                     // since modification on loop condition, terminate loop
+'                     break
+'                 }
+'             }
+'         }
+'         if (battleObjects is not empty) {
+'             // enemies remain, begin another loop
+'             InitializeNextTurn()
+'             currentTurn++;
+'         } else {
+'             // no enemies, battle ends
+'             break;
+'         }
+'     }
+'     isBattleOver = True
+'     // update hero status
+'     Hero.UpdateResult(List<Monster> killed)
+'     DestroyBattleGround()
+'     MoveCameraToMainMap()
+'     DestroyMonsterOnMap()
+
+' end note
+
+class SkillLibrary {
+    Dictionary<String SkillName, Skill skill>
+}
+
+class Skill {
+    +String name
+    +String description
+    +int Cost
+    +int potency
+}
+
+Skill : FireI, FireII, FireIII, FireIV
+
+SkillLibrary --> "0..*" Skill : contains
+Wanderable <|.. Monster
+AutoAttackable <|.. Monster
+Battleable <|.. Monster  
+Battleable <|.. Hero
+Rewardable <|.. Hero
+Hero --> Skill : uses
+Monster --|> BattleObject
+Hero --|> BattleObject
+@enduml
