@@ -5,7 +5,7 @@ Week 8: https://docs.google.com/document/d/14noLWWwgpMdXU_WmLebTrhQK81x5zxX1kmG_
 
 English: https://docs.google.com/document/d/1lVbBela7Zi1Vg597DrnhZY-w8Acr0HveFra7sVNLvxQ/edit
 
-## Adding M=Unity Muse Chat to your project；
+## Adding Unity Muse Chat to your project；
 
 Unblock obstacles with Muse Chat on the web or in the Editor
 Muse Chat can give you guidance on how to solve a wide range of Unity questions and is now available in both the web and the editor as an experimental package to allow for incrementally more and more tailored answers.
