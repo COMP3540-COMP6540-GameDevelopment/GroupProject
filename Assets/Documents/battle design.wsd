@@ -3,7 +3,6 @@ scale 2
 
 class BattleObject {
     +String name
-    +String description
     +int hp
     +int maxHp
     +int level
@@ -16,35 +15,28 @@ class BattleObject {
 }
 
 class Monster {
-
+    +String description 
 }
 
 Monster : Slime, Skeleton, MonsterKing
 
 class Hero {
-
+    +int expToNextLevel
 }
 
 Hero : Player
 
-interface Wanderable {
+interface IWanderable {
     +void WanderAround()
 }
 
-interface AutoAttackable {
-    +void Attack(Battleable Hero)
+enum BattleSystem::InnerClass {
+    START, PLAYERTURN, ENEMYTURN, WIN, LOSE
 }
 
-interface Battleable {
-    +void CommenceBattle(Hero hero, Monster monster)
-}
+BattleSystem --* BattleSystem::InnerClass : contains
 
-interface Rewardable {
-    +void UpdateResult()
-    +LevelUp()
-}
-
-class BattleManager <<singleton>> {
+class BattleSystem <<singleton>> {
     +Bool isBattleOver
     -int currentTurn
     -List<Battleable> battleObjects
@@ -126,11 +118,7 @@ class Skill {
 Skill : FireI, FireII, FireIII, FireIV
 
 SkillLibrary --> "0..*" Skill : contains
-Wanderable <|.. Monster
-AutoAttackable <|.. Monster
-Battleable <|.. Monster  
-Battleable <|.. Hero
-Rewardable <|.. Hero
+IWanderable <|.. Monster
 Hero --> Skill : uses
 Monster --|> BattleObject
 Hero --|> BattleObject
