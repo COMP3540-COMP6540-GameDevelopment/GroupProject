@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : BattleObject
+public class BattleManager : MonoBehaviour
 {
-    public int expToNextLevel;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,15 +14,5 @@ public class Hero : BattleObject
     void Update()
     {
         
-    }
-
-    public void UpdateResult()
-    {
-
-    }
-
-    public void LevelUp()
-    { 
-
     }
 }

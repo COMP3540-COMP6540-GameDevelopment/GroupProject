@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
-public class BattleObject : MonoBehaviour
+public class BattleScript : MonoBehaviour
 {
     public string battleObjectName;
     public int currentHP;
@@ -32,4 +33,15 @@ public class BattleObject : MonoBehaviour
             currentHP -= damage;
         }
     }
+
+    internal void UpdateResults(BattleScript playerCopy)
+    {
+      currentHP = playerCopy.currentHP;
+      maxHP = playerCopy.maxHP;
+      level = playerCopy.level;
+      damage = playerCopy.damage;
+      defense = playerCopy.defense;
+      exp = playerCopy.exp;
+      gold = playerCopy.gold;
+}
 }

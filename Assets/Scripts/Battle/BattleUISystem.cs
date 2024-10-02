@@ -24,13 +24,13 @@ public class BattleUISystem : MonoBehaviour
     public void UpdateStatus()
     {
         playerHPText.text = "HP:" +
-            battleSystem.player.GetComponent<BattleObject>().currentHP
+            battleSystem.playerCopy.currentHP
             + "/" +
-            battleSystem.player.GetComponent<BattleObject>().maxHP;
+            battleSystem.playerCopy.maxHP;
         enemyHPText.text = "HP:" +
-            battleSystem.enemy.GetComponent<BattleObject>().currentHP
+            battleSystem.enemyCopy.currentHP
             + "/" +
-            battleSystem.enemy.GetComponent<BattleObject>().maxHP;
+            battleSystem.enemyCopy.maxHP;
     }
 
     public void UpdateDialog(string text)
