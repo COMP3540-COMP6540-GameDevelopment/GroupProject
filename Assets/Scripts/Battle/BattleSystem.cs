@@ -9,8 +9,6 @@ public class BattleSystem : MonoBehaviour
 {
     public Transform playerPosition;
     public Transform enemyPosition;
-    public GameObject player;
-    public GameObject enemy;
     public BattleScript playerCopy;
     public BattleScript enemyCopy;
     public BattleState battleState;
@@ -22,13 +20,9 @@ public class BattleSystem : MonoBehaviour
 
         battleState = BattleState.START;    // Set battle state
         
-        // Receive player and enemy data from scene manager
-        player = SceneManagerScript.instance.playerPrefab;
-        enemy = SceneManagerScript.instance.enemy;
-
-        // create a copy to commence battle
-        playerCopy = Instantiate(player, playerPosition).GetComponent<BattleScript>();
-        enemyCopy = Instantiate(enemy, enemyPosition).GetComponent<BattleScript>();
+        // Receive player and enemy data from scene manager, create a copy to commence battle
+        playerCopy = Instantiate(SceneManagerScript.instance.player, playerPosition).GetComponent<BattleScript>();
+        enemyCopy = Instantiate(SceneManagerScript.instance.enemy, enemyPosition).GetComponent<BattleScript>();
 
         playerCopy.transform.localPosition = Vector3.zero;
         enemyCopy.transform.localPosition = Vector3.zero;

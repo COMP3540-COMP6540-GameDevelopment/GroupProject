@@ -9,7 +9,7 @@ public class SceneManagerScript : MonoBehaviour
     public static SceneManagerScript instance { get; private set; }
 
     // Data to be passed between scenes
-    public GameObject playerPrefab;
+    public GameObject player;
     public GameObject enemy;
 
     [SerializeField] List<GameObject> allObjects;    // ALL objects in the mapScene;
@@ -43,7 +43,7 @@ public class SceneManagerScript : MonoBehaviour
 
     internal void LoadBattleScene(GameObject player, GameObject enemy)
     {
-        instance.playerPrefab = player;
+        instance.player = player;
         instance.enemy = enemy;
 
         nextScene = "BattleScene";
