@@ -68,7 +68,7 @@ public class BattleSystem : MonoBehaviour
         if (enemyCopy.IsDead())
         {
             battleState = BattleState.WIN;
-
+            playerCopy.ReceiveLoot(enemyCopy);
             StartCoroutine(EndBattle());
         }
         else

@@ -73,7 +73,7 @@ public class SceneManagerScript : MonoBehaviour
         allObjects.Remove(enemy);
         Destroy(enemy);
         enemy = null;
-        //playerPrefab.GetComponent<BattleScript>().UpdateResults(playerCopy);
+        player.GetComponent<BattleScript>().UpdateResults(playerCopy);
 
         // Unload the battle scene
         SceneManager.UnloadSceneAsync(currentScene);

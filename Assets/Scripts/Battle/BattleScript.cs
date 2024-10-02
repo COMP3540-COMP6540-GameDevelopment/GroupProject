@@ -34,6 +34,12 @@ public class BattleScript : MonoBehaviour
         }
     }
 
+    internal void ReceiveLoot(BattleScript enemyCopy)
+    {
+        exp += enemyCopy.exp;
+        gold += enemyCopy.gold;
+    }
+
     internal void UpdateResults(BattleScript playerCopy)
     {
       currentHP = playerCopy.currentHP;
