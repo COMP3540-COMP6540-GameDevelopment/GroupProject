@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WIN, LOSE}
 
@@ -12,14 +13,12 @@ public class BattleSystem : MonoBehaviour
     public BattleScript playerCopy;
     public BattleScript enemyCopy;
     public BattleState battleState;
-    private BattleUISystem battleUISystem;
+
 
     void Start()
     {
-        battleUISystem = GameObject.Find("Battle UI System").GetComponent<BattleUISystem>();
-
         battleState = BattleState.START;    // Set battle state
-        
+
         // Receive player and enemy data from scene manager, create a copy to commence battle
         playerCopy = Instantiate(SceneManagerScript.instance.player, playerPosition).GetComponent<BattleScript>();
         enemyCopy = Instantiate(SceneManagerScript.instance.enemy, enemyPosition).GetComponent<BattleScript>();
@@ -33,6 +32,8 @@ public class BattleSystem : MonoBehaviour
         playerCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
         enemyCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
 
+        BattleUIHandler.instance.GetPlayerEnemy(playerCopy, enemyCopy);
+        BattleUIHandler.instance.UpdateStatus();   // Update UI
 
         battleState = BattleState.PLAYERTURN;   // Set battle state
         PlayerTurn();
@@ -40,9 +41,9 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
-        
-        battleUISystem.ActionUI.SetActive(true);
-        battleUISystem.UpdateDialog("Choose your action");
+        BattleUIHandler.instance.EnableActions();
+        BattleUIHandler.instance.UpdateDialog("Choose your action");
+        //battleUISystem.UpdateDialog("Choose your action");
     }
 
     public void OnAttackClicked()
@@ -51,7 +52,7 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
-        battleUISystem.ActionUI.SetActive(false);
+        //battleUISystem.ActionUI.SetActive(false);
         StartCoroutine(PlayerAttack());
     }
 
@@ -60,8 +61,8 @@ public class BattleSystem : MonoBehaviour
 
         int damage = playerCopy.damage - enemyCopy.defense;
         enemyCopy.TakeDamage(damage);
-        battleUISystem.UpdateStatus();
-        battleUISystem.UpdateDialog("Attack is successfull");
+        //battleUISystem.UpdateStatus();
+        //battleUISystem.UpdateDialog("Attack is successfull");
 
         yield return new WaitForSeconds(1f);
         
@@ -82,16 +83,16 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        battleUISystem.ActionUI.SetActive(false);
-        battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
+        //battleUISystem.ActionUI.SetActive(false);
+        //battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
         
 
         yield return new WaitForSeconds(1f);
 
         int damage = enemyCopy.damage - playerCopy.defense;
         playerCopy.TakeDamage(damage);
-        battleUISystem.UpdateStatus();
-        battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
+        //battleUISystem.UpdateStatus();
+        //battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
 
         yield return new WaitForSeconds(1f);
 
@@ -111,13 +112,13 @@ public class BattleSystem : MonoBehaviour
     {
         if (battleState == BattleState.WIN)
         {
-            battleUISystem.UpdateDialog("You win");
+            //battleUISystem.UpdateDialog("You win");
             yield return new WaitForSeconds(2f);
             SceneManagerScript.instance.LoadMapScene(playerCopy);    // Send data back
         } 
         else if (battleState == BattleState.LOSE)
         {
-            battleUISystem.UpdateDialog("You lose");
+            //battleUISystem.UpdateDialog("You lose");
             // Load Lose Scene
         }
     }

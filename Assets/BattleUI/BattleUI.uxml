@@ -1,0 +1,59 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Container" style="flex-grow: 1; margin-top: 1%; margin-left: 1%; margin-right: 1%; margin-bottom: 1%;">
+        <ui:VisualElement name="Status" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement name="PlayerStatus" style="flex-grow: 1; width: 28%; height: 22%; left: 0; top: 0; flex-direction: column; position: absolute; background-image: url(&quot;project://database/Assets/Art/BattleUI/barmid_ready.png?fileID=2800000&amp;guid=436dcccf254399f44b6317c36dc8609e&amp;type=3#barmid_ready&quot;); padding-top: 0; padding-left: 1%; padding-right: 1%;">
+                <ui:Label tabindex="-1" text="Clive" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayerName" style="font-size: 62%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 0; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0;" />
+                <ui:VisualElement name="HPBackground" style="flex-grow: 1; flex-direction: row; height: 39%; width: 93%; position: absolute; top: 27%;">
+                    <ui:Label tabindex="-1" text="HP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HP" style="color: rgb(255, 255, 255); font-size: 62%; -unity-text-align: middle-center; width: 25%;" />
+                    <ui:VisualElement name="HP_Bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_frame.png?fileID=21300000&amp;guid=fa605705e4fad764d9777dd21f244116&amp;type=3#Hp_frame&quot;); -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4%; margin-bottom: 4%; margin-left: 2%;">
+                        <ui:VisualElement name="HP_Line" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_line.png?fileID=21300000&amp;guid=1e30a424a4e86014aa4115be7cdbc057&amp;type=3#Hp_line&quot;); -unity-background-scale-mode: stretch-to-fill; width: 70%; padding-left: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; height: 100%;" />
+                        <ui:Label tabindex="-1" text="100/100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HP_Number" style="color: rgb(255, 255, 255); font-size: 37%; -unity-text-align: middle-center; width: 100%; height: 90%;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="MPBackground" style="flex-grow: 1; flex-direction: row; height: 39%; width: 93%; position: absolute; top: auto; bottom: 4%;">
+                    <ui:Label tabindex="-1" text="MP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MP" style="color: rgb(255, 255, 255); font-size: 62%; -unity-text-align: middle-center; width: 25%;" />
+                    <ui:VisualElement name="MP_Bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_frame.png?fileID=21300000&amp;guid=fa605705e4fad764d9777dd21f244116&amp;type=3#Hp_frame&quot;); -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4%; margin-bottom: 4%; margin-left: 2%;">
+                        <ui:VisualElement name="MP_Line" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Mp_line.png?fileID=21300000&amp;guid=e34daccc80d538e449478ea431597fa1&amp;type=3#Mp_line&quot;); -unity-background-scale-mode: stretch-to-fill; width: 32%; padding-left: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; height: 100%;" />
+                        <ui:Label tabindex="-1" text="100/100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MP_Number" style="color: rgb(255, 255, 255); font-size: 37%; -unity-text-align: middle-center; width: 100%; height: 90%;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="EnemyStatus" style="flex-grow: 1; width: 28%; height: 22%; left: auto; top: 0; flex-direction: column; position: absolute; background-image: url(&quot;project://database/Assets/Art/BattleUI/barmid_ready.png?fileID=2800000&amp;guid=436dcccf254399f44b6317c36dc8609e&amp;type=3#barmid_ready&quot;); padding-top: 0; padding-left: 1%; padding-right: 1%; right: 0;">
+                <ui:Label tabindex="-1" text="Clive" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EnemyName" style="font-size: 62%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 0; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0;" />
+                <ui:VisualElement name="HPBackground" style="flex-grow: 1; flex-direction: row; height: 39%; width: 93%; position: absolute; top: 27%;">
+                    <ui:Label tabindex="-1" text="HP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HP" style="color: rgb(255, 255, 255); font-size: 62%; -unity-text-align: middle-center; width: 25%;" />
+                    <ui:VisualElement name="HP_Bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_frame.png?fileID=21300000&amp;guid=fa605705e4fad764d9777dd21f244116&amp;type=3#Hp_frame&quot;); -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4%; margin-bottom: 4%; margin-left: 2%;">
+                        <ui:VisualElement name="HP_Line" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_line.png?fileID=21300000&amp;guid=1e30a424a4e86014aa4115be7cdbc057&amp;type=3#Hp_line&quot;); -unity-background-scale-mode: stretch-to-fill; width: 70%; padding-left: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; height: 100%;" />
+                        <ui:Label tabindex="-1" text="100/100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HP_Number" style="color: rgb(255, 255, 255); font-size: 37%; -unity-text-align: middle-center; width: 100%; height: 90%;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="HPBackground" style="flex-grow: 1; flex-direction: row; height: 39%; width: 93%; position: absolute; top: auto; bottom: 4%;">
+                    <ui:Label tabindex="-1" text="MP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MP" style="color: rgb(255, 255, 255); font-size: 62%; -unity-text-align: middle-center; width: 25%;" />
+                    <ui:VisualElement name="MP_Bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Hp_frame.png?fileID=21300000&amp;guid=fa605705e4fad764d9777dd21f244116&amp;type=3#Hp_frame&quot;); -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4%; margin-bottom: 4%; margin-left: 2%;">
+                        <ui:VisualElement name="HP_Line" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/Mp_line.png?fileID=21300000&amp;guid=e34daccc80d538e449478ea431597fa1&amp;type=3#Mp_line&quot;); -unity-background-scale-mode: stretch-to-fill; width: 32%; padding-left: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; height: 100%;" />
+                        <ui:Label tabindex="-1" text="100/100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MP_Number" style="color: rgb(255, 255, 255); font-size: 37%; -unity-text-align: middle-center; width: 100%; height: 90%;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Dialog_Actions" style="flex-grow: 1; position: absolute; width: 100%; height: 30%; bottom: 0; background-image: url(&quot;project://database/Assets/Art/BattleUI/barmid_ready.png?fileID=21300000&amp;guid=436dcccf254399f44b6317c36dc8609e&amp;type=3#barmid_ready&quot;); -unity-background-scale-mode: stretch-to-fill; left: 0; flex-direction: row;">
+            <ui:VisualElement name="Dialog_Background" style="flex-grow: 1; flex-wrap: wrap; width: 50%; margin-top: 1%; margin-right: 1%; margin-bottom: 1%; margin-left: 1%; align-items: center; justify-content: center;">
+                <ui:Label tabindex="-1" text=" A Slime is approaching Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eum totam quo dignissimos saepe incidunt assumenda consequatur perferendis aut nam." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Dialog" enable-rich-text="true" style="font-size: 58%; color: rgb(255, 255, 255); padding-left: 2%; padding-bottom: 0; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; -unity-text-align: upper-left; width: auto; height: auto; align-items: auto; justify-content: flex-start; overflow: hidden; display: flex; visibility: visible; flex-wrap: nowrap; text-overflow: clip; white-space: normal;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Actions" style="flex-grow: 1; align-items: center; justify-content: center; margin-top: 1%; margin-right: 1%; margin-left: 1%; flex-direction: row; margin-bottom: 1%; padding-right: 2%; visibility: visible; overflow: visible;">
+                <ui:VisualElement name="Left" style="flex-grow: 1;">
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action1" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action2" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action3" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action4" style="font-size: 38%;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Right" style="flex-grow: 1;">
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action1" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action2" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action3" style="font-size: 38%;" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Action8" style="font-size: 38%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

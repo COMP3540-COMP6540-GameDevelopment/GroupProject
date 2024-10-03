@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4dc4d91bf326874ba1a8a2ea2664e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleObjectName: 
+  battleObjectName: Hero
   currentHP: 100
   maxHP: 100
   level: 1
