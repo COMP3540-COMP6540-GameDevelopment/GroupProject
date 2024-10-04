@@ -33,14 +33,16 @@ public class BattleSystem : MonoBehaviour
         playerCopy.gameObject.SetActive(true);
         enemyCopy.gameObject.SetActive(true);
 
+        // Stop simulate physics
         playerCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
         enemyCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
 
+        // Update UI
         BattleUIHandler.instance.GetPlayerEnemy(playerCopy, enemyCopy);
-        BattleUIHandler.instance.UpdateStatus();   // Update UI
+        BattleUIHandler.instance.UpdateStatus();   
 
-        actionButtons = BattleUIHandler.instance.actionButtons; // Get action buttons
-
+        // Get action buttons
+        actionButtons = BattleUIHandler.instance.actionButtons; 
         battleState = BattleState.PLAYERTURN;   // Set battle state
         PlayerTurn();
     }
@@ -54,7 +56,9 @@ public class BattleSystem : MonoBehaviour
     void InitializeActionButtons()
     {
         BattleUIHandler.instance.EnableActions();
+        // Set text on button
         actionButtons[0].text = "Attack";
+        // Set the click event
         actionButtons[0].clicked += OnAttackClicked;
 
         actionButtons[1].text = "Skill";
@@ -69,10 +73,49 @@ public class BattleSystem : MonoBehaviour
         actionButtons[4].text = "Escape";
         actionButtons[4].clicked += OnEscapeClicked;
 
+        for (int i = 0; i < 5; i++)
+        {
+            // Set the hover event (mouse enter)
+            actionButtons[i].RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+        }
+
+        // Set the hover event (mouse leave)
+        BattleUIHandler.instance.actions.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
+
+        // Hide not used buttons
         actionButtons[5].style.visibility = Visibility.Hidden;
         actionButtons[6].style.visibility = Visibility.Hidden;
         actionButtons[7].style.visibility = Visibility.Hidden;
     }
+
+    private void DisplayButtonDescription(MouseEnterEvent evt)
+    {
+        Button button = (Button)evt.target;  // Get the button from the event
+        switch(button.text)
+        {
+            case("Attack"):
+                BattleUIHandler.instance.UpdateDialog($"Deals {CalculateDamage()} physical damage to the enemy.\nCost: {"0"} MP");
+                break;
+            case ("Skill"):
+                BattleUIHandler.instance.UpdateDialog("Select skill from learned skills");
+                break;
+            case ("Guard"):
+                BattleUIHandler.instance.UpdateDialog("Guard the next attack, half the damage");
+                break;
+            case ("Item"):
+                BattleUIHandler.instance.UpdateDialog("Select item from inventory");
+                break;
+            case ("Escape"):
+                BattleUIHandler.instance.UpdateDialog("Escape current battle");
+                break;
+        }
+    }
+
+    private void HideButtonDescription(MouseLeaveEvent evt)
+    {
+        BattleUIHandler.instance.UpdateDialog("Choose your action");
+    }
+
 
     private void OnEscapeClicked()
     {
@@ -86,7 +129,6 @@ public class BattleSystem : MonoBehaviour
 
     private void OnGuardClicked()
     {
-        
         StartCoroutine(PlayerGuard());
     }
 

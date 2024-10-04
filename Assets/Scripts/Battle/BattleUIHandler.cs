@@ -28,7 +28,7 @@ public class BattleUIHandler : MonoBehaviour
     public float currentEnemyMagicRatio = 1f;
 
     // Variables related to player actions
-    VisualElement actions;
+    public VisualElement actions;
     public List<Button> actionButtons;
 
     // Variables related to dialog display
