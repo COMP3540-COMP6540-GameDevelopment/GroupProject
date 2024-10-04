@@ -287,3 +287,12 @@ MonoBehaviour:
   gold: 0
   dead: 0
   guard: 0
+  skills:
+  - {fileID: 11400000, guid: 91d27ff7ac618ce40aa3a293984abdb0, type: 2}
+  - {fileID: 11400000, guid: ede08c475c40f80429b2fcf9f80f557d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

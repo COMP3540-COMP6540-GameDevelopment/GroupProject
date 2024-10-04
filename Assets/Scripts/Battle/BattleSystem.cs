@@ -94,7 +94,8 @@ public class BattleSystem : MonoBehaviour
         switch(button.text)
         {
             case("Attack"):
-                BattleUIHandler.instance.UpdateDialog($"Deals {CalculateDamage()} physical damage to the enemy.\nCost: {"0"} MP");
+                int damage = CalculateDamage(playerCopy, enemyCopy);
+                BattleUIHandler.instance.UpdateDialog($"Deals <color=red>{damage}</color> physical damage to the enemy.\nCost: <color=blue>{"0"}</color> MP");
                 break;
             case ("Skill"):
                 BattleUIHandler.instance.UpdateDialog("Select skill from learned skills");
@@ -158,7 +159,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerAttack()
     {
 
-        int damage = playerCopy.damage - enemyCopy.defense;
+        int damage = CalculateDamage(playerCopy, enemyCopy);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog("Attack is successfull");
@@ -188,7 +189,7 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        int damage = CalculateDamage();
+        int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
@@ -207,13 +208,13 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private int CalculateDamage()
+    private int CalculateDamage(BattleScript from, BattleScript to)
     {
-        int damage = enemyCopy.damage - playerCopy.defense;
-        if (playerCopy.guard)
+        int damage = from.damage - to.defense;
+        if (to.guard)
         {
             damage /= 2;
-            playerCopy.guard = false;
+            to.guard = false;
         }
         return damage;
     }

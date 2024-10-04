@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -17,6 +18,7 @@ public class BattleScript : MonoBehaviour
     public int gold;
     public bool dead = false;
     public bool guard = false;
+    public List<Skill> skills;
 
     public bool IsDead() 
     { 
@@ -55,4 +57,5 @@ public class BattleScript : MonoBehaviour
         exp = playerCopy.exp;
         gold = playerCopy.gold;
     }
+
 }
