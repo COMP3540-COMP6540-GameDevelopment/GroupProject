@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -52,20 +49,48 @@ public class BattleSystem : MonoBehaviour
         PlayerTurn();
     }
 
-    private void InitiallizeSkillButtons()
-    {
-        throw new NotImplementedException();
-    }
+
 
     void PlayerTurn()
     {
         BattleUIHandler.instance.EnableActions();
         BattleUIHandler.instance.UpdateDialog("Choose your action");
     }
+    private void InitiallizeSkillButtons()
+    {
+        BattleUIHandler.instance.DisableSkills();
+        List<Skill> playerSkills = playerCopy.skills;
+        // Assign each skill to action buttons
+        int i = 0;
+        foreach (Skill skill in playerSkills)
+        {
+            if (skill == null)
+            {
+                // Break if no skills
+                break;
+            }
+            skillButtons[i].text = skill.name;
+            skillButtons[i].userData = skill;
+            skillButtons[i].RegisterCallback<ClickEvent>(OnAttackClicked);
+            skillButtons[i].RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            i++;
+        }
+        BattleUIHandler.instance.skills.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
+    }
+
+    void ReturnToActions(MouseDownEvent evt)
+    {
+        if (evt.button != 1)
+        {
+            return;
+        }
+        BattleUIHandler.instance.skills.style.visibility = Visibility.Hidden;
+        BattleUIHandler.instance.actions.style.visibility = Visibility.Visible;
+        BattleUIHandler.instance.uiDocument.rootVisualElement.UnregisterCallback<MouseDownEvent>(ReturnToActions);
+    }
 
     void InitializeActionButtons()
     {
-        BattleUIHandler.instance.EnableActions();
         // Set text on button
         actionButtons[0].text = "Attack";
         actionButtons[0].userData = playerCopy.attackSkill;
@@ -74,37 +99,17 @@ public class BattleSystem : MonoBehaviour
         actionButtons[3].text = "Item";
         actionButtons[4].text = "Escape";
 
-
-        for (int i = 0; i < 5; i++)
+        foreach (var action in actionButtons)
         {
             // Set the click event
-            actionButtons[i].RegisterCallback<ClickEvent>(OnButtonClicked);
+            action.RegisterCallback<ClickEvent>(OnButtonClicked);
             // Set the hover event (mouse enter)
-            actionButtons[i].RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            action.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            // Display used buttons
+            action.style.visibility = Visibility.Visible;
         }
         // Set the hover event (mouse leave)
         BattleUIHandler.instance.actions.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
-
-        // Display used buttons
-        actionButtons[0].style.visibility = Visibility.Visible;
-        actionButtons[1].style.visibility = Visibility.Visible;
-        actionButtons[2].style.visibility = Visibility.Visible;
-        actionButtons[3].style. visibility = Visibility.Visible;
-        actionButtons[4].style.visibility = Visibility.Visible;
-
-        // Hide not used buttons
-        actionButtons[5].style.visibility = Visibility.Hidden;
-        actionButtons[6].style.visibility = Visibility.Hidden;
-        actionButtons[7].style.visibility = Visibility.Hidden;
-    }
-
-    void UnregisterEvents()
-    {
-        foreach (var action in actionButtons)
-        {
-            action.UnregisterCallback<ClickEvent>(OnButtonClicked);
-            action.UnregisterCallback<MouseEnterEvent>(DisplayButtonDescription);
-        }
     }
 
     void OnButtonClicked(ClickEvent evt)
@@ -132,7 +137,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private void DisplayButtonDescription(MouseEnterEvent evt)
+    void DisplayButtonDescription(MouseEnterEvent evt)
     {
         Button button = (Button)evt.target;  // Get the button from the event
         Skill skill = button.userData as Skill;
@@ -163,26 +168,30 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.UpdateDialog(dialogText);
     }
 
-    private void HideButtonDescription(MouseLeaveEvent evt)
+    void HideButtonDescription(MouseLeaveEvent evt)
     {
-        if (BattleUIHandler.instance.actions.style.visibility != Visibility.Hidden)
+        if (BattleUIHandler.instance.actions.style.visibility == Visibility.Visible)
         {
             BattleUIHandler.instance.UpdateDialog("Choose your action");
+        } 
+        else if (BattleUIHandler.instance.skills.style.visibility == Visibility.Visible)
+        {
+            BattleUIHandler.instance.UpdateDialog("Right click to go back to actions");
         }
     }
 
 
-    private void OnEscapeClicked(ClickEvent evt)
+    void OnEscapeClicked(ClickEvent evt)
     {
         throw new NotImplementedException();
     }
 
-    private void OnItemClicked(ClickEvent evt)
+    void OnItemClicked(ClickEvent evt)
     {
         throw new NotImplementedException();
     }
 
-    private void OnGuardClicked(ClickEvent evt)
+    void OnGuardClicked(ClickEvent evt)
     {
         StartCoroutine(PlayerGuard());
     }
@@ -199,32 +208,11 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(EnemyTurn());
     }
 
-    private void OnSkillClicked(ClickEvent evt)
+    void OnSkillClicked(ClickEvent evt)
     {
-        List<Skill> playerSkills = playerCopy.skills;
-        // Assign each skill to action buttons
-        foreach (var action in actionButtons)
-        {
-            action.style.visibility = Visibility.Hidden;
-        }
-        int i = 0;
-        foreach (Skill skill in playerSkills)
-        {
-            if (skill == null)
-            {
-                // Break if no skills
-                break;
-            }
-            String skillName = skill.name;
-
-            
-            actionButtons[i].style.visibility = Visibility.Visible;
-            actionButtons[i].text = skillName;
-            actionButtons[i].userData = skill;
-            actionButtons[i].UnregisterCallback<ClickEvent>(OnSkillClicked);
-            actionButtons[i].RegisterCallback<ClickEvent>(OnAttackClicked);
-            i++;
-        }
+        BattleUIHandler.instance.EnableSkills();
+        BattleUIHandler.instance.DisableActions();
+        BattleUIHandler.instance.uiDocument.rootVisualElement.RegisterCallback<MouseDownEvent>(ReturnToActions);
     }
 
     void OnAttackClicked(ClickEvent evt)

@@ -9,6 +9,9 @@ public class BattleUIHandler : MonoBehaviour
 {
     public static BattleUIHandler instance { get; private set; }
 
+    // Variables related to uiDocument
+    public UIDocument uiDocument;
+
     // Variables related to player status
     Label playerName;
     VisualElement playerhealthBar;
@@ -47,7 +50,7 @@ public class BattleUIHandler : MonoBehaviour
     {
         instance = this;
 
-        UIDocument uiDocument = GetComponent<UIDocument>();
+        uiDocument = GetComponent<UIDocument>();
 
         playerName = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<Label>("Name");
         playerhealthBar = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<VisualElement>("HP_Line");
@@ -118,6 +121,13 @@ public class BattleUIHandler : MonoBehaviour
     public void EnableSkills()
     {
         skills.style.visibility = Visibility.Visible;
+        foreach (Button skill in skillButtons)
+        {
+            if (skill.userData == null)
+            {
+                skill.style.visibility = Visibility.Hidden;
+            }
+        }
     }
     public void DisableSkills()
     {
