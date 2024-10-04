@@ -17,10 +17,16 @@ public class BattleSystem : MonoBehaviour
     List<Button> actionButtons;
     List<Button> skillButtons;
 
+    // Variables related to perform animation during battle
+    Animator playerAm;
+    Animator enemyAm;
+
 
     void Start()
     {
-        battleState = BattleState.START;    // Set battle state
+        // Initialze variables, create game objects
+        // Set battle state
+        battleState = BattleState.START;    
 
         // Receive player and enemy data from scene manager, create a copy to commence battle
         playerCopy = Instantiate(SceneManagerScript.instance.player, playerPosition).GetComponent<BattleScript>();
@@ -38,20 +44,23 @@ public class BattleSystem : MonoBehaviour
         playerCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
         enemyCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
 
-        // Update UI
-        BattleUIHandler.instance.GetPlayerEnemy(playerCopy, enemyCopy);
-        BattleUIHandler.instance.UpdateStatus();   
-
         // Get action buttons
         actionButtons = BattleUIHandler.instance.actionButtons;
         skillButtons = BattleUIHandler.instance.skillButtons;
         InitializeActionButtons();
         InitiallizeSkillButtons();
+
+        playerAm = playerCopy.gameObject.GetComponent<Animator>();
+        enemyAm = enemyCopy.gameObject.GetComponent<Animator>();
+
+        // Update UI
+        BattleUIHandler.instance.GetPlayerEnemy(playerCopy, enemyCopy);
+        BattleUIHandler.instance.UpdateStatus();   
+
+        // Set to Player Turn
         battleState = BattleState.PLAYERTURN;   // Set battle state
         PlayerTurn();
     }
-
-
 
     void PlayerTurn()
     {
@@ -230,7 +239,7 @@ public class BattleSystem : MonoBehaviour
             // Commence attack with skill
             BattleUIHandler.instance.DisableSkills();
             BattleUIHandler.instance.DisableActions();
-            StartCoroutine(PlayerAttack(skill));
+            StartCoroutine(PlayerPerformSkill(skill));
         } 
         else
         {
@@ -244,20 +253,20 @@ public class BattleSystem : MonoBehaviour
         // TODO add cooldown
     }
 
-    IEnumerator PlayerAttack(Skill skill)
+    IEnumerator PlayerPerformSkill(Skill skill)
     {
+        
+        
         int damage = 0;
         int costMP = 0;
         SkillType skillType = skill.skillType;
-        if (skillType == SkillType.DEFAULT)
-        {
-            damage = CalculateDamage(playerCopy, enemyCopy);
-            costMP = 0;
-        } else
-        {
-            damage = CalculateDamage(playerCopy, enemyCopy, skill);
-            costMP = skill.costMP;
-        }
+
+        // Wait until the animation is done
+        yield return StartCoroutine(WaitForAnimation(skill));
+
+        damage = CalculateDamage(playerCopy, enemyCopy, skill);
+        costMP = skill.costMP;
+        
         playerCopy.ReduceMana(costMP);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
@@ -280,18 +289,31 @@ public class BattleSystem : MonoBehaviour
         
     }
 
+    IEnumerator WaitForAnimation(Skill skill)
+    {
+        playerAm.Play("RightAttack");
+        BattleUIHandler.instance.UpdateDialog($"Executing {skill.skillName}...");
+        AnimatorStateInfo stateInfo = playerAm.GetCurrentAnimatorStateInfo(0);
+        // Wait until the animation is done
+        while (stateInfo.IsName("RightAttack") && stateInfo.normalizedTime < 1.0f)
+        {
+            stateInfo = playerAm.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+    }
 
     IEnumerator EnemyTurn()
     {
         BattleUIHandler.instance.DisableSkills();
         BattleUIHandler.instance.DisableActions();
-        BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
-
+        BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} is thinking what to do!");
 
         yield return new WaitForSeconds(1f);
-
+        // TODO assign other enemy actions
         int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
+
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} deals <color=red>{damage}</color> damage to you");
 
