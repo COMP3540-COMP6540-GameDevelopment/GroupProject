@@ -15,5 +15,5 @@ MonoBehaviour:
   skillName: Fire II
   skillType: 0
   description: No Description
-  potency: 200
-  costMP: 10
+  potency: 240
+  costMP: 12
