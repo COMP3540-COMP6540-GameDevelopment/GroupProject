@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -59,19 +59,21 @@ public class BattleSystem : MonoBehaviour
         // Set text on button
         actionButtons[0].text = "Attack";
         // Set the click event
-        actionButtons[0].clicked += OnAttackClicked;
+        //actionButtons[0].clicked += OnAttackClicked;
+        actionButtons[0].RegisterCallback<ClickEvent>(OnAttackClicked);
+        actionButtons[0].userData = playerCopy.attackSkill;
 
         actionButtons[1].text = "Skill";
-        actionButtons[1].clicked += OnSkillClicked;
+        actionButtons[1].RegisterCallback<ClickEvent>(OnSkillClicked);
 
         actionButtons[2].text = "Guard";
-        actionButtons[2].clicked += OnGuardClicked;
+        actionButtons[2].RegisterCallback<ClickEvent>(OnGuardClicked);
 
         actionButtons[3].text = "Item";
-        actionButtons[3].clicked += OnItemClicked;
+        actionButtons[3].RegisterCallback<ClickEvent>(OnItemClicked);
 
         actionButtons[4].text = "Escape";
-        actionButtons[4].clicked += OnEscapeClicked;
+        actionButtons[4].RegisterCallback<ClickEvent>(OnEscapeClicked);
 
         for (int i = 0; i < 5; i++)
         {
@@ -114,21 +116,24 @@ public class BattleSystem : MonoBehaviour
 
     private void HideButtonDescription(MouseLeaveEvent evt)
     {
-        BattleUIHandler.instance.UpdateDialog("Choose your action");
+        if (BattleUIHandler.instance.actions.style.visibility != Visibility.Hidden)
+        {
+            BattleUIHandler.instance.UpdateDialog("Choose your action");
+        }
     }
 
 
-    private void OnEscapeClicked()
+    private void OnEscapeClicked(ClickEvent evt)
     {
         throw new NotImplementedException();
     }
 
-    private void OnItemClicked()
+    private void OnItemClicked(ClickEvent evt)
     {
         throw new NotImplementedException();
     }
 
-    private void OnGuardClicked()
+    private void OnGuardClicked(ClickEvent evt)
     {
         StartCoroutine(PlayerGuard());
     }
@@ -145,13 +150,26 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(EnemyTurn());
     }
 
-    private void OnSkillClicked()
+    private void OnSkillClicked(ClickEvent evt)
     {
-        throw new NotImplementedException();
+        List<Skill> playerSkills = playerCopy.skills;
+        foreach (Skill skill in playerSkills)
+        {
+            if (skill == null)
+            {
+                break;
+            }
+            Debug.Log(skill);
+        }
     }
 
-    void OnAttackClicked()
+    void OnAttackClicked(ClickEvent evt)
     {
+        // Get the button that triggered this event
+        Button button = evt.target as Button;
+        // Get userdata as Skill
+        Skill skill = button.userData as Skill;
+
         BattleUIHandler.instance.DisableActions();
         StartCoroutine(PlayerAttack());
     }
