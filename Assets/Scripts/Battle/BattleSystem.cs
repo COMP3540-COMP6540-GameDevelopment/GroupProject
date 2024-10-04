@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class BattleSystem : MonoBehaviour
     public BattleState battleState;
 
     List<Button> actionButtons;
+    List<Button> skillButtons;
 
 
     void Start()
@@ -42,14 +44,22 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.UpdateStatus();   
 
         // Get action buttons
-        actionButtons = BattleUIHandler.instance.actionButtons; 
+        actionButtons = BattleUIHandler.instance.actionButtons;
+        skillButtons = BattleUIHandler.instance.skillButtons;
+        InitializeActionButtons();
+        InitiallizeSkillButtons();
         battleState = BattleState.PLAYERTURN;   // Set battle state
         PlayerTurn();
     }
 
+    private void InitiallizeSkillButtons()
+    {
+        throw new NotImplementedException();
+    }
+
     void PlayerTurn()
     {
-        InitializeActionButtons();
+        BattleUIHandler.instance.EnableActions();
         BattleUIHandler.instance.UpdateDialog("Choose your action");
     }
 
@@ -58,31 +68,29 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.EnableActions();
         // Set text on button
         actionButtons[0].text = "Attack";
-        // Set the click event
-        //actionButtons[0].clicked += OnAttackClicked;
-        actionButtons[0].RegisterCallback<ClickEvent>(OnAttackClicked);
         actionButtons[0].userData = playerCopy.attackSkill;
-
         actionButtons[1].text = "Skill";
-        actionButtons[1].RegisterCallback<ClickEvent>(OnSkillClicked);
-
         actionButtons[2].text = "Guard";
-        actionButtons[2].RegisterCallback<ClickEvent>(OnGuardClicked);
-
         actionButtons[3].text = "Item";
-        actionButtons[3].RegisterCallback<ClickEvent>(OnItemClicked);
-
         actionButtons[4].text = "Escape";
-        actionButtons[4].RegisterCallback<ClickEvent>(OnEscapeClicked);
+
 
         for (int i = 0; i < 5; i++)
         {
+            // Set the click event
+            actionButtons[i].RegisterCallback<ClickEvent>(OnButtonClicked);
             // Set the hover event (mouse enter)
             actionButtons[i].RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
         }
-
         // Set the hover event (mouse leave)
         BattleUIHandler.instance.actions.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
+
+        // Display used buttons
+        actionButtons[0].style.visibility = Visibility.Visible;
+        actionButtons[1].style.visibility = Visibility.Visible;
+        actionButtons[2].style.visibility = Visibility.Visible;
+        actionButtons[3].style. visibility = Visibility.Visible;
+        actionButtons[4].style.visibility = Visibility.Visible;
 
         // Hide not used buttons
         actionButtons[5].style.visibility = Visibility.Hidden;
@@ -90,28 +98,69 @@ public class BattleSystem : MonoBehaviour
         actionButtons[7].style.visibility = Visibility.Hidden;
     }
 
+    void UnregisterEvents()
+    {
+        foreach (var action in actionButtons)
+        {
+            action.UnregisterCallback<ClickEvent>(OnButtonClicked);
+            action.UnregisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+        }
+    }
+
+    void OnButtonClicked(ClickEvent evt)
+    {
+        Button button = (Button)evt.target;  // Get the button from the event
+        if (button.text == "Attack")
+        {
+            OnAttackClicked(evt);
+        } 
+        else if (button.text == "Skill")
+        {
+            OnSkillClicked(evt);
+        }
+        else if (button.text == "Guard")
+        {
+            OnGuardClicked(evt);
+        }
+        else if (button.text == "Item")
+        {
+            OnItemClicked(evt);
+        }
+        else if (button.text == "Escape")
+        {
+            OnEscapeClicked(evt);
+        }
+    }
+
     private void DisplayButtonDescription(MouseEnterEvent evt)
     {
         Button button = (Button)evt.target;  // Get the button from the event
-        switch(button.text)
+        Skill skill = button.userData as Skill;
+        String dialogText = "";
+        if (skill != null)
         {
-            case("Attack"):
-                int damage = CalculateDamage(playerCopy, enemyCopy);
-                BattleUIHandler.instance.UpdateDialog($"Deals <color=red>{damage}</color> physical damage to the enemy.\nCost: <color=blue>{"0"}</color> MP");
-                break;
+            int damage = CalculateDamage(playerCopy, enemyCopy, skill);
+            dialogText += skill.description + ".\n";
+            dialogText += $"Deals <color=red>{damage}</color> {skill.skillType} damage to the enemy" + ".\n";
+            dialogText += $"Potency: {skill.potency}\tCost: <color=blue>{skill.costMP}</color> MP";
+        }
+        switch (button.text)
+        {
             case ("Skill"):
-                BattleUIHandler.instance.UpdateDialog("Select skill from learned skills");
+                dialogText += "Select skill from learned skills";
                 break;
             case ("Guard"):
-                BattleUIHandler.instance.UpdateDialog("Guard the next attack, half the damage");
+                dialogText += "Guard the next attack, half the damage";
                 break;
             case ("Item"):
-                BattleUIHandler.instance.UpdateDialog("Select item from inventory");
+                dialogText += "Select item from inventory";
                 break;
             case ("Escape"):
-                BattleUIHandler.instance.UpdateDialog("Escape current battle");
+                dialogText += "Escape current battle";
                 break;
         }
+
+        BattleUIHandler.instance.UpdateDialog(dialogText);
     }
 
     private void HideButtonDescription(MouseLeaveEvent evt)
@@ -153,13 +202,28 @@ public class BattleSystem : MonoBehaviour
     private void OnSkillClicked(ClickEvent evt)
     {
         List<Skill> playerSkills = playerCopy.skills;
+        // Assign each skill to action buttons
+        foreach (var action in actionButtons)
+        {
+            action.style.visibility = Visibility.Hidden;
+        }
+        int i = 0;
         foreach (Skill skill in playerSkills)
         {
             if (skill == null)
             {
+                // Break if no skills
                 break;
             }
-            Debug.Log(skill);
+            String skillName = skill.name;
+
+            
+            actionButtons[i].style.visibility = Visibility.Visible;
+            actionButtons[i].text = skillName;
+            actionButtons[i].userData = skill;
+            actionButtons[i].UnregisterCallback<ClickEvent>(OnSkillClicked);
+            actionButtons[i].RegisterCallback<ClickEvent>(OnAttackClicked);
+            i++;
         }
     }
 
@@ -171,16 +235,26 @@ public class BattleSystem : MonoBehaviour
         Skill skill = button.userData as Skill;
 
         BattleUIHandler.instance.DisableActions();
-        StartCoroutine(PlayerAttack());
+
+        StartCoroutine(PlayerAttack(skill));
     }
 
-    IEnumerator PlayerAttack()
+    IEnumerator PlayerAttack(Skill skill)
     {
+        int damage = 0;
+        SkillType skillType = skill.skillType;
+        if (skillType == SkillType.DEFAULT)
+        {
+            damage = CalculateDamage(playerCopy, enemyCopy);
+            
+        } else
+        {
+            damage = CalculateDamage(playerCopy, enemyCopy, skill);
+        }
 
-        int damage = CalculateDamage(playerCopy, enemyCopy);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog("Attack is successfull");
+        BattleUIHandler.instance.UpdateDialog($"Hero deals <color=red>{damage}</color> {skillType} damage to {enemyCopy.battleObjectName}");
 
         yield return new WaitForSeconds(1f);
         
@@ -198,6 +272,7 @@ public class BattleSystem : MonoBehaviour
 
         
     }
+
 
     IEnumerator EnemyTurn()
     {
@@ -236,7 +311,23 @@ public class BattleSystem : MonoBehaviour
         }
         return damage;
     }
-
+    private int CalculateDamage(BattleScript from, BattleScript to, Skill skill)
+    {
+        if (skill.skillType == SkillType.DEFAULT)
+        {
+            return CalculateDamage(from, to);
+        } else
+        {
+            
+            int damage = Mathf.RoundToInt(from.damage * (float) skill.potency / 100f - to.defense);
+            if (to.guard)
+            {
+                damage /= 2;
+                to.guard = false;
+            }
+            return damage;
+        }
+    }
     IEnumerator EndBattle()
     {
         if (battleState == BattleState.WIN)

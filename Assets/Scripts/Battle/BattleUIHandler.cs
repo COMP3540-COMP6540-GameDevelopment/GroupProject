@@ -31,6 +31,10 @@ public class BattleUIHandler : MonoBehaviour
     public VisualElement actions;
     public List<Button> actionButtons;
 
+    // Variables related to player skills
+    public VisualElement skills;
+    public List<Button> skillButtons;
+
     // Variables related to dialog display
     Label dialog;
 
@@ -58,19 +62,18 @@ public class BattleUIHandler : MonoBehaviour
         enemyMP_Number = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("EnemyStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
 
         dialog = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background").Q<Label>("Dialog");
-        actions = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions");
 
-        // Find all buttons
+        // Find all action buttons
+        actions = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions");
         actionButtons = new List<Button>();
         actions.Query<Button>().ForEach(button => actionButtons.Add(button));
 
+        // Find all skill buttons
+        skills = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Skills");
+        skillButtons = new List<Button>();
+        skills.Query<Button>().ForEach(button => skillButtons.Add(button));
+
         DisableActions();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     public void GetPlayerEnemy(BattleScript player, BattleScript enemy)
@@ -111,5 +114,13 @@ public class BattleUIHandler : MonoBehaviour
     public void DisableActions()
     {
         actions.style.visibility = Visibility.Hidden;
+    }
+    public void EnableSkills()
+    {
+        skills.style.visibility = Visibility.Visible;
+    }
+    public void DisableSkills()
+    {
+        skills.style.visibility = Visibility.Hidden;
     }
 }

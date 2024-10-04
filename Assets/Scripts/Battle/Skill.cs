@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-public enum SkillType { PHYSICAL , MAGICAL}
+public enum SkillType { DEFAULT, PHYSICAL ,MAGICAL}
 
 [CreateAssetMenu(fileName = "NewSkill", menuName = "Skill")]
 public class Skill : ScriptableObject

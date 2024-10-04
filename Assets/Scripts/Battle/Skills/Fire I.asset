@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fire I
   m_EditorClassIdentifier: 
   skillName: Fire I
-  skillType: 0
-  description: No Description
+  skillType: 2
+  description: No Description fire 1
   potency: 200
   costMP: 10
