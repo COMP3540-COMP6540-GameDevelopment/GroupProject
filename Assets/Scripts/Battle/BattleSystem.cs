@@ -56,7 +56,7 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.EnableActions();
         BattleUIHandler.instance.UpdateDialog("Choose your action");
     }
-    private void InitiallizeSkillButtons()
+    void InitiallizeSkillButtons()
     {
         BattleUIHandler.instance.DisableSkills();
         List<Skill> playerSkills = playerCopy.skills;
@@ -76,17 +76,6 @@ public class BattleSystem : MonoBehaviour
             i++;
         }
         BattleUIHandler.instance.skills.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
-    }
-
-    void ReturnToActions(MouseDownEvent evt)
-    {
-        if (evt.button != 1)
-        {
-            return;
-        }
-        BattleUIHandler.instance.skills.style.visibility = Visibility.Hidden;
-        BattleUIHandler.instance.actions.style.visibility = Visibility.Visible;
-        BattleUIHandler.instance.uiDocument.rootVisualElement.UnregisterCallback<MouseDownEvent>(ReturnToActions);
     }
 
     void InitializeActionButtons()
@@ -199,6 +188,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerGuard()
     {
         BattleUIHandler.instance.DisableActions();
+        BattleUIHandler.instance.DisableSkills();
         BattleUIHandler.instance.UpdateDialog("Guarding");
         playerCopy.guard = true;
 
@@ -214,32 +204,62 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.DisableActions();
         BattleUIHandler.instance.uiDocument.rootVisualElement.RegisterCallback<MouseDownEvent>(ReturnToActions);
     }
+    void ReturnToActions(MouseDownEvent evt)
+    {
+        if (evt.button != 1)
+        {
+            return;
+        }
+        BattleUIHandler.instance.DisableSkills();
+        BattleUIHandler.instance.EnableActions();
+        BattleUIHandler.instance.uiDocument.rootVisualElement.UnregisterCallback<MouseDownEvent>(ReturnToActions);
+    }
 
     void OnAttackClicked(ClickEvent evt)
     {
+        BattleUIHandler.instance.DisableSkills();
+        BattleUIHandler.instance.DisableActions();
+
         // Get the button that triggered this event
         Button button = evt.target as Button;
         // Get userdata as Skill
         Skill skill = button.userData as Skill;
 
-        BattleUIHandler.instance.DisableActions();
+        // Determine whether is is able to attack
+        if (AbleToCast(skill))
+        {
+            // Commence attack with skill
+            BattleUIHandler.instance.DisableSkills();
+            BattleUIHandler.instance.DisableActions();
+            StartCoroutine(PlayerAttack(skill));
+        } 
+        else
+        {
+            BattleUIHandler.instance.UpdateDialog("Not enough MP, can't cast skill");
+        }
+    }
 
-        StartCoroutine(PlayerAttack(skill));
+    bool AbleToCast(Skill skill)
+    {
+        return playerCopy.currentMP >= skill.costMP;
+        // TODO add cooldown
     }
 
     IEnumerator PlayerAttack(Skill skill)
     {
         int damage = 0;
+        int costMP = 0;
         SkillType skillType = skill.skillType;
         if (skillType == SkillType.DEFAULT)
         {
             damage = CalculateDamage(playerCopy, enemyCopy);
-            
+            costMP = 0;
         } else
         {
             damage = CalculateDamage(playerCopy, enemyCopy, skill);
+            costMP = skill.costMP;
         }
-
+        playerCopy.ReduceMana(costMP);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog($"Hero deals <color=red>{damage}</color> {skillType} damage to {enemyCopy.battleObjectName}");
@@ -264,6 +284,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
+        BattleUIHandler.instance.DisableSkills();
         BattleUIHandler.instance.DisableActions();
         BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
 

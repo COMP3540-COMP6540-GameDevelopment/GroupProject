@@ -46,6 +46,11 @@ public class BattleScript : MonoBehaviour
         gold += enemyCopy.gold;
     }
 
+    internal void ReduceMana(int costMP)
+    {
+        currentMP -= costMP;
+    }
+
     internal void UpdateResults(BattleScript playerCopy)
     {
         currentHP = playerCopy.currentHP;

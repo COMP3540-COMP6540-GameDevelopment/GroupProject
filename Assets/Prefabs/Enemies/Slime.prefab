@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleObjectName: Slime
-  currentHP: 25
-  maxHP: 25
+  currentHP: 250
+  maxHP: 250
   currentMP: 10
   maxMP: 10
   level: 1
@@ -133,6 +133,8 @@ MonoBehaviour:
   gold: 10
   dead: 0
   guard: 0
+  attackSkill: {fileID: 0}
+  skills: []
 --- !u!61 &1960302792856662139
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -77,6 +77,7 @@ public class BattleUIHandler : MonoBehaviour
         skills.Query<Button>().ForEach(button => skillButtons.Add(button));
 
         DisableActions();
+        DisableSkills();
     }
 
     public void GetPlayerEnemy(BattleScript player, BattleScript enemy)
@@ -113,24 +114,40 @@ public class BattleUIHandler : MonoBehaviour
     public void EnableActions()
     {
         actions.style.visibility = Visibility.Visible;
+        foreach (var action in actionButtons)
+        {
+            action.style.visibility = Visibility.Visible;
+        }
     }
     public void DisableActions()
     {
         actions.style.visibility = Visibility.Hidden;
+        foreach(var action in actionButtons)
+        {
+            action.style.visibility = Visibility.Hidden;
+        }
     }
     public void EnableSkills()
     {
         skills.style.visibility = Visibility.Visible;
         foreach (Button skill in skillButtons)
         {
-            if (skill.userData == null)
+            if (skill.userData != null)
+            {
+                skill.style.visibility = Visibility.Visible;
+            }
+            else
             {
                 skill.style.visibility = Visibility.Hidden;
             }
         }
     }
     public void DisableSkills()
-    {
+    {       
         skills.style.visibility = Visibility.Hidden;
+        foreach (Button skill in skillButtons)
+        {
+            skill.style.visibility = Visibility.Hidden;
+        }
     }
 }
