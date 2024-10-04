@@ -18,6 +18,7 @@ public class BattleScript : MonoBehaviour
     public int gold;
     public bool dead = false;
     public bool guard = false;
+    public Skill attackSkill;
     public List<Skill> skills;
 
     public bool IsDead() 
