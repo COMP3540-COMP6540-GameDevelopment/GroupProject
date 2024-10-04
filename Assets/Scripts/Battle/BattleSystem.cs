@@ -141,7 +141,7 @@ public class BattleSystem : MonoBehaviour
         switch (button.text)
         {
             case ("Skill"):
-                dialogText += "Select skill from learned skills";
+                dialogText += "Select skills";
                 break;
             case ("Guard"):
                 dialogText += "Guard the next attack, half the damage";
@@ -217,9 +217,6 @@ public class BattleSystem : MonoBehaviour
 
     void OnAttackClicked(ClickEvent evt)
     {
-        BattleUIHandler.instance.DisableSkills();
-        BattleUIHandler.instance.DisableActions();
-
         // Get the button that triggered this event
         Button button = evt.target as Button;
         // Get userdata as Skill
@@ -262,7 +259,7 @@ public class BattleSystem : MonoBehaviour
         playerCopy.ReduceMana(costMP);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog($"Hero deals <color=red>{damage}</color> {skillType} damage to {enemyCopy.battleObjectName}");
+        BattleUIHandler.instance.UpdateDialog($"You deal <color=red>{damage}</color> {skillType} damage to {enemyCopy.battleObjectName}");
 
         yield return new WaitForSeconds(1f);
         
@@ -294,7 +291,7 @@ public class BattleSystem : MonoBehaviour
         int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
+        BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} deals <color=red>{damage}</color> damage to you");
 
         yield return new WaitForSeconds(1f);
 

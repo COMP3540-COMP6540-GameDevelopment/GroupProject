@@ -9,3 +9,7 @@ Standard Unity Asset Store EULA
 GUI Parts
 https://assetstore.unity.com/packages/2d/gui/icons/gui-parts-159068
 Standard Unity Asset Store EULA
+
+Hero Knight - Pixel Art
+https://assetstore.unity.com/packages/2d/characters/hero-knight-pixel-art-165188
+Standard Unity Asset Store EULA
