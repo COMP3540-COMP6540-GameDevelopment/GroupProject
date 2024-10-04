@@ -9,30 +9,34 @@ public class BattleUIHandler : MonoBehaviour
 {
     public static BattleUIHandler instance { get; private set; }
 
-    
+    // Variables related to player status
     Label playerName;
     VisualElement playerhealthBar;
     VisualElement playermagicBar;
     Label playerHP_Number;
     Label playerMP_Number;
+    public float currentPlayerHealthRatio = 1f;
+    public float currentPlayerMagicRatio = 1f;
 
-    
+    // Variables related to enemy status
     Label enemyName;
     VisualElement enemyhealthBar;
     VisualElement enemymagicBar;
     Label enemyHP_Number;
     Label enemyMP_Number;
+    public float currentEnemyHealthRatio = 1f;
+    public float currentEnemyMagicRatio = 1f;
 
+    // Variables related to player actions
     VisualElement actions;
+    public List<Button> actionButtons;
+
+    // Variables related to dialog display
     Label dialog;
 
+    // Variables related to player and enemy object will be displayed in this UI
     BattleScript player;
     BattleScript enemy;
-
-    public float currentPlayerHealthRatio = 0.2f;
-    public float currentPlayerMagicRatio = 0.2f;
-    public float currentEnemyHealthRatio = 0.2f;
-    public float currentEnemyMagicRatio = 0.2f;
 
 
     private void Awake()
@@ -55,6 +59,10 @@ public class BattleUIHandler : MonoBehaviour
 
         dialog = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background").Q<Label>("Dialog");
         actions = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions");
+
+        // Find all buttons
+        actionButtons = new List<Button>();
+        actions.Query<Button>().ForEach(button => actionButtons.Add(button));
 
         DisableActions();
     }
@@ -79,10 +87,16 @@ public class BattleUIHandler : MonoBehaviour
         playerHP_Number.text = $"{player.currentHP}/{player.maxHP}";
         currentPlayerHealthRatio = player.currentHP / (float) player.maxHP;
         playerhealthBar.style.width = Length.Percent(currentPlayerHealthRatio * 100.0f);
+        playerMP_Number.text = $"{player.currentMP}/{player.maxMP}";
+        currentPlayerMagicRatio = player.currentMP / (float) player.maxMP;
+        playermagicBar.style.width = Length.Percent(currentPlayerMagicRatio * 100.0f);
 
         enemyHP_Number.text = $"{enemy.currentHP}/{enemy.maxHP}";
         currentEnemyHealthRatio = enemy.currentHP / (float)enemy.maxHP;
         enemyhealthBar.style.width = Length.Percent(currentEnemyHealthRatio * 100.0f);
+        enemyMP_Number.text = $"{enemy.currentMP}/{enemy.maxMP}";
+        currentEnemyMagicRatio = enemy.currentMP / (float)enemy.maxMP;
+        enemymagicBar.style.width = Length.Percent(currentEnemyMagicRatio * 100.0f);
     }
 
     public void UpdateDialog(string text)
@@ -93,7 +107,6 @@ public class BattleUIHandler : MonoBehaviour
     public void EnableActions()
     {
         actions.style.visibility = Visibility.Visible;
-
     }
     public void DisableActions()
     {

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,6 +15,8 @@ public class BattleSystem : MonoBehaviour
     public BattleScript playerCopy;
     public BattleScript enemyCopy;
     public BattleState battleState;
+
+    List<Button> actionButtons;
 
 
     void Start()
@@ -35,24 +39,77 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.GetPlayerEnemy(playerCopy, enemyCopy);
         BattleUIHandler.instance.UpdateStatus();   // Update UI
 
+        actionButtons = BattleUIHandler.instance.actionButtons; // Get action buttons
+
         battleState = BattleState.PLAYERTURN;   // Set battle state
         PlayerTurn();
     }
 
     void PlayerTurn()
     {
-        BattleUIHandler.instance.EnableActions();
+        InitializeActionButtons();
         BattleUIHandler.instance.UpdateDialog("Choose your action");
-        //battleUISystem.UpdateDialog("Choose your action");
     }
 
-    public void OnAttackClicked()
+    void InitializeActionButtons()
     {
-        if (battleState != BattleState.PLAYERTURN)
-        {
-            return;
-        }
-        //battleUISystem.ActionUI.SetActive(false);
+        BattleUIHandler.instance.EnableActions();
+        actionButtons[0].text = "Attack";
+        actionButtons[0].clicked += OnAttackClicked;
+
+        actionButtons[1].text = "Skill";
+        actionButtons[1].clicked += OnSkillClicked;
+
+        actionButtons[2].text = "Guard";
+        actionButtons[2].clicked += OnGuardClicked;
+
+        actionButtons[3].text = "Item";
+        actionButtons[3].clicked += OnItemClicked;
+
+        actionButtons[4].text = "Escape";
+        actionButtons[4].clicked += OnEscapeClicked;
+
+        actionButtons[5].style.visibility = Visibility.Hidden;
+        actionButtons[6].style.visibility = Visibility.Hidden;
+        actionButtons[7].style.visibility = Visibility.Hidden;
+    }
+
+    private void OnEscapeClicked()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnItemClicked()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnGuardClicked()
+    {
+        
+        StartCoroutine(PlayerGuard());
+    }
+
+    IEnumerator PlayerGuard()
+    {
+        BattleUIHandler.instance.DisableActions();
+        BattleUIHandler.instance.UpdateDialog("Guarding");
+        playerCopy.guard = true;
+
+        yield return new WaitForSeconds(1f);
+
+        battleState = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+    }
+
+    private void OnSkillClicked()
+    {
+        throw new NotImplementedException();
+    }
+
+    void OnAttackClicked()
+    {
+        BattleUIHandler.instance.DisableActions();
         StartCoroutine(PlayerAttack());
     }
 
@@ -61,8 +118,8 @@ public class BattleSystem : MonoBehaviour
 
         int damage = playerCopy.damage - enemyCopy.defense;
         enemyCopy.TakeDamage(damage);
-        //battleUISystem.UpdateStatus();
-        //battleUISystem.UpdateDialog("Attack is successfull");
+        BattleUIHandler.instance.UpdateStatus();
+        BattleUIHandler.instance.UpdateDialog("Attack is successfull");
 
         yield return new WaitForSeconds(1f);
         
@@ -83,16 +140,16 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        //battleUISystem.ActionUI.SetActive(false);
-        //battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
-        
+        BattleUIHandler.instance.DisableActions();
+        BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " attacks!");
+
 
         yield return new WaitForSeconds(1f);
 
-        int damage = enemyCopy.damage - playerCopy.defense;
+        int damage = CalculateDamage();
         playerCopy.TakeDamage(damage);
-        //battleUISystem.UpdateStatus();
-        //battleUISystem.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
+        BattleUIHandler.instance.UpdateStatus();
+        BattleUIHandler.instance.UpdateDialog(enemyCopy.battleObjectName + " deals " + damage + " damage to you");
 
         yield return new WaitForSeconds(1f);
 
@@ -108,19 +165,34 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    private int CalculateDamage()
+    {
+        int damage = enemyCopy.damage - playerCopy.defense;
+        if (playerCopy.guard)
+        {
+            damage /= 2;
+            playerCopy.guard = false;
+        }
+        return damage;
+    }
+
     IEnumerator EndBattle()
     {
         if (battleState == BattleState.WIN)
         {
-            //battleUISystem.UpdateDialog("You win");
+            BattleUIHandler.instance.UpdateDialog("You win");
             yield return new WaitForSeconds(2f);
             SceneManagerScript.instance.LoadMapScene(playerCopy);    // Send data back
         } 
         else if (battleState == BattleState.LOSE)
         {
-            //battleUISystem.UpdateDialog("You lose");
+            BattleUIHandler.instance.UpdateDialog("You lose");
             // Load Lose Scene
         }
     }
+
+
+
+
 
 }

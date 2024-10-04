@@ -7,17 +7,20 @@ public class BattleScript : MonoBehaviour
 {
     public string battleObjectName;
     public int currentHP;
-    public int maxHP;
+    public int maxHP; 
+    public int currentMP;
+    public int maxMP;
     public int level;
     public int damage;
     public int defense;
     public int exp;
     public int gold;
-    public bool Dead = false;
+    public bool dead = false;
+    public bool guard = false;
 
     public bool IsDead() 
     { 
-        return Dead; 
+        return dead; 
     }
 
     public void TakeDamage(int damage)
@@ -26,7 +29,7 @@ public class BattleScript : MonoBehaviour
         if (damage >= currentHP)
         {
             currentHP = 0;
-            Dead = true;
+            dead = true;
         }
         else
         {
@@ -42,12 +45,14 @@ public class BattleScript : MonoBehaviour
 
     internal void UpdateResults(BattleScript playerCopy)
     {
-      currentHP = playerCopy.currentHP;
-      maxHP = playerCopy.maxHP;
-      level = playerCopy.level;
-      damage = playerCopy.damage;
-      defense = playerCopy.defense;
-      exp = playerCopy.exp;
-      gold = playerCopy.gold;
-}
+        currentHP = playerCopy.currentHP;
+        maxHP = playerCopy.maxHP;
+        currentMP = playerCopy.currentMP;
+        maxMP = playerCopy.maxMP;
+        level = playerCopy.level;
+        damage = playerCopy.damage;
+        defense = playerCopy.defense;
+        exp = playerCopy.exp;
+        gold = playerCopy.gold;
+    }
 }

@@ -278,9 +278,12 @@ MonoBehaviour:
   battleObjectName: Hero
   currentHP: 100
   maxHP: 100
+  currentMP: 100
+  maxMP: 100
   level: 1
   damage: 15
   defense: 0
   exp: 0
   gold: 0
-  Dead: 0
+  dead: 0
+  guard: 0
