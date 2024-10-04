@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf1ea6d43f4aaf4d90e3fa8a32963a1, type: 3}
   m_Name: Melee
   m_EditorClassIdentifier: 
-  skillName: Melee
+  skillName: melee attack
   skillType: 0
-  description: Basic attack
+  description: A Basic melee attack with your sword.
   potency: 100
   costMP: 0

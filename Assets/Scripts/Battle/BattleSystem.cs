@@ -65,7 +65,7 @@ public class BattleSystem : MonoBehaviour
     void PlayerTurn()
     {
         BattleUIHandler.instance.EnableActions();
-        BattleUIHandler.instance.UpdateDialog("Choose your action");
+        BattleUIHandler.instance.UpdateDialog("Choose your action.");
     }
     void InitiallizeSkillButtons()
     {
@@ -152,16 +152,16 @@ public class BattleSystem : MonoBehaviour
         switch (button.text)
         {
             case ("Skill"):
-                dialogText += "Select skills";
+                dialogText += "Select skills.";
                 break;
             case ("Guard"):
-                dialogText += "Guard the next attack, half the damage";
+                dialogText += "Guard the next attack, half the damage.";
                 break;
             case ("Item"):
-                dialogText += "Select item from inventory";
+                dialogText += "Select item from inventory.";
                 break;
             case ("Escape"):
-                dialogText += "Escape current battle";
+                dialogText += "Escape current battle.";
                 break;
         }
 
@@ -172,11 +172,11 @@ public class BattleSystem : MonoBehaviour
     {
         if (BattleUIHandler.instance.actions.style.visibility == Visibility.Visible)
         {
-            BattleUIHandler.instance.UpdateDialog("Choose your action");
+            BattleUIHandler.instance.UpdateDialog("Choose your action.");
         } 
         else if (BattleUIHandler.instance.skills.style.visibility == Visibility.Visible)
         {
-            BattleUIHandler.instance.UpdateDialog("Right click to go back to actions");
+            BattleUIHandler.instance.UpdateDialog("Right click to go back to actions.");
         }
     }
 
@@ -200,7 +200,7 @@ public class BattleSystem : MonoBehaviour
     {
         BattleUIHandler.instance.DisableActions();
         BattleUIHandler.instance.DisableSkills();
-        BattleUIHandler.instance.UpdateDialog("Guarding");
+        BattleUIHandler.instance.UpdateDialog("Guarding.");
         playerCopy.guard = true;
 
         yield return new WaitForSeconds(1f);
@@ -243,7 +243,7 @@ public class BattleSystem : MonoBehaviour
         } 
         else
         {
-            BattleUIHandler.instance.UpdateDialog("Not enough MP, can't cast skill");
+            BattleUIHandler.instance.UpdateDialog("Not enough MP, can't cast skill.");
         }
     }
 
@@ -255,14 +255,30 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerPerformSkill(Skill skill)
     {
-        
-        
         int damage = 0;
-        int costMP = 0;
-        SkillType skillType = skill.skillType;
-
+        int costMP = 0;     
+        string animationClipName = "RightAttack";
+        switch (skill.skillType)
+        {
+            case SkillType.DEFAULT:
+                animationClipName = "RightAttack";
+                break;
+            case SkillType.PHYSICAL:
+                break;
+            case SkillType.MAGICAL:
+                animationClipName = "Cast";
+                break;
+            case SkillType.HEAL:
+                break;
+            case SkillType.BUFF:
+                break;
+            case SkillType.DEBUFF:
+                break;
+        }
+        BattleUIHandler.instance.UpdateDialog($"You are performing {skill.skillName}...");
         // Wait until the animation is done
-        yield return StartCoroutine(WaitForAnimation(skill));
+        yield return StartCoroutine(WaitForAnimation(playerAm, animationClipName));
+        yield return StartCoroutine(WaitForAnimation(enemyAm, "Hit"));
 
         damage = CalculateDamage(playerCopy, enemyCopy, skill);
         costMP = skill.costMP;
@@ -270,9 +286,10 @@ public class BattleSystem : MonoBehaviour
         playerCopy.ReduceMana(costMP);
         enemyCopy.TakeDamage(damage);
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog($"You deal <color=red>{damage}</color> {skillType} damage to {enemyCopy.battleObjectName}");
+        BattleUIHandler.instance.UpdateDialog($"You dealt <color=red>{damage}</color> {skill.skillType} damage to {enemyCopy.battleObjectName}.");
 
         yield return new WaitForSeconds(1f);
+              
         
         if (enemyCopy.IsDead())
         {
@@ -288,16 +305,14 @@ public class BattleSystem : MonoBehaviour
 
         
     }
-
-    IEnumerator WaitForAnimation(Skill skill)
+    IEnumerator WaitForAnimation(Animator am, string animationClipName)
     {
-        playerAm.Play("RightAttack");
-        BattleUIHandler.instance.UpdateDialog($"Executing {skill.skillName}...");
-        AnimatorStateInfo stateInfo = playerAm.GetCurrentAnimatorStateInfo(0);
+        am.Play(animationClipName);
+        AnimatorStateInfo stateInfo = am.GetCurrentAnimatorStateInfo(0);
         // Wait until the animation is done
-        while (stateInfo.IsName("RightAttack") && stateInfo.normalizedTime < 1.0f)
+        while (stateInfo.IsName(animationClipName) && stateInfo.normalizedTime < 1.0f)
         {
-            stateInfo = playerAm.GetCurrentAnimatorStateInfo(0);
+            stateInfo = am.GetCurrentAnimatorStateInfo(0);
             yield return null;
         }
         yield return new WaitForSeconds(0.5f);
@@ -309,13 +324,15 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.DisableActions();
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} is thinking what to do!");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         // TODO assign other enemy actions
+        BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} attacks!");
+        yield return StartCoroutine(WaitForAnimation(playerAm, "Hit"));
         int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
 
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} deals <color=red>{damage}</color> damage to you");
+        BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} dealt <color=red>{damage}</color> damage to you.");
 
         yield return new WaitForSeconds(1f);
 
@@ -362,13 +379,13 @@ public class BattleSystem : MonoBehaviour
     {
         if (battleState == BattleState.WIN)
         {
-            BattleUIHandler.instance.UpdateDialog("You win");
+            BattleUIHandler.instance.UpdateDialog("You win.");
             yield return new WaitForSeconds(2f);
             SceneManagerScript.instance.LoadMapScene(playerCopy);    // Send data back
         } 
         else if (battleState == BattleState.LOSE)
         {
-            BattleUIHandler.instance.UpdateDialog("You lose");
+            BattleUIHandler.instance.UpdateDialog("You lose.");
             // Load Lose Scene
         }
     }
