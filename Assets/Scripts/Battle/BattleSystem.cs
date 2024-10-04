@@ -26,8 +26,7 @@ public class BattleSystem : MonoBehaviour
         playerCopy = Instantiate(SceneManagerScript.instance.player, playerPosition).GetComponent<BattleScript>();
         enemyCopy = Instantiate(SceneManagerScript.instance.enemy, enemyPosition).GetComponent<BattleScript>();
 
-        playerCopy.transform.localPosition = Vector3.zero;
-        playerCopy.transform.localPosition.y = -0.5f;
+        playerCopy.transform.localPosition = new Vector3(0, -0.5f, 0);
         enemyCopy.transform.localPosition = Vector3.zero;
 
         playerCopy.gameObject.SetActive(true);
