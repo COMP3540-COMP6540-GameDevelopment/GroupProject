@@ -32,6 +32,8 @@ public class BattleSystem : MonoBehaviour
         playerCopy.gameObject.SetActive(true);
         enemyCopy.gameObject.SetActive(true);
 
+        playerCopy.gameObject.GetComponent<PlayerController>().isBattle = true;
+
         // Stop simulate physics
         playerCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;
         enemyCopy.gameObject.GetComponent<Rigidbody2D>().simulated = false;

@@ -21,10 +21,12 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     [SerializeField] float moveDirection;
     float moveSpeed;
+    public bool isBattle = false;
 
     private void Awake()
     {
-
+        moveDirection = 1;
+        moveSpeed = 0;
     }
 
     // Start is called before the first frame update
@@ -33,11 +35,14 @@ public class PlayerController : MonoBehaviour
         // Movement
         moveAction.Enable();
         playerRb = GetComponent<Rigidbody2D>();
-        moveDirection = 1;
-        moveSpeed = 0;
         animator = GetComponent<Animator>();
-        animator.SetFloat("f_Move_X", moveDirection);
-        animator.SetFloat("f_Speed", moveSpeed);
+
+        if(!isBattle)
+        {
+            animator.SetFloat("f_Move_X", moveDirection);
+            animator.SetFloat("f_Speed", moveSpeed);
+        }
+      
 
         //Jump
         jumpAction.Enable();
@@ -50,24 +55,16 @@ public class PlayerController : MonoBehaviour
         // Movement
         moveAction.Enable();
         playerRb = GetComponent<Rigidbody2D>();
-        if (playerRb == null)
-        {
-            Debug.LogError("Rigidbody2D not found on reactivation.");
-        }
         animator = GetComponent<Animator>();
-        animator.SetFloat("f_Move_X", moveDirection);
-        animator.SetFloat("f_Speed", moveSpeed);
+        if (!isBattle)
+        {
+            animator.SetFloat("f_Move_X", moveDirection);
+            animator.SetFloat("f_Speed", moveSpeed);
+        }
 
         //Jump
         jumpAction.Enable();
         isJump = false;
-    }
-
-    // Called when deactivate
-    void OnDisable()
-    {
-        moveAction.Disable();
-        jumpAction.Disable();
     }
 
     // Update is called once per frame
@@ -78,8 +75,11 @@ public class PlayerController : MonoBehaviour
         if (!Mathf.Approximately(move.x, 0))
         {
             moveDirection = move.x;
-            animator.SetFloat("f_Move_X", moveDirection);
-            animator.SetFloat("f_Speed", speed);
+            if (!isBattle)
+            {
+                animator.SetFloat("f_Move_X", moveDirection);
+                animator.SetFloat("f_Speed", speed);
+            }
         }
         else
         {
@@ -90,11 +90,17 @@ public class PlayerController : MonoBehaviour
         jumpAction.performed += Jump;   // bind Jump() method to this action
         if (isJump)
         {
-            animator.SetFloat("f_Move_Y", playerRb.velocity.y);
+            if (!isBattle)
+            {
+                animator.SetFloat("f_Move_Y", playerRb.velocity.y);
+            }
             if (Mathf.Approximately(playerRb.velocity.y, 0))
             {
                 isJump = false;
-                animator.SetBool("b_isJump", isJump);
+                if (!isBattle)
+                {
+                    animator.SetBool("b_isJump", isJump);
+                }
                 animator.SetFloat("f_Move_Y", 0);
             }
         }
@@ -136,13 +142,19 @@ public class PlayerController : MonoBehaviour
             // Double jump
             jumpAction.Disable();
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpVelocity);
-            animator.SetTrigger("t_DoubleJump");
+            if (!isBattle)
+            {
+                animator.SetTrigger("t_DoubleJump");
+            }
         } 
         else
         {
             isJump = true;
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpVelocity);
-            animator.SetBool("b_isJump", isJump);
+            if (!isBattle)
+            {
+                animator.SetBool("b_isJump", isJump);
+            }
         }
 
     }
