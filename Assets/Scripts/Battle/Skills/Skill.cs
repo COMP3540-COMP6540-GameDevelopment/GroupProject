@@ -10,4 +10,5 @@ public class Skill : ScriptableObject
     public string description;
     public int potency;
     public int costMP;
+    public ParticleSystem particleSystem;
 }

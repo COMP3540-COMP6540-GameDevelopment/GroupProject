@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: melee attack
   skillType: 0
-  description: A Basic melee attack with your sword.
+  description: A Basic melee attack with your sword
   potency: 100
   costMP: 0

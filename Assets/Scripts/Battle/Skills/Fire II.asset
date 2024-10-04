@@ -17,3 +17,4 @@ MonoBehaviour:
   description: No Description fire 2
   potency: 240
   costMP: 12
+  particleSystem: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}

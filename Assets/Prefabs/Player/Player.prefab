@@ -279,8 +279,8 @@ MonoBehaviour:
   battleObjectName: Hero
   currentHP: 100
   maxHP: 100
-  currentMP: 100
-  maxMP: 100
+  currentMP: 200
+  maxMP: 200
   level: 1
   damage: 15
   defense: 0
@@ -292,8 +292,8 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 91d27ff7ac618ce40aa3a293984abdb0, type: 2}
   - {fileID: 11400000, guid: ede08c475c40f80429b2fcf9f80f557d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 293955bf941a9794b8acd67d716ed808, type: 2}
+  - {fileID: 11400000, guid: 1828a507ec4886d45a504f842c9fffa5, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

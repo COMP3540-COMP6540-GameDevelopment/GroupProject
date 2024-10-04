@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleObjectName: Slime
-  currentHP: 250
-  maxHP: 250
+  currentHP: 500
+  maxHP: 500
   currentMP: 10
   maxMP: 10
   level: 1

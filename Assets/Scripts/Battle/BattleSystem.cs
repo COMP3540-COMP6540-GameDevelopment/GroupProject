@@ -239,7 +239,7 @@ public class BattleSystem : MonoBehaviour
             // Commence attack with skill
             BattleUIHandler.instance.DisableSkills();
             BattleUIHandler.instance.DisableActions();
-            StartCoroutine(PlayerPerformSkill(skill));
+            StartCoroutine(PlayerAction(skill));
         } 
         else
         {
@@ -253,7 +253,7 @@ public class BattleSystem : MonoBehaviour
         // TODO add cooldown
     }
 
-    IEnumerator PlayerPerformSkill(Skill skill)
+    IEnumerator PlayerAction(Skill skill)
     {
         int damage = 0;
         int costMP = 0;     
@@ -275,21 +275,24 @@ public class BattleSystem : MonoBehaviour
             case SkillType.DEBUFF:
                 break;
         }
-        BattleUIHandler.instance.UpdateDialog($"You are performing {skill.skillName}...");
-        // Wait until the animation is done
-        yield return StartCoroutine(WaitForAnimation(playerAm, animationClipName));
-        yield return StartCoroutine(WaitForAnimation(enemyAm, "Hit"));
-
         damage = CalculateDamage(playerCopy, enemyCopy, skill);
         costMP = skill.costMP;
-        
         playerCopy.ReduceMana(costMP);
         enemyCopy.TakeDamage(damage);
+        
         BattleUIHandler.instance.UpdateStatus();
-        BattleUIHandler.instance.UpdateDialog($"You dealt <color=red>{damage}</color> {skill.skillType} damage to {enemyCopy.battleObjectName}.");
+        BattleUIHandler.instance.UpdateDialog($"You are performing {skill.skillName}...");
+        
+        // Wait until the animation is done
+        yield return StartCoroutine(WaitForAnimation(playerAm, animationClipName));
+        if (skill.particleSystem != null)
+        {
+            Instantiate(skill.particleSystem, enemyPosition.position, Quaternion.identity);
+        }
+        yield return StartCoroutine(WaitForAnimation(enemyAm, "Hit"));
 
+        BattleUIHandler.instance.UpdateDialog($"You dealt <color=red>{damage}</color> {skill.skillType} damage to {enemyCopy.battleObjectName}.");
         yield return new WaitForSeconds(1f);
-              
         
         if (enemyCopy.IsDead())
         {
@@ -327,10 +330,11 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
         // TODO assign other enemy actions
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} attacks!");
-        yield return StartCoroutine(WaitForAnimation(playerAm, "Hit"));
+        
         int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
-
+        yield return StartCoroutine(WaitForAnimation(playerAm, "Hit"));
+        
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} dealt <color=red>{damage}</color> damage to you.");
 
