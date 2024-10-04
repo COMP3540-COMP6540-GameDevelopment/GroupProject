@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Fire II
   skillType: 2
-  description: No Description fire 2
-  potency: 240
-  costMP: 12
-  particleSystem: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  description: Summons a moderate blaze, causing stronger damage
+  potency: 330
+  costMP: 16
+  particleSystem: {fileID: 4593184484909914550, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
