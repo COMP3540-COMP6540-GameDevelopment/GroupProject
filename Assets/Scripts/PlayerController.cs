@@ -113,9 +113,8 @@ public class PlayerController : MonoBehaviour
         // Related to movement
         Vector2 position = playerRb.position + speed * Time.deltaTime * move;
         playerRb.position = position;
-
+    
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
