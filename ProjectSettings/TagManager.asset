@@ -8,6 +8,7 @@ TagManager:
   - Float
   - Coin
   - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Tilemap Background
+    uniqueID: 458945205
     locked: 0
