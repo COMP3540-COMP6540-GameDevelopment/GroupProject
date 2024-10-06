@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("f_Move_Y", 0);
             }
         }
+
+     
     }
 
     private void FixedUpdate()
