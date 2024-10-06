@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ae297123f091bbf4e8f1835eb98fb293, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,18 +148,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011306882, y: -0.038644075}
+  m_Offset: {x: 0.01938355, y: 0.67747056}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 3.125, y: 1.71875}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5519706, y: 0.8781781}
+  m_Size: {x: 0.58427835, y: 1.1873817}
   m_EdgeRadius: 0
 --- !u!114 &1484473346616268916
 MonoBehaviour:
@@ -242,6 +242,7 @@ MonoBehaviour:
     m_Flags: 0
   jumpVelocity: 10
   moveDirection: 0
+  isBattle: 0
 --- !u!95 &1219300452595266965
 Animator:
   serializedVersion: 5
@@ -275,12 +276,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4dc4d91bf326874ba1a8a2ea2664e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleObjectName: 
+  battleObjectName: Hero
   currentHP: 100
   maxHP: 100
+  currentMP: 200
+  maxMP: 200
   level: 1
   damage: 15
   defense: 0
   exp: 0
   gold: 0
-  Dead: 0
+  dead: 0
+  guard: 0
+  attackSkill: {fileID: 11400000, guid: ef59bd32376b2e04c8e222cd7beb2e25, type: 2}
+  skills:
+  - {fileID: 11400000, guid: 91d27ff7ac618ce40aa3a293984abdb0, type: 2}
+  - {fileID: 11400000, guid: ede08c475c40f80429b2fcf9f80f557d, type: 2}
+  - {fileID: 11400000, guid: 293955bf941a9794b8acd67d716ed808, type: 2}
+  - {fileID: 11400000, guid: 1828a507ec4886d45a504f842c9fffa5, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

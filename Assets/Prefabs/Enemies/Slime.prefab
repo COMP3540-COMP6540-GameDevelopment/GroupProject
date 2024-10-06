@@ -122,14 +122,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleObjectName: Slime
-  currentHP: 25
-  maxHP: 25
+  currentHP: 500
+  maxHP: 500
+  currentMP: 10
+  maxMP: 10
   level: 1
   damage: 2
   defense: 0
   exp: 10
   gold: 10
-  Dead: 0
+  dead: 0
+  guard: 0
+  attackSkill: {fileID: 0}
+  skills: []
 --- !u!61 &1960302792856662139
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -201,4 +206,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
