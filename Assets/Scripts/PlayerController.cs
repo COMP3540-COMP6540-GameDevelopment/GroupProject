@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     // Variables related to movement on the map
     [SerializeField] InputAction moveAction;
-    Rigidbody2D playerRb;
+    [SerializeField] Rigidbody2D playerRb;
     [SerializeField] float speed;
     Vector2 move;
 
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
         //Jump
         jumpAction.Enable();
+        jumpAction.performed += Jump;   // bind Jump() method to this action
         isJump = false;
 
         // Initially hide the dialogue panel
@@ -66,18 +67,19 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         // Movement
-        moveAction.Enable();
-        playerRb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        if (!isBattle)
-        {
-            animator.SetFloat("f_Move_X", moveDirection);
-            animator.SetFloat("f_Speed", moveSpeed);
-        }
+        //moveAction.Enable();
+        //playerRb = GetComponent<Rigidbody2D>();
+        //animator = GetComponent<Animator>();
+        //if (!isBattle)
+        //{
+        //    animator.SetFloat("f_Move_X", moveDirection);
+        //    animator.SetFloat("f_Speed", moveSpeed);
+        //}
 
-        //Jump
-        jumpAction.Enable();
-        isJump = false;
+        ////Jump
+        //jumpAction.Enable();
+        //isJump = false;
+        Start();
     }
 
     // Update is called once per frame
@@ -102,7 +104,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Related to jump
-        jumpAction.performed += Jump;   // bind Jump() method to this action
+        
         if (isJump)
         {
             if (!isBattle)
