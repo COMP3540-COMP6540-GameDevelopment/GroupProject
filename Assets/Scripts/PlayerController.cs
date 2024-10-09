@@ -82,6 +82,13 @@ public class PlayerController : MonoBehaviour
         Start();
     }
 
+    private void OnDisable()
+    {
+        moveAction.Disable();
+        jumpAction.Disable();
+        jumpAction.performed -= Jump;
+    }
+
     // Update is called once per frame
     void Update()
     {
