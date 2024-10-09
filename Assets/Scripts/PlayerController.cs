@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool canMove = true;
     // Variables related to movement on the map
     [SerializeField] InputAction moveAction;
     Rigidbody2D playerRb;
@@ -22,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveDirection;
     float moveSpeed;
     public bool isBattle = false;
+
+    public GameObject dialoguePanel; 
+    public Button option1Button;     
+    public Button option2Button; 
 
     private void Awake()
     {
@@ -48,6 +54,13 @@ public class PlayerController : MonoBehaviour
         jumpAction.Enable();
         isJump = false;
 
+        // Initially hide the dialogue panel
+        dialoguePanel.SetActive(false);
+
+        // Add listeners to the buttons
+        option1Button.onClick.AddListener(OnOption1Selected);
+        option2Button.onClick.AddListener(OnOption2Selected);
+
     }
     // Called when reactivate
     void OnEnable()
@@ -70,6 +83,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (canMove)
+        {
         // Related to movement
         move = moveAction.ReadValue<Vector2>();
         if (!Mathf.Approximately(move.x, 0))
@@ -104,20 +119,27 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("f_Move_Y", 0);
             }
         }
+        // Boundary check
+        Vector2 playerPosition = playerRb.position;
 
      
+    }
     }
 
     private void FixedUpdate()
     {
+        if (canMove){
         // Related to movement
         Vector2 position = playerRb.position + speed * Time.deltaTime * move;
         playerRb.position = position;
-    
+        }
+        
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         CompositeCollider2D platform = collision.gameObject.GetComponent<CompositeCollider2D>();
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -134,6 +156,13 @@ public class PlayerController : MonoBehaviour
             isJump = false;
             animator.SetBool("b_isJump", isJump);
             animator.SetFloat("f_Move_Y", 0);
+        }
+
+        if (collision.gameObject.CompareTag("Statue"))
+        {
+            // When the player collides with the statue, display the dialogue panel
+            dialoguePanel.SetActive(true);
+            canMove = false;
         }
     }
 
@@ -161,4 +190,47 @@ public class PlayerController : MonoBehaviour
 
     }
     
+    // When option 1 (Pray) is selected
+    private void OnOption1Selected()
+    {
+        Debug.Log("Player chose to pray, the ladder rotates.");
+
+        // Trigger the rotation of a different ladder
+        GameObject ladderPivot = GameObject.Find("LadderPivot"); // Assume the pivot object's name is "LadderPivot"
+        if (ladderPivot != null)
+        {
+          LadderRotator ladderRotator = ladderPivot.GetComponent<LadderRotator>();
+          if (ladderRotator != null)
+          {
+             ladderRotator.RotateLadder(); // Trigger the ladder rotation
+            }
+    }
+
+        // Hide the dialogue panel and allow player movement
+        dialoguePanel.SetActive(false);
+        canMove = true; // Re-enable player movement and jumping
+}
+
+
+    // When option 2 (Leave) is selected
+    private void OnOption2Selected()
+    {
+        // Player chose to leave, simply hide the dialogue panel
+        Debug.Log("Player chose to leave, dialogue panel disappears.");
+        dialoguePanel.SetActive(false);
+        canMove = true; 
+    }
+
+    // Ladder falling logic
+    private void LadderFall()
+    {
+        // Implement the logic for making the ladder fall
+        // For example, find the ladder and change its position or enable falling animation
+        GameObject ladder = GameObject.Find("Ladder");
+        if (ladder != null)
+        {
+            // Simple example: Directly change the position to simulate falling
+            ladder.transform.position += new Vector3(0, -5, 0);
+        }
+    }
 }
