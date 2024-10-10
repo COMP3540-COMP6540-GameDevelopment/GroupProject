@@ -28,12 +28,12 @@ public class SceneManagerScript : MonoBehaviour
         }
 
         instance = this;
-
+        transform.SetParent(null, false);
         // Make sure SceneManager persists across scene changes
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    public void startGame()
     {
         nextScene = "MapScene";
         SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
