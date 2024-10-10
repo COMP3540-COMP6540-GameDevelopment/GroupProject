@@ -17,3 +17,7 @@ Standard Unity Asset Store EULA
 Cartoon FX Remaster Free
 https://assetstore.unity.com/packages/vfx/particles/cartoon-fx-remaster-free-109565
 Standard Unity Asset Store EULA
+
+Dragon Crashers - UI Toolkit Sample project
+https://assetstore.unity.com/packages/essentials/tutorial-projects/dragon-crashers-ui-toolkit-sample-project-231178#description
+Standard Unity Asset Store EULA
