@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,38 +35,81 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputAction interactAction;
     public bool isInteract = false;
 
+    // Variables related to top down
+    [SerializeField] InputAction moveTopDownAction;
+    public bool isTopDown = false;
+    
+
     private void Awake()
     {
         moveDirection = 1;
         moveSpeed = 0;
+
+        if (SceneManager.GetActiveScene().name == "MapScene_2")
+        {
+            isTopDown = true;
+        }
+        else
+        {
+            isTopDown = false;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
         // Movement
-        moveAction.Enable();
+        if (isTopDown)
+        {
+            moveTopDownAction.Enable();
+        }
+        else
+        {
+            moveAction.Enable();
+        }
+        
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        if(!isBattle)
+        if (isTopDown)
+        {
+            playerRb.gravityScale = 0;
+        }
+        else
+        {
+            playerRb.gravityScale = 2;
+        }
+
+        if (!isBattle)
         {
             animator.SetFloat("f_Move_X", moveDirection);
             animator.SetFloat("f_Speed", moveSpeed);
         }
-      
 
-        //Jump
-        jumpAction.Enable();
-        jumpAction.performed += Jump;   // bind Jump() method to this action
-        isJump = false;
+
+        //
+        if (!isTopDown)
+        {
+            jumpAction.Enable();
+            jumpAction.performed += Jump;   // bind Jump() method to this action
+            isJump = false;
+        }
+        
 
         // Initially hide the dialogue panel
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+        
 
         // Add listeners to the buttons
-        option1Button.onClick.AddListener(OnOption1Selected);
-        option2Button.onClick.AddListener(OnOption2Selected);
+        if (option1Button != null && option2Button != null)
+        {
+            option1Button.onClick.AddListener(OnOption1Selected);
+            option2Button.onClick.AddListener(OnOption2Selected);
+        }
+
 
         // Interaction
         interactAction.Enable();
@@ -84,8 +128,12 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         moveAction.Disable();
-        jumpAction.Disable();
-        jumpAction.performed -= Jump;
+        if (!isTopDown)
+        {
+            jumpAction.Disable();
+            jumpAction.performed -= Jump;
+        }
+
         interactAction.Disable();
         interactAction.performed -= FindInteractObject;
     }
@@ -95,42 +143,57 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
         {
-        // Related to movement
-        move = moveAction.ReadValue<Vector2>();
-        if (!Mathf.Approximately(move.x, 0))
-        {
-            moveDirection = move.x;
-            if (!isBattle)
+            // Related to movement
+            if (!isTopDown)
             {
-                animator.SetFloat("f_Move_X", moveDirection);
-                animator.SetFloat("f_Speed", speed);
+                move = moveAction.ReadValue<Vector2>();
             }
-        }
-        else
-        {
-            animator.SetFloat("f_Speed", 0f);
-        }
-
-        // Related to jump
-        
-        if (isJump)
-        {
-            if (!isBattle)
+            else
             {
-                animator.SetFloat("f_Move_Y", playerRb.velocity.y);
+                move = moveTopDownAction.ReadValue<Vector2>();
             }
-            if (Mathf.Approximately(playerRb.velocity.y, 0))
+                
+            if (!Mathf.Approximately(move.x, 0))
             {
-                isJump = false;
+                moveDirection = move.x;
                 if (!isBattle)
                 {
-                    animator.SetBool("b_isJump", isJump);
+                    animator.SetFloat("f_Move_X", moveDirection);
+                    animator.SetFloat("f_Speed", speed);
                 }
-                animator.SetFloat("f_Move_Y", 0);
+            } 
+            else if (!Mathf.Approximately(move.y, 0))
+            {
+                if (!isBattle)
+                {
+                    animator.SetFloat("f_Speed", speed);
+                }
             }
-        }
-        // Boundary check
-        Vector2 playerPosition = playerRb.position;
+            else
+            {
+                animator.SetFloat("f_Speed", 0f);
+            }
+
+            // Related to jump
+        
+            if (isJump)
+            {
+                if (!isBattle)
+                {
+                    animator.SetFloat("f_Move_Y", playerRb.velocity.y);
+                }
+                if (Mathf.Approximately(playerRb.velocity.y, 0))
+                {
+                    isJump = false;
+                    if (!isBattle)
+                    {
+                        animator.SetBool("b_isJump", isJump);
+                    }
+                    animator.SetFloat("f_Move_Y", 0);
+                }
+            }
+            // Boundary check
+            Vector2 playerPosition = playerRb.position;
 
      
         }

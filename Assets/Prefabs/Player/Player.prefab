@@ -148,7 +148,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01938355, y: 0.67747056}
+  m_Offset: {x: 0.01938355, y: 0.24989718}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -159,7 +159,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.58427835, y: 1.1873817}
+  m_Size: {x: 0.58427835, y: 0.33223498}
   m_EdgeRadius: 0
 --- !u!114 &1484473346616268916
 MonoBehaviour:
@@ -265,6 +265,57 @@ MonoBehaviour:
       m_Action: Interact
       m_Flags: 0
     m_Flags: 0
+  isInteract: 0
+  moveTopDownAction:
+    m_Name: Move Top Down
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3f864922-5937-4241-a44c-0a8b042ec2b1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 89f20d8c-3c6d-4af5-b545-bcca804125f3
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 4
+    - m_Name: up
+      m_Id: e34bed7d-5285-4892-ae61-7e03adb120f0
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 505f15d3-054e-4a30-97d3-9f26a124d6ec
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 61d2a9c6-9336-4539-bc02-ef2d15e7875f
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: right
+      m_Id: a14f5ada-2613-4864-a057-f70aff9f7f4e
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    m_Flags: 0
+  isTopDown: 0
 --- !u!95 &1219300452595266965
 Animator:
   serializedVersion: 5
