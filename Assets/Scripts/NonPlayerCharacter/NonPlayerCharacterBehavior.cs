@@ -86,28 +86,6 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
             }
             animator.SetBool("b_faceLeft", faceLeft);
         }
-
-        //// Physics2D.Raycast(Ray origin, Ray direction, Ray distance, Layer mask)
-        //RaycastHit2D hitLeft = Physics2D.Raycast(rb.position, Vector2.left, 1f, LayerMask.GetMask("Player"));
-        //RaycastHit2D hitRight = Physics2D.Raycast(rb.position, Vector2.right, 1f, LayerMask.GetMask("Player"));
-        //if (hitLeft.collider != null)
-        //{
-        //    hint.SetActive(true);
-        //    faceLeft = true;
-        //    animator.SetBool("b_faceLeft", faceLeft);
-
-        //}
-        //else if (hitRight.collider != null)
-        //{
-        //    hint.SetActive(true);
-        //    faceLeft = false;
-        //    animator.SetBool("b_faceLeft", faceLeft);
-        //}
-        //else
-        //{
-        //    hint.SetActive(false);
-        //    Hide(uiDocument.rootVisualElement);
-        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

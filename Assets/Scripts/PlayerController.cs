@@ -46,8 +46,13 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = 1;
         moveSpeed = 0;
+        playerRb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
-        if (SceneManager.GetActiveScene().name == "MapScene_2")
+        animator.SetFloat("f_Move_X", moveDirection);
+        animator.SetFloat("f_Speed", moveSpeed);
+
+        if (SceneManager.GetActiveScene().name == "MapScene_2" || SceneManagerScript.instance.currentScene == "MapScene_2")
         {
             isTopDown = true;
         }
@@ -60,6 +65,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        moveDirection = 1;
+        moveSpeed = 0;
+
+        animator.SetFloat("f_Move_X", moveDirection);
+        animator.SetFloat("f_Speed", moveSpeed);
+
         // Movement
         if (isTopDown)
         {
@@ -70,8 +81,7 @@ public class PlayerController : MonoBehaviour
             moveAction.Enable();
         }
         
-        playerRb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        
 
         if (isTopDown)
         {

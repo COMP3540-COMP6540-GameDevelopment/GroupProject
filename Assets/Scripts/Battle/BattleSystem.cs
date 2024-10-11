@@ -385,7 +385,7 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUIHandler.instance.UpdateDialog("You win.");
             yield return new WaitForSeconds(2f);
-            SceneManagerScript.instance.LoadMapScene(playerCopy);    // Send data back
+            SceneManagerScript.instance.ReturnToCurrentMap(playerCopy);    // Send data back
         } 
         else if (battleState == BattleState.LOSE)
         {
