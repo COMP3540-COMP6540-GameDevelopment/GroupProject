@@ -214,22 +214,26 @@ public class PlayerController : MonoBehaviour
             // Within NPC
             isInteract = true;
             GameObject npc = hitNPC.collider.gameObject;
-            UIDocument converstaionDialog = npc.GetComponent<UIDocument>();
-            npc.GetComponent<NonPlayerCharacterBehavior>().Show(converstaionDialog.rootVisualElement);
+            NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
+            UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
+            nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
+            nonPlayerCharacterBehavior.Show(npcUIDocument.rootVisualElement);
             // Detect if player moves out range
-            StartCoroutine(InterationStatus());
+            StartCoroutine(InterationStatus(npc));
         }
     }
 
-    IEnumerator InterationStatus()
+    IEnumerator InterationStatus(GameObject npc)
     {
         RaycastHit2D hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
-        while (hitNPC.collider != null)
+        UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
+        while (hitNPC.collider != null && npcUIDocument.rootVisualElement.style.visibility == Visibility.Visible)
         {
             hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
             yield return null;
         }
         // No longer within NPC
+        npc.GetComponent<NonPlayerCharacterBehavior>().whoIsTalkingTo = null;
         isInteract = false;
     }
 

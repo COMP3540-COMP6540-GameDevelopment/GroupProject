@@ -15,6 +15,8 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
     Label dialog;
     [Tooltip("This text will be firstly shown in the conversation")]
     [SerializeField] string firstText;
+    Button closeButton;
+    public GameObject whoIsTalkingTo;
 
     // Variables related to Animation
     Animator animator;
@@ -28,9 +30,19 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
         uiDocument = GetComponent<UIDocument>();
         animator = GetComponent<Animator>();
 
+        whoIsTalkingTo = null;
+
         hint.SetActive(false);
         dialog = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background").Q<Label>("Dialog");
         dialog.text = firstText;
+        closeButton = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<Button>("CloseButton");
+        closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
+
+        Hide(uiDocument.rootVisualElement);
+    }
+
+    private void OnCloseButtonClicked(ClickEvent evt)
+    {
         Hide(uiDocument.rootVisualElement);
     }
 
@@ -68,13 +80,13 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
         {
             hint.SetActive(true);
             faceLeft = true;
-            animator.SetBool("b_faceLeft", true);
+            animator.SetBool("b_faceLeft", faceLeft);
 
         } else if (hitRight.collider != null)
         {
             hint.SetActive(true);
             faceLeft = false;
-            animator.SetBool("b_faceLeft", false);
+            animator.SetBool("b_faceLeft", faceLeft);
         }
         else
         {

@@ -196,7 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hint: {fileID: 3193529829166905597}
-  firstText: Please Write the text to be shown here in the editor
+  firstText: Write the text to be shown in the npc behavior script in editor
+  whoIsTalkingTo: {fileID: 0}
   faceLeft: 0
 --- !u!114 &4152519371164888901
 MonoBehaviour:
