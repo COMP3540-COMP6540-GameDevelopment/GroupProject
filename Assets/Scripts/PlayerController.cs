@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,8 +27,12 @@ public class PlayerController : MonoBehaviour
     public bool isBattle = false;
 
     public GameObject dialoguePanel; 
-    public Button option1Button;     
-    public Button option2Button; 
+    public UnityEngine.UI.Button option1Button;     
+    public UnityEngine.UI.Button option2Button;
+
+    // Variables related to Interaction
+    [SerializeField] InputAction interactAction;
+    public bool isInteract = false;
 
     private void Awake()
     {
@@ -62,23 +67,17 @@ public class PlayerController : MonoBehaviour
         option1Button.onClick.AddListener(OnOption1Selected);
         option2Button.onClick.AddListener(OnOption2Selected);
 
+        // Interaction
+        interactAction.Enable();
+        interactAction.performed += FindInteractObject;
+        isInteract = false;
     }
+
+
+
     // Called when reactivate
     void OnEnable()
     {
-        // Movement
-        //moveAction.Enable();
-        //playerRb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
-        //if (!isBattle)
-        //{
-        //    animator.SetFloat("f_Move_X", moveDirection);
-        //    animator.SetFloat("f_Speed", moveSpeed);
-        //}
-
-        ////Jump
-        //jumpAction.Enable();
-        //isJump = false;
         Start();
     }
 
@@ -87,6 +86,8 @@ public class PlayerController : MonoBehaviour
         moveAction.Disable();
         jumpAction.Disable();
         jumpAction.performed -= Jump;
+        interactAction.Disable();
+        interactAction.performed -= FindInteractObject;
     }
 
     // Update is called once per frame
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour
         Vector2 playerPosition = playerRb.position;
 
      
-    }
+        }
     }
 
     private void FixedUpdate()
@@ -198,7 +199,44 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    
+
+    private void FindInteractObject(InputAction.CallbackContext context)
+    {
+        if (isInteract)
+        {
+            return;
+        }
+        
+        // Perfrom raycast
+        RaycastHit2D hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
+        if (hitNPC.collider != null) 
+        {
+            // Within NPC
+            isInteract = true;
+            GameObject npc = hitNPC.collider.gameObject;
+            NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
+            UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
+            nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
+            nonPlayerCharacterBehavior.Show(npcUIDocument.rootVisualElement);
+            // Detect if player moves out range
+            StartCoroutine(InterationStatus(npc));
+        }
+    }
+
+    IEnumerator InterationStatus(GameObject npc)
+    {
+        RaycastHit2D hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
+        UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
+        while (hitNPC.collider != null && npcUIDocument.rootVisualElement.style.visibility == Visibility.Visible)
+        {
+            hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
+            yield return null;
+        }
+        // No longer within NPC
+        npc.GetComponent<NonPlayerCharacterBehavior>().whoIsTalkingTo = null;
+        isInteract = false;
+    }
+
     // When option 1 (Pray) is selected
     private void OnOption1Selected()
     {
