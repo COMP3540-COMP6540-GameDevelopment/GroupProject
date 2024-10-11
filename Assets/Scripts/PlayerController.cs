@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     // Variables related to Interaction
     [SerializeField] InputAction interactAction;
     public bool isInteract = false;
+    public bool ableToInteract = false;
+    public GameObject InteractObject;
 
     // Variables related to top down
     [SerializeField] InputAction moveTopDownAction;
@@ -113,8 +115,9 @@ public class PlayerController : MonoBehaviour
 
         // Interaction
         interactAction.Enable();
-        interactAction.performed += FindInteractObject;
+        interactAction.performed += Interact;
         isInteract = false;
+        ableToInteract = false;
     }
 
 
@@ -135,7 +138,7 @@ public class PlayerController : MonoBehaviour
         }
 
         interactAction.Disable();
-        interactAction.performed -= FindInteractObject;
+        interactAction.performed -= Interact;
     }
 
     // Update is called once per frame
@@ -263,20 +266,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void FindInteractObject(InputAction.CallbackContext context)
+    private void Interact(InputAction.CallbackContext context)
     {
-        if (isInteract)
+        if (isInteract || !ableToInteract || InteractObject == null)
         {
             return;
         }
-        
-        // Perfrom raycast
-        RaycastHit2D hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
-        if (hitNPC.collider != null) 
+
+        if (InteractObject.layer == LayerMask.NameToLayer("NPC"))
         {
             // Within NPC
             isInteract = true;
-            GameObject npc = hitNPC.collider.gameObject;
+            GameObject npc = InteractObject;
             NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
             UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
             nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
