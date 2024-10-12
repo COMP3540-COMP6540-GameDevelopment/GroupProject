@@ -13,8 +13,11 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
     // Variables related to conversation dialog
     UIDocument uiDocument;
     Label dialog;
-    [Tooltip("This text will be firstly shown in the conversation")]
-    [SerializeField] string firstText;
+    VisualElement dialogBackGround;
+    [Tooltip("The text will be shown in the conversation from up to down")]
+    [SerializeField] List<string> texts;
+    [SerializeField] int indexOfShownText;
+    //[SerializeField] string firstText;
     Button closeButton;
     public GameObject whoIsTalkingTo;
 
@@ -33,12 +36,31 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
         whoIsTalkingTo = null;
 
         hint.SetActive(false);
-        dialog = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background").Q<Label>("Dialog");
-        dialog.text = firstText;
+        dialogBackGround = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background");
+        dialog = dialogBackGround.Q<Label>("Dialog");
+        indexOfShownText = 0;
+        dialog.text = texts.ToArray()[indexOfShownText];
+
         closeButton = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<Button>("CloseButton");
         closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
+        dialogBackGround.RegisterCallback<ClickEvent>(OnDialogBackGroundClicked);
 
         Hide(uiDocument.rootVisualElement);
+    }
+
+    private void OnDialogBackGroundClicked(ClickEvent evt)
+    {
+        indexOfShownText++;
+        string[] toBeShown = texts.ToArray();
+        if (indexOfShownText >= toBeShown.Length)
+        {
+            indexOfShownText = 0;
+            dialog.text = texts.ToArray()[indexOfShownText];
+            OnCloseButtonClicked(evt);
+        } else
+        {
+            dialog.text = texts.ToArray()[indexOfShownText];
+        }
     }
 
     private void OnCloseButtonClicked(ClickEvent evt)
