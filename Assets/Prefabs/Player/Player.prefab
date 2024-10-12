@@ -226,49 +226,6 @@ MonoBehaviour:
     m_Flags: 0
   playerRb: {fileID: 0}
   speed: 4
-  jumpAction:
-    m_Name: Jump
-    m_Type: 1
-    m_ExpectedControlType: Button
-    m_Id: 0a96f78d-210e-435f-a73d-3123b41e2240
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: b7aead02-c72f-4cd7-b02e-a73539ca3d10
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    m_Flags: 0
-  jumpVelocity: 10
-  moveDirection: 0
-  isBattle: 0
-  dialoguePanel: {fileID: 0}
-  option1Button: {fileID: 0}
-  option2Button: {fileID: 0}
-  interactAction:
-    m_Name: Interact
-    m_Type: 1
-    m_ExpectedControlType: Button
-    m_Id: e1154a48-259e-444d-b64a-567554729bca
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: acd9d0ac-928f-4c28-ba98-59d5706f2fee
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Interact
-      m_Flags: 0
-    m_Flags: 0
-  isInteract: 0
-  ableToInteract: 0
-  InteractObject: {fileID: 0}
   moveTopDownAction:
     m_Name: Move Top Down
     m_Type: 0
@@ -319,6 +276,84 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
   isTopDown: 0
+  jumpAction:
+    m_Name: Jump
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 0a96f78d-210e-435f-a73d-3123b41e2240
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: b7aead02-c72f-4cd7-b02e-a73539ca3d10
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
+    m_Flags: 0
+  jumpVelocity: 10
+  interactAction:
+    m_Name: Interact
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: e1154a48-259e-444d-b64a-567554729bca
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: acd9d0ac-928f-4c28-ba98-59d5706f2fee
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Interact
+      m_Flags: 0
+    m_Flags: 0
+  isInteract: 0
+  ableToInteract: 0
+  InteractObject: {fileID: 0}
+  inventoryAction:
+    m_Name: Inventory
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 565a9dd0-28e2-4e2c-8143-34bc7fa5cf91
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cc7f01a4-7e95-41bd-8c82-ef5a8195b73e
+      m_Path: <Keyboard>/i
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Inventory
+      m_Flags: 0
+    m_Flags: 0
+  inventory: {fileID: 0}
+  statusAction:
+    m_Name: Status
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 00628d50-19b5-4dac-8aff-79139d0417b0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 2a51732a-3e2c-48db-aa1c-7871914b09b2
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Status
+      m_Flags: 0
+    m_Flags: 0
+  status: {fileID: 0}
+  isBattle: 0
+  dialoguePanel: {fileID: 0}
+  option1Button: {fileID: 0}
+  option2Button: {fileID: 0}
 --- !u!95 &1219300452595266965
 Animator:
   serializedVersion: 5
@@ -386,3 +421,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad8138116c3c4e4ca539e16b0e51855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: []

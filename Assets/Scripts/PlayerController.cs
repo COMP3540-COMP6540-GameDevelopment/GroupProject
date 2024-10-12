@@ -16,20 +16,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed;
     Vector2 move;
 
+    // Variables related to top down movement on the map
+    [SerializeField] InputAction moveTopDownAction;
+    public bool isTopDown = false;
+
     // Variables related to jump
     [SerializeField] InputAction jumpAction;
     bool isJump;
     [SerializeField] float jumpVelocity;
-
-    // Variables related to animation
-    Animator animator;
-    [SerializeField] float moveDirection;
-    float moveSpeed;
-    public bool isBattle = false;
-
-    public GameObject dialoguePanel; 
-    public UnityEngine.UI.Button option1Button;     
-    public UnityEngine.UI.Button option2Button;
 
     // Variables related to Interaction
     [SerializeField] InputAction interactAction;
@@ -37,9 +31,27 @@ public class PlayerController : MonoBehaviour
     public bool ableToInteract = false;
     public GameObject InteractObject;
 
-    // Variables related to top down
-    [SerializeField] InputAction moveTopDownAction;
-    public bool isTopDown = false;
+    // Variables related to display Inventory
+    [SerializeField] InputAction inventoryAction;
+    public Inventory inventory;
+
+    // Variables related to display player battle status
+    [SerializeField] InputAction statusAction;
+    public BattleScript status;
+
+    // Variables related to animation
+    Animator animator;
+    float moveDirection;
+    float moveSpeed;
+    public bool isBattle = false;
+
+    public GameObject dialoguePanel; 
+    public UnityEngine.UI.Button option1Button;     
+    public UnityEngine.UI.Button option2Button;
+
+    
+
+    
     
 
     private void Awake()
@@ -48,6 +60,8 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 0;
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        inventory = GetComponent<Inventory>();
+        status = GetComponent<BattleScript>();
 
         animator.SetFloat("f_Move_X", moveDirection);
         animator.SetFloat("f_Speed", moveSpeed);
@@ -70,6 +84,12 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("f_Move_X", moveDirection);
         animator.SetFloat("f_Speed", moveSpeed);
+
+        // Bind inventory and status actions
+        inventoryAction.Enable();
+        statusAction.Enable();
+        inventoryAction.performed += showInventory;
+        statusAction.performed += showStatus;
 
         // Movement
         if (isTopDown)
@@ -130,6 +150,16 @@ public class PlayerController : MonoBehaviour
         ableToInteract = false;
     }
 
+    private void showStatus(InputAction.CallbackContext context)
+    {
+        Debug.Log("showStatus");
+    }
+
+    private void showInventory(InputAction.CallbackContext context)
+    {
+        Debug.Log("showInventory");
+    }
+
 
 
     // Called when reactivate
@@ -149,6 +179,13 @@ public class PlayerController : MonoBehaviour
 
         interactAction.Disable();
         interactAction.performed -= Interact;
+
+        inventoryAction.Disable();
+        inventoryAction.performed -= showInventory;
+
+        statusAction.Disable();
+        statusAction.performed -= showStatus;
+
     }
 
     // Update is called once per frame
