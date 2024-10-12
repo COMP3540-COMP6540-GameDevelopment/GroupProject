@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.HDROutputUtils;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -15,8 +17,11 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField] List<GameObject> allObjects;    // ALL objects in the mapScene;
 
     // Keep track of the current and previous scene
-    [SerializeField] string currentScene = "";
-    [SerializeField] string nextScene = "";
+    public string currentScene = "";
+    public string nextScene = "";
+
+    // Variables related to how to load map
+    public bool isFromRightToLeft;
 
 
     void Awake()
@@ -33,28 +38,106 @@ public class SceneManagerScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void startGame()
+    void Update()
     {
-        nextScene = "MapScene";
-        SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
+        if (nextScene != "" && nextScene != "BattleScene")
+        {
+            LoadMap(isFromRightToLeft);
+        }
+    }
+
+    void LoadMap(bool isFromRightToLeft)
+    {
+        if (currentScene != "")
+        {
+            foreach (GameObject obj in allObjects)
+            {
+                obj.SetActive(false);
+            }
+        }
+        Scene scene = SceneManager.GetSceneByName(nextScene);
+        if (scene.isLoaded)
+        {
+            // Update objects list
+            allObjects = new List<GameObject>(scene.GetRootGameObjects());
+            GameObject playerInNextScene = null;
+            GameObject SpawnPosition = null;
+
+            foreach (GameObject obj in allObjects)
+            {
+                
+                if (obj.layer == LayerMask.NameToLayer("Player"))
+                {
+                    playerInNextScene = obj;
+                }
+                else
+                {
+                    if (isFromRightToLeft)
+                    {
+                        if (obj.name == "SpawnPositionRight")
+                        {
+                            SpawnPosition = obj;
+                        }
+                    }
+                    else
+                    {
+                        if (obj.name == "SpawnPositionLeft")
+                        {
+                            SpawnPosition = obj; 
+                        }
+                    }
+                    obj.SetActive(true);
+                }
+            }
+
+            if (playerInNextScene != null && SpawnPosition != null)
+            {
+                playerInNextScene.transform.position = SpawnPosition.transform.position;
+                playerInNextScene.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("playerInNextScene or SpawnPosition not found");
+            }
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
+        }
+        
         currentScene = nextScene;
         nextScene = "";
     }
 
+    public void startGame()
+    {
+        if (nextScene == "")
+        {
+            nextScene = "MapScene";
+        }
+    }
+
     internal void LoadBattleScene(GameObject player, GameObject enemy)
     {
-        instance.player = player;
+        if (instance.player == null)
+        {
+            instance.player = player;
+        }
+        
         instance.enemy = enemy;
 
         nextScene = "BattleScene";
         SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnBattleSceneLoaded;
 
     }
-
     void OnMapSceneLoaded(AsyncOperation asyncOperation)
     {
         // Get all root objects in the map scene
-        allObjects = new List<GameObject>(SceneManager.GetSceneByName("MapScene").GetRootGameObjects());
+        //Debug.Log($"nextScene = {nextScene}");
+        //Debug.Log($"currentScene = {currentScene}");
+        allObjects = new List<GameObject>(SceneManager.GetSceneByName(currentScene).GetRootGameObjects());
+        // Update BattleScript
+
     }
 
     void OnBattleSceneLoaded(AsyncOperation asyncOperation)
@@ -68,7 +151,7 @@ public class SceneManagerScript : MonoBehaviour
         nextScene = "";
     }
 
-    internal void LoadMapScene(BattleScript playerCopy)
+    internal void ReturnToCurrentMap(BattleScript playerCopy)
     {
         allObjects.Remove(enemy);
         Destroy(enemy);

@@ -73,27 +73,49 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Physics2D.Raycast(Ray origin, Ray direction, Ray distance, Layer mask)
-        RaycastHit2D hitLeft = Physics2D.Raycast(rb.position, Vector2.left, 1f, LayerMask.GetMask("Player"));
-        RaycastHit2D hitRight = Physics2D.Raycast(rb.position, Vector2.right, 1f, LayerMask.GetMask("Player"));
-        if (hitLeft.collider != null)
+        if (whoIsTalkingTo != null)
         {
-            hint.SetActive(true);
-            faceLeft = true;
-            animator.SetBool("b_faceLeft", faceLeft);
+            if (whoIsTalkingTo.transform.position.x < transform.position.x)
+            {
+                faceLeft = true;
+            }
+            else
+            {
+                faceLeft = false;
 
-        } else if (hitRight.collider != null)
-        {
-            hint.SetActive(true);
-            faceLeft = false;
+            }
             animator.SetBool("b_faceLeft", faceLeft);
-        }
-        else
-        {
-            hint.SetActive(false);
-            Hide(uiDocument.rootVisualElement);
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                whoIsTalkingTo = collision.gameObject;
+                collision.gameObject.GetComponent<PlayerController>().ableToInteract = true;
+                collision.gameObject.GetComponent<PlayerController>().InteractObject = gameObject;
+                hint.SetActive(true);
+            }
+        }
+    }
+
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                whoIsTalkingTo = null;
+                collision.gameObject.GetComponent<PlayerController>().ableToInteract = false;
+                collision.gameObject.GetComponent<PlayerController>().InteractObject = null;
+                hint.SetActive(false);
+                Hide(uiDocument.rootVisualElement);
+            }
+        }
+    }
 
 }
