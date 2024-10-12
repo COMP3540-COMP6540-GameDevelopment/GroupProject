@@ -33,11 +33,11 @@ public class PlayerController : MonoBehaviour
 
     // Variables related to display Inventory
     [SerializeField] InputAction inventoryAction;
-    public Inventory inventory;
+    public Inventory inventoryScript;
 
     // Variables related to display player battle status
     [SerializeField] InputAction statusAction;
-    public BattleScript status;
+    public BattleScript statusScript;
 
     // Variables related to animation
     Animator animator;
@@ -60,8 +60,8 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 0;
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        inventory = GetComponent<Inventory>();
-        status = GetComponent<BattleScript>();
+        inventoryScript = GetComponent<Inventory>();
+        statusScript = GetComponent<BattleScript>();
 
         animator.SetFloat("f_Move_X", moveDirection);
         animator.SetFloat("f_Speed", moveSpeed);
@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
     private void showInventory(InputAction.CallbackContext context)
     {
-        Debug.Log("showInventory");
+        Debug.Log(inventoryScript.CollectibleItems.ToString());
     }
 
 

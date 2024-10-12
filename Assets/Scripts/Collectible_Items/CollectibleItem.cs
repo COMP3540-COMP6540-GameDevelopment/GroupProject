@@ -1,10 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class CollectibleItem : MonoBehaviour
+public enum CollectibleItemType { HPRecover, MPRecover };
+
+[CreateAssetMenu(fileName = "New Collectible", menuName = "Collectible Item")]
+public class CollectibleItem : ScriptableObject
 {
     public string itemName;
-    public int number;
-    public GameObject itemPrefab;
+    public CollectibleItemType type;
+    public int value;
+
+
+    public void PrintInfo()
+    {
+        Debug.Log("Item: " + itemName + ", Value: " + value + ", Type: " + type);
+    }
 }
