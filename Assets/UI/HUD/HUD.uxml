@@ -18,4 +18,28 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="Details" style="flex-grow: 1; position: absolute; left: 1232px; top: 108px; right: auto; width: 382px; height: 573px; background-image: url(&quot;project://database/Assets/Art/BattleUI/bar_ready.png?fileID=21300000&amp;guid=65e54929c0bf23143be33e9cf0bb51bc&amp;type=3#bar_ready&quot;); -unity-background-scale-mode: scale-to-fit; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 1%; padding-right: 1%; padding-bottom: 1%; padding-left: 1%; flex-wrap: wrap;">
+        <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/BattleUI/warrior_silhouette_man.png?fileID=21300000&amp;guid=5cc4cec66ee562e4cb0043b2120eb001&amp;type=3#warrior_silhouette_man&quot;); -unity-background-scale-mode: scale-to-fit; position: absolute; width: 286px; height: 442px; top: 68px; left: 53px;" />
+        <ui:Label tabindex="-1" text="Hero" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeroName" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 84px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0;" />
+        <ui:VisualElement name="Level" style="flex-grow: 1; flex-direction: row; width: 329px;">
+            <ui:Label tabindex="-1" text="Level:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; position: absolute;" />
+            <ui:Label tabindex="-1" text="99" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; right: 0; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Damage" style="flex-grow: 1; flex-direction: row; width: 329px;">
+            <ui:Label tabindex="-1" text="Damage:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; position: absolute;" />
+            <ui:Label tabindex="-1" text="99" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; right: 0; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Defense" style="flex-grow: 1; flex-direction: row; width: 329px;">
+            <ui:Label tabindex="-1" text="Defense:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; position: absolute;" />
+            <ui:Label tabindex="-1" text="99" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; right: 0; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="EXP" style="flex-grow: 1; flex-direction: row; width: 329px;">
+            <ui:Label tabindex="-1" text="EXP:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; position: absolute;" />
+            <ui:Label tabindex="-1" text="99" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; right: 0; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Gold" style="flex-grow: 1; flex-direction: row; width: 329px;">
+            <ui:Label tabindex="-1" text="Gold:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; position: absolute;" />
+            <ui:Label tabindex="-1" text="99" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Value" style="font-size: 41%; color: rgb(255, 255, 255); padding-left: 4%; padding-bottom: 15px; padding-right: 0; padding-top: 0; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; right: 0; position: absolute;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

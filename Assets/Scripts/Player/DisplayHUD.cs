@@ -10,12 +10,20 @@ public class DisplayHUD : MonoBehaviour
 
     // Variables related to player status
     Label playerName;
+    VisualElement playerStatus;
     VisualElement playerhealthBar;
     VisualElement playermagicBar;
     Label playerHP_Number;
     Label playerMP_Number;
     public float currentPlayerHealthRatio = 1f;
     public float currentPlayerMagicRatio = 1f;
+
+    VisualElement details;
+    Label levelValue;
+    Label damageValue;
+    Label defenseValue;
+    Label expValue;
+    Label goldValue;
 
     // Variables related to player and enemy object will be displayed in this UI
     BattleScript player;
@@ -30,15 +38,23 @@ public class DisplayHUD : MonoBehaviour
     {
         uiDocument = GetComponent<UIDocument>();
         player = gameObject.GetComponent<BattleScript>();
+        
+        playerStatus = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus");
+        playerName = playerStatus.Q<Label>("Name");
+        playerhealthBar = playerStatus.Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<VisualElement>("HP_Line");
+        playermagicBar = playerStatus.Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<VisualElement>("MP_Line");
+        playerHP_Number = playerStatus.Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<Label>("HP_Number");
+        playerMP_Number = playerStatus.Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
 
-        playerName = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<Label>("Name");
-        playerhealthBar = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<VisualElement>("HP_Line");
-        playermagicBar = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<VisualElement>("MP_Line");
-        playerHP_Number = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<Label>("HP_Number");
-        playerMP_Number = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
+        details = uiDocument.rootVisualElement.Q<VisualElement>("Details");
+        levelValue = details.Q<VisualElement>("Level").Q<Label>("Value");
+        damageValue = details.Q<VisualElement>("Damage").Q<Label>("Value");
+        defenseValue = details.Q<VisualElement>("Defense").Q<Label>("Value");
+        expValue = details.Q<VisualElement>("EXP").Q<Label>("Value");
+        goldValue = details.Q<VisualElement>("Gold").Q<Label>("Value");
 
+        HideStatus();
         UpdateStatus();
-
     }
 
     // Update is called once per frame
@@ -50,7 +66,7 @@ public class DisplayHUD : MonoBehaviour
     private void OnEnable()
     {
         Start();
-        Show(uiDocument.rootVisualElement);
+        Show(playerStatus);
     }
 
     private void OnDisable()
@@ -67,6 +83,26 @@ public class DisplayHUD : MonoBehaviour
         }
     }
 
+    public void Hide(VisualElement element)
+    {
+        element.style.visibility = Visibility.Hidden;
+        foreach (var child in element.Children())
+        {
+            // Recursively hide all elements
+            Hide(child);
+        }
+    }
+
+    public void ShowStatus()
+    {
+        Show(details);
+    }
+
+    public void HideStatus()
+    {
+        Hide(details);
+    }
+
 
     public void UpdateStatus()
     {
@@ -77,5 +113,11 @@ public class DisplayHUD : MonoBehaviour
         playerMP_Number.text = $"{player.currentMP}/{player.maxMP}";
         currentPlayerMagicRatio = player.currentMP / (float)player.maxMP;
         playermagicBar.style.width = Length.Percent(currentPlayerMagicRatio * 100.0f);
+
+        levelValue.text = player.level.ToString();
+        damageValue.text = player.damage.ToString();
+        defenseValue.text = player.defense.ToString();
+        expValue.text = player.exp.ToString();
+        goldValue.text = player.gold.ToString();
     }
 }
