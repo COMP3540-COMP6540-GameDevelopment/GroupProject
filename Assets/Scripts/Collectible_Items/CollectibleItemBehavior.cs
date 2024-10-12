@@ -15,15 +15,18 @@ public class CollectibleItemBehavior : MonoBehaviour
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 // Collide with player
+                GameObject player = collision.gameObject;
                 GameObject effect = Instantiate(collected, transform.position, Quaternion.identity);
-
-                Inventory playerInventory = collision.gameObject.GetComponent<Inventory>();
-                CollectibleItem thisItem = gameObject.GetComponent<CollectibleItem>();
-                if (thisItem != null && playerInventory != null)
+                CollectibleItemType type = collectibleItemData.type;
+                
+                if (type == CollectibleItemType.HPRecover)
                 {
-                    playerInventory.AddItem(gameObject.GetComponent<CollectibleItem>());
-                    Debug.Log($"item {thisItem.itemName} is added to player inventory");
+                    player.GetComponent<BattleScript>().RecoverHP(collectibleItemData.value);
+
+                    player.GetComponent<DisplayHUD>().UpdateStatus();
+                    Debug.Log($"Player HP recovered by {collectibleItemData.value}");
                 }
+
                 Destroy(gameObject);
             }
         }

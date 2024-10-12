@@ -40,6 +40,31 @@ public class BattleScript : MonoBehaviour
         }
     }
 
+    public void RecoverHP(int value)
+    {
+        if (value < 0) return;
+        if (value + currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        } else
+        {
+            currentHP += value;
+        }
+    }
+
+    public void RecoverMP(int value)
+    {
+        if (value < 0) return;
+        if (value + currentMP > maxMP)
+        {
+            currentMP = maxMP;
+        }
+        else
+        {
+            currentMP += value;
+        }
+    }
+
     internal void ReceiveLoot(BattleScript enemyCopy)
     {
         exp += enemyCopy.exp;
