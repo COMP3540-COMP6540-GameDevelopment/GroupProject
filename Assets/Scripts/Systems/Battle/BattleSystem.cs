@@ -38,6 +38,8 @@ public class BattleSystem : MonoBehaviour
         playerCopy.gameObject.SetActive(true);
         enemyCopy.gameObject.SetActive(true);
 
+        playerCopy.gameObject.GetComponent<DisplayHUD>().HideTopLeftStatus();
+
         playerCopy.gameObject.GetComponent<PlayerController>().isBattle = true;
 
         // Stop simulate physics
@@ -327,14 +329,14 @@ public class BattleSystem : MonoBehaviour
         BattleUIHandler.instance.DisableActions();
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} is thinking what to do!");
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         // TODO assign other enemy actions
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} attacks!");
         
         int damage = CalculateDamage(enemyCopy, playerCopy);
         playerCopy.TakeDamage(damage);
         yield return StartCoroutine(WaitForAnimation(playerAm, "Hit"));
-        
+        yield return new WaitForSeconds(1f);
         BattleUIHandler.instance.UpdateStatus();
         BattleUIHandler.instance.UpdateDialog($"{enemyCopy.battleObjectName} dealt <color=red>{damage}</color> damage to you.");
 
@@ -384,7 +386,7 @@ public class BattleSystem : MonoBehaviour
         if (battleState == BattleState.WIN)
         {
             BattleUIHandler.instance.UpdateDialog("You win.");
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             SceneManagerScript.instance.ReturnToCurrentMap(playerCopy);    // Send data back
         } 
         else if (battleState == BattleState.LOSE)

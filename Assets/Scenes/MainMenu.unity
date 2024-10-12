@@ -4229,7 +4229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7e13c6d2d647944ab0ab40ac982c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4435828392457731875, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
+  player: {fileID: 0}
   enemy: {fileID: 0}
   allObjects: []
   currentScene: 

@@ -352,6 +352,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   statusScript: {fileID: 0}
+  isStatusShown: 0
   isBattle: 0
   dialoguePanel: {fileID: 0}
   option1Button: {fileID: 0}

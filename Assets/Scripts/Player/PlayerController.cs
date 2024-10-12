@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     float moveDirection;
     float moveSpeed;
     public bool isBattle = false;
+    SpriteRenderer spriteRenderer;
 
     public GameObject dialoguePanel; 
     public UnityEngine.UI.Button option1Button;     
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 0;
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         inventoryScript = GetComponent<Inventory>();
         statusScript = GetComponent<BattleScript>();
 
@@ -157,10 +159,10 @@ public class PlayerController : MonoBehaviour
 
         if (isStatusShown)
         {
-            GetComponent<DisplayHUD>().ShowStatus();
+            GetComponent<DisplayHUD>().ShowStatusPanel();
         } else
         {
-            GetComponent<DisplayHUD>().HideStatus();
+            GetComponent<DisplayHUD>().HideStatusPanel();
         }
     }
 
@@ -194,6 +196,15 @@ public class PlayerController : MonoBehaviour
 
         statusAction.Disable();
         statusAction.performed -= showStatus;
+
+
+        moveDirection = 1;
+
+
+        if (spriteRenderer.flipX)
+        {
+            spriteRenderer.flipX = false;
+        }
 
     }
 

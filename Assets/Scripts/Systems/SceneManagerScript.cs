@@ -58,6 +58,7 @@ public class SceneManagerScript : MonoBehaviour
         Scene scene = SceneManager.GetSceneByName(nextScene);
         if (scene.isLoaded)
         {
+            // if nextScene to load is already in the heirarchy, set all gameobjects to active
             // Update objects list
             allObjects = new List<GameObject>(scene.GetRootGameObjects());
             GameObject playerInNextScene = null;
@@ -89,11 +90,19 @@ public class SceneManagerScript : MonoBehaviour
                     obj.SetActive(true);
                 }
             }
-
+            if (playerInNextScene != null)
+            {
+                
+            }
             if (playerInNextScene != null && SpawnPosition != null)
             {
-                playerInNextScene.transform.position = SpawnPosition.transform.position;
-                playerInNextScene.SetActive(true);
+                // Destroy and re Instantiate player to fix facing animation issue
+                Destroy(playerInNextScene);
+                // Potential issue: camera
+                Instantiate(player, SpawnPosition.transform.position, Quaternion.identity);
+
+                //playerInNextScene.transform.position = SpawnPosition.transform.position;
+                //playerInNextScene.SetActive(true);
             }
             else
             {
@@ -102,6 +111,7 @@ public class SceneManagerScript : MonoBehaviour
         }
         else
         {
+            //nextScene to load is not in the heirarchy, load the scene
             SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
         }
         
@@ -137,7 +147,15 @@ public class SceneManagerScript : MonoBehaviour
         //Debug.Log($"currentScene = {currentScene}");
         allObjects = new List<GameObject>(SceneManager.GetSceneByName(currentScene).GetRootGameObjects());
         // Update BattleScript
-
+        if (player == null)
+        {
+            // First scene that contains a player, set reference in script
+            player = allObjects.Find(obj => obj.name == "Player");
+        } else
+        {
+            // is travelling between scenes, need to synchronize player status
+            allObjects.Find(obj => obj.name == "Player").GetComponent<BattleScript>().UpdateResults(player.GetComponent<BattleScript>());
+        }
     }
 
     void OnBattleSceneLoaded(AsyncOperation asyncOperation)
@@ -164,6 +182,10 @@ public class SceneManagerScript : MonoBehaviour
         // Activate all root objects in the map scene
         foreach (GameObject obj in allObjects)
         {
+            if (obj.layer == LayerMask.NameToLayer("Player"))
+            {
+                obj.GetComponent<BattleScript>().UpdateResults(player.GetComponent<BattleScript>());
+            }
             obj.SetActive(true);
         }
     }

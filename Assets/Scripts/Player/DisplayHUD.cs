@@ -39,12 +39,12 @@ public class DisplayHUD : MonoBehaviour
         uiDocument = GetComponent<UIDocument>();
         player = gameObject.GetComponent<BattleScript>();
         
-        playerStatus = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus");
+        playerStatus = uiDocument.rootVisualElement.Q<VisualElement>("Status");
         playerName = playerStatus.Q<Label>("Name");
-        playerhealthBar = playerStatus.Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<VisualElement>("HP_Line");
-        playermagicBar = playerStatus.Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<VisualElement>("MP_Line");
-        playerHP_Number = playerStatus.Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<Label>("HP_Number");
-        playerMP_Number = playerStatus.Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
+        playerhealthBar = playerStatus.Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<VisualElement>("HP_Line");
+        playermagicBar = playerStatus.Q<VisualElement>("PlayerStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<VisualElement>("MP_Line");
+        playerHP_Number = playerStatus.Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<Label>("HP_Number");
+        playerMP_Number = playerStatus.Q<VisualElement>("PlayerStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
 
         details = uiDocument.rootVisualElement.Q<VisualElement>("Details");
         levelValue = details.Q<VisualElement>("Level").Q<Label>("Value");
@@ -53,7 +53,7 @@ public class DisplayHUD : MonoBehaviour
         expValue = details.Q<VisualElement>("EXP").Q<Label>("Value");
         goldValue = details.Q<VisualElement>("Gold").Q<Label>("Value");
 
-        HideStatus();
+        HideStatusPanel();
         UpdateStatus();
     }
 
@@ -93,14 +93,24 @@ public class DisplayHUD : MonoBehaviour
         }
     }
 
-    public void ShowStatus()
+    public void ShowStatusPanel()
     {
         Show(details);
     }
 
-    public void HideStatus()
+    public void HideStatusPanel()
     {
         Hide(details);
+    }
+
+    public void ShowTopLeftStatus()
+    {
+        Show(playerStatus);
+    }
+
+    public void HideTopLeftStatus()
+    {
+        Hide(playerStatus);
     }
 
 
