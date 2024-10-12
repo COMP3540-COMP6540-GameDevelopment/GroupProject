@@ -6496,6 +6496,18 @@ PrefabInstance:
       propertyPath: firstText
       value: Do you notice the shape of stones on the ground?
       objectReference: {fileID: 0}
+    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
+      propertyPath: texts.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
+      propertyPath: texts.Array.data[0]
+      value: Do you notice the shape of stones on the ground?
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
+      propertyPath: texts.Array.data[1]
+      value: I have nothing to say.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
