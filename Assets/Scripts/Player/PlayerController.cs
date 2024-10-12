@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Variables related to display player battle status
     [SerializeField] InputAction statusAction;
     public BattleScript statusScript;
+    public bool isStatusShown = false;
 
     // Variables related to animation
     Animator animator;
@@ -152,7 +153,15 @@ public class PlayerController : MonoBehaviour
 
     private void showStatus(InputAction.CallbackContext context)
     {
-        Debug.Log("showStatus");
+        isStatusShown = !isStatusShown;
+
+        if (isStatusShown)
+        {
+            GetComponent<DisplayHUD>().ShowStatus();
+        } else
+        {
+            GetComponent<DisplayHUD>().HideStatus();
+        }
     }
 
     private void showInventory(InputAction.CallbackContext context)
