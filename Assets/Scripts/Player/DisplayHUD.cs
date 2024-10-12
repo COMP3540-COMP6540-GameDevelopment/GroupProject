@@ -22,6 +22,12 @@ public class DisplayHUD : MonoBehaviour
 
     private void Awake()
     {
+        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         uiDocument = GetComponent<UIDocument>();
         player = gameObject.GetComponent<BattleScript>();
 
@@ -31,11 +37,6 @@ public class DisplayHUD : MonoBehaviour
         playerHP_Number = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("HPBackground").Q<VisualElement>("HP_Bar").Q<Label>("HP_Number");
         playerMP_Number = uiDocument.rootVisualElement.Q<VisualElement>("Status").Q<VisualElement>("PlayerStatus").Q<VisualElement>("MPBackground").Q<VisualElement>("MP_Bar").Q<Label>("MP_Number");
 
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         UpdateStatus();
 
     }
