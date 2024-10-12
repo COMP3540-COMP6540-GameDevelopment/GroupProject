@@ -96,13 +96,9 @@ public class SceneManagerScript : MonoBehaviour
             }
             if (playerInNextScene != null && SpawnPosition != null)
             {
-                // Destroy and re Instantiate player to fix facing animation issue
-                Destroy(playerInNextScene);
-                // Potential issue: camera
-                Instantiate(player, SpawnPosition.transform.position, Quaternion.identity);
 
-                //playerInNextScene.transform.position = SpawnPosition.transform.position;
-                //playerInNextScene.SetActive(true);
+                playerInNextScene.transform.position = SpawnPosition.transform.position;
+                playerInNextScene.SetActive(true);
             }
             else
             {
