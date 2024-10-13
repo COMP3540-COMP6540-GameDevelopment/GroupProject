@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
         ableToInteract = false;
     }
 
+    // Press C
     private void showStatus(InputAction.CallbackContext context)
     {
         isStatusShown = !isStatusShown;
@@ -332,7 +333,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    // Press E
     private void Interact(InputAction.CallbackContext context)
     {
         if (isInteract || !ableToInteract || InteractObject == null)
@@ -346,14 +347,13 @@ public class PlayerController : MonoBehaviour
             isInteract = true;
             GameObject npc = InteractObject;
             NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
-            UIDocument npcUIDocument = npc.GetComponent<UIDocument>();
             nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
-            nonPlayerCharacterBehavior.Show(npcUIDocument.rootVisualElement);
+            nonPlayerCharacterBehavior.BeginConversation();
             // Detect if player moves out range
             StartCoroutine(InterationStatus(npc));
         }
     }
-
+    // Related to Press E
     IEnumerator InterationStatus(GameObject npc)
     {
         RaycastHit2D hitNPC = Physics2D.Raycast(playerRb.position + Vector2.up * 0.5f, new Vector2(moveDirection, 0), 1f, LayerMask.GetMask("NPC"));
