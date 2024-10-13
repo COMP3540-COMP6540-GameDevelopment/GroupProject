@@ -39,7 +39,10 @@ public class BattleScript : MonoBehaviour
         {
             currentHP -= damage;
         }
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     public void RecoverHP(int value)
@@ -52,7 +55,10 @@ public class BattleScript : MonoBehaviour
         {
             currentHP += value;
         }
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     public void RecoverMP(int value)
@@ -66,27 +72,39 @@ public class BattleScript : MonoBehaviour
         {
             currentMP += value;
         }
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     public void FullyRecover()
     {
         RecoverHP(9999);
         RecoverMP(9999);
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void ReceiveLoot(BattleScript enemyCopy)
     {
         exp += enemyCopy.exp;
         gold += enemyCopy.gold;
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void ReduceMana(int costMP)
     {
         currentMP -= costMP;
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void UpdateResults(BattleScript playerCopy)
@@ -100,7 +118,10 @@ public class BattleScript : MonoBehaviour
         defense = playerCopy.defense;
         exp = playerCopy.exp;
         gold = playerCopy.gold;
-        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     public int CalculateNeedEXPToLevelUp()

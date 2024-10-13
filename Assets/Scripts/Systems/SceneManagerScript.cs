@@ -48,10 +48,16 @@ public class SceneManagerScript : MonoBehaviour
 
     void LoadMap(bool isFromRightToLeft)
     {
+        GameObject currentPlayer = null;
         if (currentScene != "")
         {
             foreach (GameObject obj in allObjects)
             {
+                // Find current player
+                if (obj.layer == LayerMask.NameToLayer("Player"))
+                {
+                    currentPlayer = obj;
+                }
                 obj.SetActive(false);
             }
         }
@@ -92,7 +98,8 @@ public class SceneManagerScript : MonoBehaviour
             }
             if (playerInNextScene != null)
             {
-                
+                // Need to synchronize player status
+                playerInNextScene.GetComponent<BattleScript>().UpdateResults(currentPlayer.GetComponent<BattleScript>());
             }
             if (playerInNextScene != null && SpawnPosition != null)
             {
