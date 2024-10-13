@@ -20,6 +20,7 @@ public class BattleScript : MonoBehaviour
     public bool guard = false;
     public Skill attackSkill;
     public List<Skill> skills;
+    public int boughtCount = 0;
 
     public bool IsDead() 
     { 
@@ -38,6 +39,10 @@ public class BattleScript : MonoBehaviour
         {
             currentHP -= damage;
         }
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     public void RecoverHP(int value)
@@ -49,6 +54,10 @@ public class BattleScript : MonoBehaviour
         } else
         {
             currentHP += value;
+        }
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
         }
     }
 
@@ -63,17 +72,39 @@ public class BattleScript : MonoBehaviour
         {
             currentMP += value;
         }
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
+    }
+
+    public void FullyRecover()
+    {
+        RecoverHP(9999);
+        RecoverMP(9999);
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void ReceiveLoot(BattleScript enemyCopy)
     {
         exp += enemyCopy.exp;
         gold += enemyCopy.gold;
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void ReduceMana(int costMP)
     {
         currentMP -= costMP;
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
 
     internal void UpdateResults(BattleScript playerCopy)
@@ -87,6 +118,56 @@ public class BattleScript : MonoBehaviour
         defense = playerCopy.defense;
         exp = playerCopy.exp;
         gold = playerCopy.gold;
+        if (gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
+    }
+
+    public int CalculateNeedEXPToLevelUp()
+    {
+        return 10 * level * (level - 1) + 20;
+    }
+
+    public int CalculateNeedGOLDToBuy()
+    {
+        if (boughtCount == 0)
+        {
+            return 20;
+        }
+        else
+        {
+            return 10 * boughtCount * (boughtCount - 1) + 20;
+        }
+    }
+
+    public void LevelUp()
+    {
+        exp -= CalculateNeedEXPToLevelUp();
+        level += 1;
+        maxHP += 100;
+        currentHP += 100;
+        maxMP += 100;
+        currentMP += 100;
+        damage += 2;
+        defense += 2;
+        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+    }
+
+    public void IncreaseDMG()
+    {
+        gold -= CalculateNeedGOLDToBuy();
+        boughtCount++;
+        damage += 5;
+        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+    }
+
+    public void IncreaseDEF()
+    {
+        gold -= CalculateNeedGOLDToBuy();
+        boughtCount++;
+        defense += 5;
+        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
     }
 
 }
