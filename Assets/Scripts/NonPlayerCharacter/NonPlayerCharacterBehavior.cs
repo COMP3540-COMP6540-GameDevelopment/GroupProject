@@ -60,14 +60,86 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
         closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
 
         leftActions = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<VisualElement>("Left");
+        
         levelButton = leftActions.Q<Button>("Action1");
-        levelButton.RegisterCallback<ClickEvent>(OnLevelButtonClicked);
+        damageButton = leftActions.Q<Button>("Action2");
+        defenseButton = leftActions.Q<Button>("Action3");
+        recoverButton = leftActions.Q<Button>("Action4");
 
+        if (isTradable)
+        {
+            levelButton.RegisterCallback<ClickEvent>(OnLevelButtonClicked);
+            damageButton.RegisterCallback<ClickEvent>(OnDamageButtonClicked);
+            defenseButton.RegisterCallback<ClickEvent>(OnDefenseButtonClicked);
+            recoverButton.RegisterCallback<ClickEvent>(OnRecoverButtonClicked);
 
-        levelButton.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
-        levelButton.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
+            levelButton.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            damageButton.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            defenseButton.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+            recoverButton.RegisterCallback<MouseEnterEvent>(DisplayButtonDescription);
+
+            leftActions.RegisterCallback<MouseLeaveEvent>(HideButtonDescription);
+        }
+
 
         Hide(uiDocument.rootVisualElement);
+    }
+
+    private void OnRecoverButtonClicked(ClickEvent evt)
+    {
+        int currentHP = playerBattleScript.currentHP;
+        int currentMP = playerBattleScript.currentMP;
+        int maxHP = playerBattleScript.maxHP;
+        int maxMP = playerBattleScript.maxMP;
+
+        if (currentHP == maxHP && currentMP == maxMP)
+        {
+            dialog.text = $"No need to recover.";
+        } else
+        {
+            int goldNeed = 40;
+            if (goldNeed <= playerBattleScript.gold)
+            {
+                playerBattleScript.gold -= goldNeed;
+                playerBattleScript.FullyRecover();
+                dialog.text = $"Fully recovered! You are now full of determination!";
+            }
+            else
+            {
+                dialog.text = $"Not enough gold.";
+            }
+        }
+
+    }
+
+    private void OnDefenseButtonClicked(ClickEvent evt)
+    {
+        int goldNeed = playerBattleScript.CalculateNeedGOLDToBuy();
+        if (goldNeed <= playerBattleScript.gold)
+        {
+            playerBattleScript.IncreaseDEF();
+            int defense = playerBattleScript.defense;
+            dialog.text = $"Defense Increased! You have {defense} Defense now.";
+        }
+        else
+        {
+            dialog.text = $"Not enough gold.";
+        }
+    }
+
+    private void OnDamageButtonClicked(ClickEvent evt)
+    {
+        int goldNeed = playerBattleScript.CalculateNeedGOLDToBuy();
+        if (goldNeed <= playerBattleScript.gold)
+        {
+            playerBattleScript.IncreaseDMG();
+            int damage = playerBattleScript.damage;
+            dialog.text = $"Damage Increased! You have {damage} damage now.";
+        }
+        else
+        {
+            dialog.text = $"Not enough gold.";
+        }
     }
 
     private void HideButtonDescription(MouseLeaveEvent evt)
@@ -77,15 +149,40 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
 
     private void DisplayButtonDescription(MouseEnterEvent evt)
     {
+        int expNeed = playerBattleScript.CalculateNeedEXPToLevelUp();
+        int exp = playerBattleScript.exp;
+        int level = playerBattleScript.level;
+
+        int goldNeed = playerBattleScript.CalculateNeedGOLDToBuy();
+        int gold = playerBattleScript.gold;
+        int damage = playerBattleScript.damage;
+        int defense = playerBattleScript.defense;
+        int boughtCount = playerBattleScript.boughtCount;
+
         Button button = (Button)evt.target;  // Get the button from the event
         if (button.text == "LEVEL")
         {
-            int expNeed = playerBattleScript.CalculateNeedEXPToLevelUp();
-            int exp = playerBattleScript.exp;
-            int level = playerBattleScript.level;
-            dialog.text = $"Level up and  increase Max HP, MP by <color=red>100</color>,\nDamage, Defense by <color=red>2</color>.\n";
+            dialog.text = $"Level up and increase Max HP, MP by <color=red>100</color>,\nDamage, Defense by <color=red>2</color>.\n";
             dialog.text += $"You are Level {level}. This will spend <color=red>{expNeed}</color> exp!\n";
             dialog.text += $"You have <color=red>{exp}</color> exp.\n";
+        } 
+        else if (button.text == "DMG")
+        {
+            dialog.text = $"Increase damage by 5.\n";
+            dialog.text += $"This will spend <color=red>{goldNeed}</color> gold!\n";
+            dialog.text += $"You have <color=red>{gold}</color> gold.\n";
+        }
+        else if (button.text == "DEF")
+        {
+            dialog.text = $"Increase defense by 5.\n";
+            dialog.text += $"This will spend <color=red>{goldNeed}</color> gold!\n";
+            dialog.text += $"You have <color=red>{gold}</color> gold.\n";
+        }
+        else if (button.text == "RECOVER")
+        {
+            dialog.text = $"Fully recover your HP and MP.\n";
+            dialog.text += $"This will spend <color=red>40</color> gold!\n";
+            dialog.text += $"You have <color=red>{gold}</color> gold.\n";
         }
     }
 
@@ -209,8 +306,5 @@ public class NonPlayerCharacterBehavior : MonoBehaviour
             }
         }
     }
-
-
-
 
 }

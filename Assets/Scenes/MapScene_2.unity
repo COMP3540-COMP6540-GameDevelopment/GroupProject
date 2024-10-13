@@ -219,6 +219,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -5041679598976749075, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
+      propertyPath: exp
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: -5041679598976749075, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
+      propertyPath: gold
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -5041679598976749075, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
       propertyPath: currentHP
       value: 30
       objectReference: {fileID: 0}

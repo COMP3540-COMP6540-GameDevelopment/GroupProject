@@ -20,7 +20,7 @@ public class BattleScript : MonoBehaviour
     public bool guard = false;
     public Skill attackSkill;
     public List<Skill> skills;
-    public int damageOrDenfenseBoughtCount = 0;
+    public int boughtCount = 0;
 
     public bool IsDead() 
     { 
@@ -69,6 +69,13 @@ public class BattleScript : MonoBehaviour
         gameObject.GetComponent<DisplayHUD>().UpdateStatus();
     }
 
+    public void FullyRecover()
+    {
+        RecoverHP(9999);
+        RecoverMP(9999);
+        gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+    }
+
     internal void ReceiveLoot(BattleScript enemyCopy)
     {
         exp += enemyCopy.exp;
@@ -103,13 +110,13 @@ public class BattleScript : MonoBehaviour
 
     public int CalculateNeedGOLDToBuy()
     {
-        if (damageOrDenfenseBoughtCount == 0)
+        if (boughtCount == 0)
         {
             return 20;
         }
         else
         {
-            return 10 * damageOrDenfenseBoughtCount * (damageOrDenfenseBoughtCount - 1) + 20;
+            return 10 * boughtCount * (boughtCount - 1) + 20;
         }
     }
 
@@ -129,7 +136,7 @@ public class BattleScript : MonoBehaviour
     public void IncreaseDMG()
     {
         gold -= CalculateNeedGOLDToBuy();
-        damageOrDenfenseBoughtCount++;
+        boughtCount++;
         damage += 5;
         gameObject.GetComponent<DisplayHUD>().UpdateStatus();
     }
@@ -137,7 +144,7 @@ public class BattleScript : MonoBehaviour
     public void IncreaseDEF()
     {
         gold -= CalculateNeedGOLDToBuy();
-        damageOrDenfenseBoughtCount++;
+        boughtCount++;
         defense += 5;
         gameObject.GetComponent<DisplayHUD>().UpdateStatus();
     }
