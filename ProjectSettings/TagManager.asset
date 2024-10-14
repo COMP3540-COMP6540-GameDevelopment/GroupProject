@@ -50,3 +50,6 @@ TagManager:
   - name: Tilemap Background
     uniqueID: 458945205
     locked: 0
+  - name: UI
+    uniqueID: 2472941095
+    locked: 0

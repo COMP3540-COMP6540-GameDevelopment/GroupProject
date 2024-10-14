@@ -4,6 +4,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public GameObject dialoguePanel; 
     public Button option1Button;     
     public Button option2Button; 
+    public TextMeshProUGUI dialogueText;
 
     private void Awake()
     {
@@ -203,6 +205,11 @@ public class PlayerController : MonoBehaviour
     private void OnOption1Selected()
     {
         Debug.Log("Player chose to pray, the ladder rotates.");
+
+        if (dialogueText != null)
+        {
+            dialogueText.text = "Praying.... The ladder is spinning....";
+        }
 
         // Trigger the rotation of a different ladder
         GameObject ladderPivot = GameObject.Find("LadderPivot"); // Assume the pivot object's name is "LadderPivot"
