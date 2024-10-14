@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     public Button option2Button; 
     public TextMeshProUGUI dialogueText;
 
+    private BattleScript battleScript;
+
+
     private void Awake()
     {
         moveDirection = 1;
@@ -63,6 +66,9 @@ public class PlayerController : MonoBehaviour
         // Add listeners to the buttons
         option1Button.onClick.AddListener(OnOption1Selected);
         option2Button.onClick.AddListener(OnOption2Selected);
+
+        battleScript = GetComponent<BattleScript>();  
+
 
     }
     // Called when reactivate
@@ -151,7 +157,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-        CompositeCollider2D platform = collision.gameObject.GetComponent<CompositeCollider2D>();
+        //CompositeCollider2D platform = collision.gameObject.GetComponent<CompositeCollider2D>();
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
@@ -160,14 +166,21 @@ public class PlayerController : MonoBehaviour
             SceneManagerScript.instance.LoadBattleScene(gameObject, collision.gameObject);
         }
 
-        if (platform != null)
+        float groundCheckThreshold = 0.1f;
+
+        // 遍历所有接触点
+        foreach (ContactPoint2D contact in collision.contacts)
+    {
+        // 判断接触点是否在玩家的底部附近
+        if (contact.point.y < playerRb.position.y)
         {
-            // Player collides with the platform
-            jumpAction.Enable();
+            // 重置跳跃状态以允许再次跳跃
             isJump = false;
             animator.SetBool("b_isJump", isJump);
             animator.SetFloat("f_Move_Y", 0);
+            break;  // 找到一个有效的接触点后就可以退出循环
         }
+    }
 
         if (collision.gameObject.CompareTag("Statue"))
         {
@@ -177,19 +190,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Detect when player falls to the bottom boundary
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("BottomBoundary"))
+        {
+            Debug.Log("Player fell out of bounds");
+
+            // reposition
+            playerRb.position = new Vector2(-78, -10); 
+
+            if (battleScript != null)
+            {
+                battleScript.TakeDamage(10); // 掉10点血（可以根据需要调整）
+            }
+        }
+    }
+
     void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (isJump)
-        {
-            // Double jump
-            jumpAction.Disable();
-            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpVelocity);
-            if (!isBattle)
-            {
-                animator.SetTrigger("t_DoubleJump");
-            }
-        } 
-        else
+        if (!isJump)
         {
             isJump = true;
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpVelocity);
@@ -222,10 +242,16 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-        // Hide the dialogue panel and allow player movement
+        StartCoroutine(HideDialogueAfterDelay(3.0f));
+}
+
+    // Coroutine to hide dialogue after a delay
+    private IEnumerator HideDialogueAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         dialoguePanel.SetActive(false);
         canMove = true; // Re-enable player movement and jumping
-}
+    }
 
 
     // When option 2 (Leave) is selected

@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Wall
   - Statue
+  - BottomBoundary
   layers:
   - Default
   - TransparentFX
