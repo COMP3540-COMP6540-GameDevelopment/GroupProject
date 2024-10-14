@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
             if (battleScript != null)
             {
-                battleScript.TakeDamage(10); // 掉10点血（可以根据需要调整）
+                battleScript.TakeDamage(10); // HP -10
             }
         }
     }
