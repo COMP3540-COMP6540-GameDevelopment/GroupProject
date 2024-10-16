@@ -10,7 +10,11 @@ TagManager:
   - Enemy
   - Wall
   - Statue
+<<<<<<< HEAD
   - DangerZone
+=======
+  - FxTemporaire
+>>>>>>> main
   layers:
   - Default
   - TransparentFX
@@ -20,8 +24,8 @@ TagManager:
   - UI
   - 
   - Enemy
-  - 
-  - 
+  - NPC
+  - Player
   - 
   - 
   - 

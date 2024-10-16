@@ -21,3 +21,7 @@ Standard Unity Asset Store EULA
 Dragon Crashers - UI Toolkit Sample project
 https://assetstore.unity.com/packages/essentials/tutorial-projects/dragon-crashers-ui-toolkit-sample-project-231178#description
 Standard Unity Asset Store EULA
+
+Pixel Art Icon Pack - RPG
+https://assetstore.unity.com/packages/2d/gui/icons/pixel-art-icon-pack-rpg-158343
+Standard Unity Asset Store EULA
