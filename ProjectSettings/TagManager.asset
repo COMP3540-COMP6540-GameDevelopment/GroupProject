@@ -3,18 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-  - Float
-  - Coin
-  - Enemy
-  - Wall
-  - Statue
-<<<<<<< HEAD
-  - DangerZone
-=======
-  - FxTemporaire
->>>>>>> main
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -23,9 +12,6 @@ TagManager:
   - Water
   - UI
   - 
-  - Enemy
-  - NPC
-  - Player
   - 
   - 
   - 
@@ -47,11 +33,11 @@ TagManager:
   - 
   - 
   - 
-  - CameraConfiner
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Tilemap Background
-    uniqueID: 458945205
     locked: 0
