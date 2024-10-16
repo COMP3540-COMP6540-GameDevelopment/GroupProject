@@ -4,6 +4,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -55,12 +56,6 @@ public class PlayerController : MonoBehaviour
         jumpAction.performed += Jump;   // bind Jump() method to this action
         isJump = false;
 
-        // Initially hide the dialogue panel
-        dialoguePanel.SetActive(false);
-
-        // Add listeners to the buttons
-        option1Button.onClick.AddListener(OnOption1Selected);
-        option2Button.onClick.AddListener(OnOption2Selected);
 
     }
     // Called when reactivate
@@ -175,6 +170,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.CompareTag("DangerZone"))
+    {
+        // Player enter danger zone
+        Debug.Log("Player entered a danger zone!");
+
+        // reduce HP
+        BattleScript playerBattleScript = GetComponent<BattleScript>();
+        if (playerBattleScript != null)
+        {
+            int damage = 10; // HP-10
+            playerBattleScript.TakeDamage(damage);
+            Debug.Log("Player took " + damage + " damage. Current HP: " + playerBattleScript.currentHP);
+        }
+
+        // Restart game
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+}
+
     void Jump(InputAction.CallbackContext callbackContext)
     {
         if (isJump)
@@ -199,47 +215,7 @@ public class PlayerController : MonoBehaviour
 
     }
     
-    // When option 1 (Pray) is selected
-    private void OnOption1Selected()
-    {
-        Debug.Log("Player chose to pray, the ladder rotates.");
-
-        // Trigger the rotation of a different ladder
-        GameObject ladderPivot = GameObject.Find("LadderPivot"); // Assume the pivot object's name is "LadderPivot"
-        if (ladderPivot != null)
-        {
-          LadderRotator ladderRotator = ladderPivot.GetComponent<LadderRotator>();
-          if (ladderRotator != null)
-          {
-             ladderRotator.RotateLadder(); // Trigger the ladder rotation
-            }
-    }
-
-        // Hide the dialogue panel and allow player movement
-        dialoguePanel.SetActive(false);
-        canMove = true; // Re-enable player movement and jumping
-}
 
 
-    // When option 2 (Leave) is selected
-    private void OnOption2Selected()
-    {
-        // Player chose to leave, simply hide the dialogue panel
-        Debug.Log("Player chose to leave, dialogue panel disappears.");
-        dialoguePanel.SetActive(false);
-        canMove = true; 
-    }
 
-    // Ladder falling logic
-    private void LadderFall()
-    {
-        // Implement the logic for making the ladder fall
-        // For example, find the ladder and change its position or enable falling animation
-        GameObject ladder = GameObject.Find("Ladder");
-        if (ladder != null)
-        {
-            // Simple example: Directly change the position to simulate falling
-            ladder.transform.position += new Vector3(0, -5, 0);
-        }
-    }
 }

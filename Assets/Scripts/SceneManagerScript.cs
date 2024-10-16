@@ -15,8 +15,8 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField] List<GameObject> allObjects;    // ALL objects in the mapScene;
 
     // Keep track of the current and previous scene
-    [SerializeField] string currentScene = "";
-    [SerializeField] string nextScene = "";
+    [SerializeField] string currentScene = "MapScene3";
+    [SerializeField] string nextScene = "MapScene3";
 
 
     void Awake()
@@ -35,7 +35,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void startGame()
     {
-        nextScene = "MapScene";
+        nextScene = "MapScene3";
         SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
         currentScene = nextScene;
         nextScene = "";
@@ -54,7 +54,7 @@ public class SceneManagerScript : MonoBehaviour
     void OnMapSceneLoaded(AsyncOperation asyncOperation)
     {
         // Get all root objects in the map scene
-        allObjects = new List<GameObject>(SceneManager.GetSceneByName("MapScene").GetRootGameObjects());
+        allObjects = new List<GameObject>(SceneManager.GetSceneByName("MapScene3").GetRootGameObjects());
     }
 
     void OnBattleSceneLoaded(AsyncOperation asyncOperation)
