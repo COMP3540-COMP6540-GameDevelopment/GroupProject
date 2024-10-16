@@ -5,11 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class NonPlayerCharacterBehavior : MonoBehaviour
 {
