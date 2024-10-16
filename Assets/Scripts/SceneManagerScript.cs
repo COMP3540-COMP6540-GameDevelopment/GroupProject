@@ -35,7 +35,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void startGame()
     {
-        nextScene = "MapScene";
+        nextScene = "MapScene_1";
         SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;
         currentScene = nextScene;
         nextScene = "";
@@ -54,7 +54,7 @@ public class SceneManagerScript : MonoBehaviour
     void OnMapSceneLoaded(AsyncOperation asyncOperation)
     {
         // Get all root objects in the map scene
-        allObjects = new List<GameObject>(SceneManager.GetSceneByName("MapScene").GetRootGameObjects());
+        allObjects = new List<GameObject>(SceneManager.GetSceneByName("MapScene_1").GetRootGameObjects());
     }
 
     void OnBattleSceneLoaded(AsyncOperation asyncOperation)
