@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
     public bool isBattle = false;
 
     public GameObject dialoguePanel; 
-    public Button option1Button;     
-    public Button option2Button; 
 
     private void Awake()
     {
@@ -55,6 +53,11 @@ public class PlayerController : MonoBehaviour
         jumpAction.Enable();
         jumpAction.performed += Jump;   // bind Jump() method to this action
         isJump = false;
+
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
 
 
     }
@@ -177,6 +180,11 @@ public class PlayerController : MonoBehaviour
         // Player enter danger zone
         Debug.Log("Player entered a danger zone!");
 
+        if (dialoguePanel != null)
+            {
+                dialoguePanel.SetActive(true);
+            }
+
         // reduce HP
         BattleScript playerBattleScript = GetComponent<BattleScript>();
         if (playerBattleScript != null)
@@ -187,9 +195,23 @@ public class PlayerController : MonoBehaviour
         }
 
         // Restart game
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(RestartAfterDelay(2.0f));
     }
 }
+
+    private IEnumerator RestartAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Hide dialog box after delay
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+
+        // Restart the game
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     void Jump(InputAction.CallbackContext callbackContext)
     {

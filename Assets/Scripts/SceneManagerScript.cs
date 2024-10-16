@@ -15,8 +15,8 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField] List<GameObject> allObjects;    // ALL objects in the mapScene;
 
     // Keep track of the current and previous scene
-    [SerializeField] string currentScene = "MapScene3";
-    [SerializeField] string nextScene = "MapScene3";
+    [SerializeField] string currentScene = "";
+    [SerializeField] string nextScene = "";
 
 
     void Awake()
@@ -28,12 +28,12 @@ public class SceneManagerScript : MonoBehaviour
         }
 
         instance = this;
-        transform.SetParent(null, false);
+
         // Make sure SceneManager persists across scene changes
         DontDestroyOnLoad(gameObject);
     }
 
-    public void startGame()
+    private void Start()
     {
         nextScene = "MapScene3";
         SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive).completed += OnMapSceneLoaded;

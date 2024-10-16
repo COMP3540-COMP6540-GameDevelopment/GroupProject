@@ -4,57 +4,40 @@ using UnityEngine;
 
 public class LadderController : MonoBehaviour
 {
-    public float riseSpeed = 1f; // Speed of ascending
-    public float fallSpeed = 2f; // Speed of descending
-    public float maxHeight = 0f; // Maximum height the ladder can rise
-    private bool playerOnLadder = false;
-    private bool shouldFall = false;
-
-    private Vector3 initialPosition; // Initial position of the ladder
+    public float moveSpeed = 2.0f; // 梯子移动速度
+    public float moveDistance = 3.0f; // 梯子上升的距离
+    private Vector3 originalPosition; // 梯子的初始位置
 
     private void Start()
     {
-        // Record the initial position of the ladder
-        initialPosition = transform.position;
+        // 记录梯子的原始位置
+        originalPosition = transform.position;
     }
 
-    private void Update()
+    public void MoveUp()
     {
-        if (playerOnLadder && transform.position.y < maxHeight)
-        {
-            // Ladder slowly rises until it reaches maxHeight
-            transform.position += Vector3.up * riseSpeed * Time.deltaTime;
-        }
-        else if (shouldFall)
-        {
-            // Ladder slowly falls back to its initial position
-            transform.position = Vector3.MoveTowards(transform.position, initialPosition, fallSpeed * Time.deltaTime);
-
-            // If the ladder reaches the initial position, stop falling
-            if (transform.position == initialPosition)
-            {
-                shouldFall = false;
-            }
-        }
+        // 梯子上升到目标位置
+        Vector3 targetPosition = originalPosition + new Vector3(0, moveDistance, 0);
+        StopAllCoroutines();
+        StartCoroutine(MoveToPosition(targetPosition));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void MoveDown()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // Player is on the ladder
-            playerOnLadder = true;
-            shouldFall = false; // Stop falling
-        }
+        // 梯子回到原始位置
+        StopAllCoroutines();
+        StartCoroutine(MoveToPosition(originalPosition));
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private System.Collections.IEnumerator MoveToPosition(Vector3 target)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        // 逐步移动到目标位置，实现平滑移动
+        while (Vector3.Distance(transform.position, target) > 0.01f)
         {
-            // Player leaves the ladder, ladder starts to fall
-            playerOnLadder = false;
-            shouldFall = true; // Mark that the ladder should fall
+            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+            yield return null;
         }
+        transform.position = target; // 最终确保梯子在目标位置
     }
 }
+
