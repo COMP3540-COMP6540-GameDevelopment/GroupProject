@@ -153,11 +153,17 @@ public class ChestInteraction : MonoBehaviour
 
     public void BeginConversation()
     {
+        Debug.Log("Begin conversation with chest.");
         Show(uiDocument.rootVisualElement);
         if (!isOpenable)
         {
+            dialog.text = "box is opening";
             // Not showing action buttons
             Hide(leftActions);
+        }
+        else
+        {
+            dialog.text = "box cannot be open...";
         }
 
     }

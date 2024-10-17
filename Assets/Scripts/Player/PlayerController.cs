@@ -354,14 +354,15 @@ public class PlayerController : MonoBehaviour
         }
         if(InteractObject.layer == LayerMask.NameToLayer("Box"))
         {
-            // Within Box
             isInteract = true;
-            GameObject npc = InteractObject;
-            NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
-            nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
-            nonPlayerCharacterBehavior.BeginConversation();
+            GameObject box = InteractObject;
+            ChestInteraction chestInteraction = box.GetComponent<ChestInteraction>();
+            if (chestInteraction != null)
+            {
+                chestInteraction.BeginConversation();
+            }
             // Detect if player moves out range
-            StartCoroutine(InterationStatus(npc));
+            StartCoroutine(InterationStatus(box));
         }
     }
     // Related to Press E
