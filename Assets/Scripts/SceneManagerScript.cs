@@ -84,4 +84,21 @@ public class SceneManagerScript : MonoBehaviour
             obj.SetActive(true);
         }
     }
+    public void LoadMainMenu()
+    {
+        if (!string.IsNullOrEmpty(currentScene))
+        {
+            SceneManager.UnloadSceneAsync(currentScene);
+        }
+
+        nextScene = "MainMenu";
+        SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Single).completed += OnMainMenuLoaded;
+        currentScene = nextScene;
+        nextScene = "";
+    }
+
+    void OnMainMenuLoaded(AsyncOperation asyncOperation)
+    {
+        Debug.Log("Main Menu loaded");
+    }
 }
