@@ -8819,119 +8819,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2756778543401539848, guid: 282d10bd840f2244d993130a17f23515, type: 3}
   m_PrefabInstance: {fileID: 965424217}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &985029091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 985029093}
-  - component: {fileID: 985029092}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &985029092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985029091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88a5507da8bb5d4ba8199c4c2e6ce62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canMove: 1
-  moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1fbbfd82-3bd7-4e30-89ba-76a1619ef9e7
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  playerRb: {fileID: 0}
-  speed: 0
-  moveTopDownAction:
-    m_Name: Move Top Down
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 2dd3769b-b55c-48dd-b566-beec92edb48d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  isTopDown: 0
-  jumpAction:
-    m_Name: Jump
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 64f2b1fa-7960-4c9e-8045-5021c6a76ee6
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  jumpVelocity: 0
-  interactAction:
-    m_Name: Interact
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 457824cb-7b77-4c8c-bd7e-3182a6d002de
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  isInteract: 0
-  ableToInteract: 0
-  InteractObject: {fileID: 0}
-  inventoryAction:
-    m_Name: Inventory
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 02891015-8f8b-432a-8d8a-61cb8e85dc1f
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  inventoryScript: {fileID: 0}
-  statusAction:
-    m_Name: Status
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4eba067a-5b3b-4962-b741-c19d78b00670
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  statusScript: {fileID: 0}
-  isStatusShown: 0
-  isBattle: 0
-  dialoguePanel: {fileID: 0}
-  option1Button: {fileID: 0}
-  option2Button: {fileID: 0}
---- !u!4 &985029093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985029091}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.252926, y: -18.004858, z: 0.083733454}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1008483007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15621,7 +15508,7 @@ Transform:
   m_GameObject: {fileID: 2144174371}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.91832, y: -11.05556, z: -10}
+  m_LocalPosition: {x: -70.919846, y: -11.05556, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16636,4 +16523,3 @@ SceneRoots:
   - {fileID: 1165609572}
   - {fileID: 1991061370}
   - {fileID: 2063018469}
-  - {fileID: 985029093}
