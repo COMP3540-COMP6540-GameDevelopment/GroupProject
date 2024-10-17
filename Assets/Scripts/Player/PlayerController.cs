@@ -352,6 +352,17 @@ public class PlayerController : MonoBehaviour
             // Detect if player moves out range
             StartCoroutine(InterationStatus(npc));
         }
+        if(InteractObject.layer == LayerMask.NameToLayer("Box"))
+        {
+            // Within Box
+            isInteract = true;
+            GameObject npc = InteractObject;
+            NonPlayerCharacterBehavior nonPlayerCharacterBehavior = npc.GetComponent<NonPlayerCharacterBehavior>();
+            nonPlayerCharacterBehavior.whoIsTalkingTo = gameObject;
+            nonPlayerCharacterBehavior.BeginConversation();
+            // Detect if player moves out range
+            StartCoroutine(InterationStatus(npc));
+        }
     }
     // Related to Press E
     IEnumerator InterationStatus(GameObject npc)
