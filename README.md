@@ -71,3 +71,6 @@ Discover a richly designed pixel world filled with lore, secrets, and side quest
 Encounter logical puzzles intertwined with RPG quests, enhancing the depth of gameplay and providing a unique blend of genres.
 
 Join the hero on a thrilling journey filled with adventure, puzzles, and battles as you strive to rescue Princess Liora and restore harmony to the Kingdom of Eldoria!
+
+### Playtesting link:
+https://play.unity.com/en/games/aac7d589-f52e-4e0b-b4bf-6b39da7b0df7/webgl-builds

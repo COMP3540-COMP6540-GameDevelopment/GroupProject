@@ -15,9 +15,12 @@ GameObject:
   - component: {fileID: 1484473346616268916}
   - component: {fileID: 1219300452595266965}
   - component: {fileID: -5041679598976749075}
-  m_Layer: 0
+  - component: {fileID: 6022232574324268024}
+  - component: {fileID: 4294578199001335172}
+  - component: {fileID: 1984099380585957656}
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: ae297123f091bbf4e8f1835eb98fb293, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -148,7 +151,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01938355, y: 0.67747056}
+  m_Offset: {x: 0.01938355, y: 0.24989718}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -159,7 +162,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.58427835, y: 1.1873817}
+  m_Size: {x: 0.58427835, y: 0.33223498}
   m_EdgeRadius: 0
 --- !u!114 &1484473346616268916
 MonoBehaviour:
@@ -173,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88a5507da8bb5d4ba8199c4c2e6ce62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -222,7 +226,58 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
-  speed: 5
+  playerRb: {fileID: 0}
+  speed: 4
+  moveTopDownAction:
+    m_Name: Move Top Down
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3f864922-5937-4241-a44c-0a8b042ec2b1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 89f20d8c-3c6d-4af5-b545-bcca804125f3
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 4
+    - m_Name: up
+      m_Id: e34bed7d-5285-4892-ae61-7e03adb120f0
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 505f15d3-054e-4a30-97d3-9f26a124d6ec
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 61d2a9c6-9336-4539-bc02-ef2d15e7875f
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    - m_Name: right
+      m_Id: a14f5ada-2613-4864-a057-f70aff9f7f4e
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Top Down
+      m_Flags: 8
+    m_Flags: 0
+  isTopDown: 0
   jumpAction:
     m_Name: Jump
     m_Type: 1
@@ -241,8 +296,67 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   jumpVelocity: 10
-  moveDirection: 0
+  interactAction:
+    m_Name: Interact
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: e1154a48-259e-444d-b64a-567554729bca
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: acd9d0ac-928f-4c28-ba98-59d5706f2fee
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Interact
+      m_Flags: 0
+    m_Flags: 0
+  isInteract: 0
+  ableToInteract: 0
+  InteractObject: {fileID: 0}
+  inventoryAction:
+    m_Name: Inventory
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 565a9dd0-28e2-4e2c-8143-34bc7fa5cf91
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cc7f01a4-7e95-41bd-8c82-ef5a8195b73e
+      m_Path: <Keyboard>/i
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Inventory
+      m_Flags: 0
+    m_Flags: 0
+  inventoryScript: {fileID: 0}
+  statusAction:
+    m_Name: Status
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 00628d50-19b5-4dac-8aff-79139d0417b0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 2a51732a-3e2c-48db-aa1c-7871914b09b2
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Status
+      m_Flags: 0
+    m_Flags: 0
+  statusScript: {fileID: 0}
+  isStatusShown: 0
   isBattle: 0
+  dialoguePanel: {fileID: 0}
+  option1Button: {fileID: 0}
+  option2Button: {fileID: 0}
 --- !u!95 &1219300452595266965
 Animator:
   serializedVersion: 5
@@ -298,3 +412,46 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &6022232574324268024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435828392457731875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad8138116c3c4e4ca539e16b0e51855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: []
+--- !u!114 &4294578199001335172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435828392457731875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 195cb5a5e97f0204ab0104d17e6183ce, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 72e7f584847606b43a47ff0c9d33af06, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &1984099380585957656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435828392457731875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3d7ac08e1562246b9d4b9f29650d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPlayerHealthRatio: 1
+  currentPlayerMagicRatio: 1
