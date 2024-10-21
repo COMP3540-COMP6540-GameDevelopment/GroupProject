@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MapScene_2.unity
     guid: 8b98d5e223d2b064b81341752de239c0
+  - enabled: 1
+    path: Assets/Scenes/MapScene_Bonus.unity
+    guid: e4095b4b2e976b9408791d92cfc20a7f
   m_configObjects: {}

@@ -38,10 +38,7 @@ public class ChestInteraction : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         uiDocument = GetComponent<UIDocument>();
-        if (uiDocument == null)
-        {
-            Debug.LogError("UIDocument component is not attached to the GameObject.");
-        }
+        //uiDocument.enabled = false;
 
         chestAnimator = GetComponent<Animator>();
         hint.SetActive(false);
@@ -49,9 +46,9 @@ public class ChestInteraction : MonoBehaviour
         dialogBackGround = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background");
         dialogBackGround.RegisterCallback<ClickEvent>(OnDialogBackGroundClicked);
 
-        dialog = dialogBackGround.Q<Label>("Dialog");
-        indexOfShownText = 0;
-        dialog.text = texts.ToArray()[indexOfShownText];
+        //dialog = dialogBackGround.Q<Label>("Dialog");
+        //indexOfShownText = 0;
+        //dialog.text = texts.ToArray()[indexOfShownText];
 
         closeButton = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<Button>("CloseButton");
         closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
