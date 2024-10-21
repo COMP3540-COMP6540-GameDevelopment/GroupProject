@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,7 @@ public class ChestInteraction : MonoBehaviour
     [SerializeField] Transform potionSpawnPoint;  // 药水生成位置
     UIDocument uiDocument;
     [SerializeField] List<string> texts;
+    [SerializeField] TextMeshProUGUI statusText;
 
     Rigidbody2D rb;
 
@@ -45,16 +47,14 @@ public class ChestInteraction : MonoBehaviour
         dialogBackGround = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background");
         dialogBackGround.RegisterCallback<ClickEvent>(OnDialogBackGroundClicked);
 
-        //dialog = dialogBackGround.Q<Label>("Dialog");
-        //indexOfShownText = 0;
-        //dialog.text = texts.ToArray()[indexOfShownText];
-
         closeButton = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<Button>("CloseButton");
         closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
 
         leftActions = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<VisualElement>("Left");
 
         NoButton = leftActions.Q<Button>("Action2");
+
+        //statusText.gameObject.SetActive(false);  // 确保文本开始时是隐藏的
 
         if (isOpenable)
         {
@@ -64,6 +64,7 @@ public class ChestInteraction : MonoBehaviour
         }
 
         Hide(uiDocument.rootVisualElement);
+        statusText.gameObject.SetActive(false);  // 确保文本开始时是隐藏的
     }
 
     void Update()
@@ -81,6 +82,7 @@ public class ChestInteraction : MonoBehaviour
             isOpenable = false; // 确保箱子只能被打开一次
             chestAnimator.SetBool("Open", true); // 触发开箱动画 
             StartCoroutine(WaitForChestOpenAnimation());
+            ShowStatusText(); // 直接显示预设文本
             Hide(uiDocument.rootVisualElement); // 关闭对话框
         }
         else
@@ -122,16 +124,57 @@ public class ChestInteraction : MonoBehaviour
 
     IEnumerator SpawnPotion()
     {
+        // 根据名称创建对应类型的药水
+        string potionType = potionPrefab.name;
         GameObject potion = Instantiate(potionPrefab, potionSpawnPoint.position, Quaternion.identity);
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        BattleScript playerBattleScript = playerTransform.GetComponent<BattleScript>();
+
         while (Vector3.Distance(potion.transform.position, playerTransform.position) > 0.0001f)
         {
             potion.transform.position = Vector3.MoveTowards(potion.transform.position, playerTransform.position, 0.5f * Time.deltaTime);
             yield return null;
         }
         Destroy(potion); // 药水到达玩家位置后销毁，表示玩家获得药水
-                         // 可以在这里添加玩家获得药水的逻辑，比如增加生命值等
+                         
+        // 根据药水类型调整玩家属性
+        switch (potionType)
+        {
+            case "Potions 64x64 BG transparent BLUE_8":
+                playerBattleScript.RecoverMP(10); // 增加 MP 值
+                break;
+            case "Potions 64x64 BG transparent GREEN_16":
+                playerBattleScript.exp += 50; // 增加经验值
+                break;
+            case "Potions 64x64 BG transparent ORANGE_40":
+                playerBattleScript.gold += 100; // 增加金币
+                break;
+            case "Potions 64x64 BG transparent RED_0":
+                playerBattleScript.RecoverHP(20); // 增加 HP 值
+                break;
+            case "Potions 64x64 BG transparent YELLOW_24":
+                playerBattleScript.TakeDamage(10); // 减少 HP 值
+                break;
+        }
+
+        if (playerBattleScript.gameObject.GetComponent<DisplayHUD>() != null)
+        {
+            playerBattleScript.gameObject.GetComponent<DisplayHUD>().UpdateStatus();
+        }
     }
+
+    void ShowStatusText()
+    {
+        statusText.gameObject.SetActive(true); // 只显示文本，不更改内容
+        StartCoroutine(HideStatusTextAfterDelay(3.0f)); // 3秒后隐藏文本
+    }
+
+    IEnumerator HideStatusTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        statusText.gameObject.SetActive(false);
+    }
+
 
     void Hide(VisualElement element)
     {
