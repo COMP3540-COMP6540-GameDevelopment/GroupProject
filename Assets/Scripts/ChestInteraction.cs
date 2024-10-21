@@ -37,8 +37,7 @@ public class ChestInteraction : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        uiDocument = GetComponent<UIDocument>();
-        //uiDocument.enabled = false;
+        uiDocument = GetComponent<UIDocument>();       
 
         chestAnimator = GetComponent<Animator>();
         hint.SetActive(false);
@@ -81,12 +80,18 @@ public class ChestInteraction : MonoBehaviour
         {
             isOpenable = false; // 确保箱子只能被打开一次
             chestAnimator.SetBool("Open", true); // 触发开箱动画 
-            StartCoroutine(SpawnPotion());
+            StartCoroutine(WaitForChestOpenAnimation());
+            Hide(uiDocument.rootVisualElement); // 关闭对话框
         }
         else
         {
-            dialog.text = "箱子已打开"; // 提示玩家箱子已被打开
+            dialog.text = "box cannot be open"; // 提示玩家箱子已被打开
         }
+    }
+    IEnumerator WaitForChestOpenAnimation()
+    {
+        yield return new WaitForSeconds(1f); 
+        StartCoroutine(SpawnPotion());
     }
 
     private void OnNoButtonClicked(ClickEvent evt)
@@ -118,9 +123,10 @@ public class ChestInteraction : MonoBehaviour
     IEnumerator SpawnPotion()
     {
         GameObject potion = Instantiate(potionPrefab, potionSpawnPoint.position, Quaternion.identity);
-        while (Vector3.Distance(potion.transform.position, playerBattleScript.transform.position) > 0.1f)
+        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        while (Vector3.Distance(potion.transform.position, playerTransform.position) > 0.0001f)
         {
-            potion.transform.position = Vector3.MoveTowards(potion.transform.position, playerBattleScript.transform.position, 5f * Time.deltaTime);
+            potion.transform.position = Vector3.MoveTowards(potion.transform.position, playerTransform.position, 0.5f * Time.deltaTime);
             yield return null;
         }
         Destroy(potion); // 药水到达玩家位置后销毁，表示玩家获得药水
