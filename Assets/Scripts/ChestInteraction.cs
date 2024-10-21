@@ -54,8 +54,7 @@ public class ChestInteraction : MonoBehaviour
 
         NoButton = leftActions.Q<Button>("Action2");
 
-        //statusText.gameObject.SetActive(false);  // 确保文本开始时是隐藏的
-
+        
         if (isOpenable)
         {
             YesButton = leftActions.Q<Button>("Action1");
