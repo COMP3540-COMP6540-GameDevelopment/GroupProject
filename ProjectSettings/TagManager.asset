@@ -11,6 +11,8 @@ TagManager:
   - Wall
   - Statue
   - FxTemporaire
+  - DangerZone
+  - Box
   layers:
   - Default
   - TransparentFX

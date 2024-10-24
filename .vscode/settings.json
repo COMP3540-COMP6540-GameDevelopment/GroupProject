@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GroupProject.sln"
+    "dotnet.defaultSolution": "GroupProject.sln",
+    "dotnet.preferCSharpExtension": true
 }

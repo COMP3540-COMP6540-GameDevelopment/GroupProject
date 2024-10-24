@@ -157,6 +157,7 @@ public class SceneManagerScript : MonoBehaviour
             currentScene = nextScene;
             nextScene = "";
             tmpScene = "";
+
         }
     }
 

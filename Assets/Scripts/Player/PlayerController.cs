@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     public GameObject dialoguePanel; 
     public UnityEngine.UI.Button option1Button;     
     public UnityEngine.UI.Button option2Button;
+
+    public GameObject dangerZoneDialogue; 
     
 
     private void Awake()
@@ -73,6 +75,8 @@ public class PlayerController : MonoBehaviour
         {
             isTopDown = false;
         }
+
+        dangerZoneDialogue.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -128,10 +132,14 @@ public class PlayerController : MonoBehaviour
         
 
         // Initially hide the dialogue panel
-        if (dialoguePanel != null)
-        {
-            dialoguePanel.SetActive(false);
+        dialoguePanel.SetActive(false);
+
+        if (dangerZoneDialogue != null){
+            dangerZoneDialogue.SetActive(false);
         }
+        Debug.Log("Initial state of dangerZoneDialogue: " + dangerZoneDialogue.activeSelf);
+
+        
         
 
         // Add listeners to the buttons
@@ -305,6 +313,47 @@ public class PlayerController : MonoBehaviour
             canMove = false;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DangerZone"))
+    {
+        // Player enter danger zone
+        Debug.Log("Player entered a danger zone!");
+
+        if (dangerZoneDialogue != null)
+            {
+                dangerZoneDialogue.SetActive(true);
+            }
+
+        // reduce HP
+        BattleScript playerBattleScript = GetComponent<BattleScript>();
+        if (playerBattleScript != null)
+        {
+            int damage = 10; // HP-10
+            playerBattleScript.TakeDamage(damage);
+            Debug.Log("Player took " + damage + " damage. Current HP: " + playerBattleScript.currentHP);
+        }
+
+        // Restart game
+        StartCoroutine(RestartAfterDelay(2.0f));
+    }
+    }
+
+    private IEnumerator RestartAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Hide dialog box after delay
+        if (dangerZoneDialogue != null)
+        {
+            dangerZoneDialogue.SetActive(false);
+        }
+
+        // Restart the game
+        SceneManager.LoadScene("MapScene_3");
+    }
+
 
     void Jump(InputAction.CallbackContext callbackContext)
     {
