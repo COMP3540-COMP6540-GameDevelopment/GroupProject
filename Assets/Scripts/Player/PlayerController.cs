@@ -50,10 +50,6 @@ public class PlayerController : MonoBehaviour
     public GameObject dialoguePanel; 
     public UnityEngine.UI.Button option1Button;     
     public UnityEngine.UI.Button option2Button;
-
-    
-
-    
     
 
     private void Awake()
@@ -351,6 +347,16 @@ public class PlayerController : MonoBehaviour
             nonPlayerCharacterBehavior.BeginConversation();
             // Detect if player moves out range
             StartCoroutine(InterationStatus(npc));
+        }
+
+        if(InteractObject.layer == LayerMask.NameToLayer("Box"))
+        {
+            isInteract = true;
+            GameObject box = InteractObject;
+            ChestInteraction chestInteraction = box.GetComponent<ChestInteraction>();
+            chestInteraction.BeginConversation();
+            // Detect if player moves out range
+            StartCoroutine(InterationStatus(box));
         }
     }
     // Related to Press E
