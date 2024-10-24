@@ -57,7 +57,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1550397193077637956
 RectTransform:
   m_ObjectHideFlags: 0
@@ -328,11 +328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6498531755080222416, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6498531755080222416, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6525596192922960591, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_IsActive
@@ -340,15 +340,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6834360073319294251, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6834360073319294251, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6834360073319294251, guid: 8d77716b8133a4f2ea31d212dae945d1, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -377,6 +377,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1490248405800689516}
     m_Modifications:
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: escBackHome
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2643692394794390395, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_text
       value: Home
@@ -573,7 +597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: CloseMenu
+      value: ToggleMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -581,7 +605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1055206896555372399, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1173,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -600.8572
+      value: 565
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1387,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300.4286
+      value: 291
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_AnchoredPosition.y
