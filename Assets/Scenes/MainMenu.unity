@@ -3557,12 +3557,28 @@ PrefabInstance:
       value: credit
       objectReference: {fileID: 0}
     - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392188625485340453, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Credit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Pivot.x
@@ -3643,6 +3659,10 @@ PrefabInstance:
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078845969563734293, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3738,16 +3758,32 @@ PrefabInstance:
       value: option
       objectReference: {fileID: 0}
     - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392188625485340453, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Option
       objectReference: {fileID: 0}
+    - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Option
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Pivot.x
@@ -3828,6 +3864,10 @@ PrefabInstance:
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078845969563734293, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5353,7 +5393,7 @@ GameObject:
   - component: {fileID: 1421274340}
   - component: {fileID: 1421274341}
   m_Layer: 5
-  m_Name: VolumeSlider
+  m_Name: MySlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6321,8 +6361,16 @@ PrefabInstance:
       value: background
       objectReference: {fileID: 0}
     - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392188625485340453, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6453494001902112455, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_SizeDelta.x
@@ -6333,12 +6381,20 @@ PrefabInstance:
       value: Background
       objectReference: {fileID: 0}
     - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Background
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Pivot.x
@@ -6419,6 +6475,10 @@ PrefabInstance:
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078845969563734293, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7721,16 +7781,32 @@ PrefabInstance:
       value: start
       objectReference: {fileID: 0}
     - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867554163558212272, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392188625485340453, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Start
       objectReference: {fileID: 0}
+    - target: {fileID: 7448297385069612802, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Name
       value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450665583539195578, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_Pivot.x
@@ -7811,6 +7887,10 @@ PrefabInstance:
     - target: {fileID: 7760332866733040472, guid: e0dc725878aae42839814d7f321d9774, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078845969563734293, guid: e0dc725878aae42839814d7f321d9774, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
