@@ -126,7 +126,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         if (nextScene == "")
         {
-            nextScene = "MapScene";
+            nextScene = "MapScene_3";
         }
     }
 
