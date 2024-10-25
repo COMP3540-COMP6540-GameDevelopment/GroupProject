@@ -133,7 +133,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         if (nextScene == "")
         {
-            nextScene = "MapScene";
+            nextScene = "MapScene_3";
             Time.timeScale = 1; 
         }else{
             Scene scene = SceneManager.GetSceneByName(tmpScene);

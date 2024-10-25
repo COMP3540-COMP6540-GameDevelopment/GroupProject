@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
     public GameObject dialoguePanel; 
     public UnityEngine.UI.Button option1Button;     
     public UnityEngine.UI.Button option2Button;
+
+    public GameObject dangerZoneDialogue; 
+    private Vector3 initialPosition;
     
 
     private void Awake()
@@ -78,6 +81,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initialPosition = transform.position;
+
         moveDirection = 1;
         moveSpeed = 0;
 
@@ -132,6 +137,11 @@ public class PlayerController : MonoBehaviour
         {
             dialoguePanel.SetActive(false);
         }
+
+        if (dangerZoneDialogue != null)
+        {
+            dangerZoneDialogue.SetActive(false);
+        }
         
 
         // Add listeners to the buttons
@@ -147,6 +157,8 @@ public class PlayerController : MonoBehaviour
         interactAction.performed += Interact;
         isInteract = false;
         ableToInteract = false;
+
+        
     }
 
     // Press C
@@ -305,6 +317,48 @@ public class PlayerController : MonoBehaviour
             canMove = false;
         }
     }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DangerZone"))
+    {
+        // Player enter danger zone
+        Debug.Log("Player entered a danger zone!");
+
+        if (dangerZoneDialogue != null)
+            {
+                dangerZoneDialogue.SetActive(true);
+            }
+
+        // reduce HP
+        BattleScript playerBattleScript = GetComponent<BattleScript>();
+        if (playerBattleScript != null)
+        {
+            int damage = 10; // HP-10
+            playerBattleScript.TakeDamage(damage);
+            Debug.Log("Player took " + damage + " damage. Current HP: " + playerBattleScript.currentHP);
+        }
+
+        // Restart game
+        StartCoroutine(ResetPlayerPositionAfterDelay(2.0f));
+    }
+    }
+
+       private IEnumerator ResetPlayerPositionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (dangerZoneDialogue != null)
+        {
+            dangerZoneDialogue.SetActive(false);
+        }
+
+        transform.position = initialPosition;
+
+        canMove = true;
+        playerRb.velocity = Vector2.zero; 
+    }
+
 
     void Jump(InputAction.CallbackContext callbackContext)
     {

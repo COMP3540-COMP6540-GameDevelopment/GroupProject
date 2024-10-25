@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SceneManager.unity
     guid: 481b4416ce9406245bd21128dabe367f
+  - enabled: 1
+    path: Assets/Scenes/MapScene_3.unity
+    guid: d305c6be6639f4181949c680de5460f3
   m_configObjects: {}
