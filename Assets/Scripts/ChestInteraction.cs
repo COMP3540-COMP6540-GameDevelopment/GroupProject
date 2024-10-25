@@ -46,6 +46,7 @@ public class ChestInteraction : MonoBehaviour
 
         dialogBackGround = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Dialog_Background");
         dialogBackGround.RegisterCallback<ClickEvent>(OnDialogBackGroundClicked);
+        dialog = dialogBackGround.Q<Label>("Dialog");
 
         closeButton = uiDocument.rootVisualElement.Q<VisualElement>("Dialog_Actions").Q<VisualElement>("Actions").Q<Button>("CloseButton");
         closeButton.RegisterCallback<ClickEvent>(OnCloseButtonClicked);
