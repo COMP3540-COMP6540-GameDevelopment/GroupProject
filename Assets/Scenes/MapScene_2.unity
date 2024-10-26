@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 40420686}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.25, y: -8.44, z: -10}
+  m_LocalPosition: {x: -84.4, y: -8.44, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -232,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2358624424564591452, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -74.25
+      value: -84.4
       objectReference: {fileID: 0}
     - target: {fileID: 2358624424564591452, guid: d4f3557160484fe40b6436cda6173e56, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1729,7 +1729,7 @@ Transform:
   m_GameObject: {fileID: 2144174371}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.10056, y: -8.44059, z: -10}
+  m_LocalPosition: {x: -75.16699, y: -8.48528, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1982,7 +1982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6503654812711949453, guid: 39312b6bc3f70f04c8588df6c749d2cf, type: 3}
       propertyPath: SceneToLoadName
-      value: MapScene
+      value: MapScene_1
       objectReference: {fileID: 0}
     - target: {fileID: 6503654812711949453, guid: 39312b6bc3f70f04c8588df6c749d2cf, type: 3}
       propertyPath: isFromRightToLeft
@@ -2046,20 +2046,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
-      propertyPath: firstText
-      value: Do you notice the shape of stones on the ground?
-      objectReference: {fileID: 0}
-    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
       propertyPath: texts.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
-      propertyPath: texts.Array.data[0]
-      value: Do you notice the shape of stones on the ground?
-      objectReference: {fileID: 0}
-    - target: {fileID: 2966110229990830589, guid: 0a43a1445d175634db8f36ab69102b99, type: 3}
-      propertyPath: texts.Array.data[1]
-      value: I have nothing to say.
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2076,11 +2064,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4765014298979756074, guid: 722728d9d859e4e4d80aa99a64a1317d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -68.46
+      value: -46.05
       objectReference: {fileID: 0}
     - target: {fileID: 4765014298979756074, guid: 722728d9d859e4e4d80aa99a64a1317d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.35
+      value: 17.33
       objectReference: {fileID: 0}
     - target: {fileID: 4765014298979756074, guid: 722728d9d859e4e4d80aa99a64a1317d, type: 3}
       propertyPath: m_LocalPosition.z
