@@ -4274,6 +4274,7 @@ MonoBehaviour:
   allObjects: []
   currentScene: 
   nextScene: 
+  tmpScene: 
   isFromRightToLeft: 0
 --- !u!114 &1176259631
 MonoBehaviour:

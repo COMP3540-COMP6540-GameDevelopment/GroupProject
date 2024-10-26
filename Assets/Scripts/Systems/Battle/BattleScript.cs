@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class BattleScript : MonoBehaviour
 {
     public string battleObjectName;
@@ -26,7 +25,6 @@ public class BattleScript : MonoBehaviour
     { 
         return dead; 
     }
-
     public void TakeDamage(int damage)
     {
         if (damage < 0) damage = 0;

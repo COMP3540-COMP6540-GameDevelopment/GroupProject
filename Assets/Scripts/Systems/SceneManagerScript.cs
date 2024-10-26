@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.HDROutputUtils;
-
+using UnityEngine.UIElements;
 public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance { get; private set; }
@@ -254,7 +254,9 @@ public class SceneManagerScript : MonoBehaviour
                 SceneManager.UnloadSceneAsync(ac_scene);
             }else if(ac_scene.name == "MapScene_3"){
                 SceneManager.UnloadSceneAsync(ac_scene);
-            }else if(ac_scene.name == "MapScene_4"){
+            }else if(ac_scene.name == "MapScene_Bonus"){
+                SceneManager.UnloadSceneAsync(ac_scene);
+            }else if(ac_scene.name == "MapScene_Final"){
                 SceneManager.UnloadSceneAsync(ac_scene);
             }
             // else if()
