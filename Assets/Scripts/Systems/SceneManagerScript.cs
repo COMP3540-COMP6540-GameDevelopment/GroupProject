@@ -135,7 +135,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         if (nextScene == "")
         {
-            nextScene = "MapScene";
+            nextScene = "MapScene_Final";
             Time.timeScale = 1; 
         }else{
             Scene scene = SceneManager.GetSceneByName(tmpScene);
@@ -310,5 +310,18 @@ public class SceneManagerScript : MonoBehaviour
                 main.gameObject.SetActive(true);
             }
         }
+    }
+    public void gameOver_battle(){
+        SceneManager.UnloadSceneAsync(currentScene);
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.CompareTag("Over"))
+            {
+                obj.SetActive(true);
+            }
+        }
+        currentScene = tmpScene;
+        tmpScene = "";
     }
 }
