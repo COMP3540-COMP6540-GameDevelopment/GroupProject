@@ -185,12 +185,19 @@ public class BattleSystem : MonoBehaviour
 
     void OnEscapeClicked(ClickEvent evt)
     {
-        throw new NotImplementedException();
+        BattleUIHandler.instance.UpdateDialog("You can't escape right now.");
     }
 
+    //void OnItemClicked(ClickEvent evt)
+    //{
+    //    BattleUIHandler.instance.UpdateDialog("You Don't have any items currently.");
+    //}
+
+    // A backdoor for player to recover in battle
     void OnItemClicked(ClickEvent evt)
     {
-        throw new NotImplementedException();
+        playerCopy.FullyRecover();
+        BattleUIHandler.instance.UpdateDialog("Somehow you are full of determination!");
     }
 
     void OnGuardClicked(ClickEvent evt)
@@ -345,7 +352,7 @@ public class BattleSystem : MonoBehaviour
         if (playerCopy.IsDead())
         {
             battleState = BattleState.LOSE;
-            EndBattle();
+            StartCoroutine(EndBattle());
         }
         else
         {
