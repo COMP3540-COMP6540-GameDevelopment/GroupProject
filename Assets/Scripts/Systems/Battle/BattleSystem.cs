@@ -400,11 +400,8 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUIHandler.instance.UpdateDialog("You lose.");
             // Load Lose Scene
+            yield return new WaitForSeconds(1f);
+            SceneManagerScript.instance.gameOver_battle();
         }
     }
-
-
-
-
-
 }
