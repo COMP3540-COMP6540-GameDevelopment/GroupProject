@@ -135,7 +135,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         if (nextScene == "")
         {
-            nextScene = "MapScene_Final";
+            nextScene = "MapScene";
             Time.timeScale = 1; 
         }else{
             Scene scene = SceneManager.GetSceneByName(tmpScene);
