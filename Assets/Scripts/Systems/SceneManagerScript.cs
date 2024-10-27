@@ -107,6 +107,8 @@ public class SceneManagerScript : MonoBehaviour
             {
                 // Need to synchronize player status
                 playerInNextScene.GetComponent<BattleScript>().UpdateResults(currentPlayer.GetComponent<BattleScript>());
+                // set reference to the player in next scene
+                player = playerInNextScene;
             }
             if (playerInNextScene != null && SpawnPosition != null)
             {
@@ -187,7 +189,9 @@ public class SceneManagerScript : MonoBehaviour
         } else
         {
             // is travelling between scenes, need to synchronize player status
-            allObjects.Find(obj => obj.name == "Player").GetComponent<BattleScript>().UpdateResults(player.GetComponent<BattleScript>());
+            GameObject playerInNextScene = allObjects.Find(obj => obj.name == "Player");
+            playerInNextScene.GetComponent<BattleScript>().UpdateResults(player.GetComponent<BattleScript>());
+            player = playerInNextScene;
         }
     }
 
