@@ -74,3 +74,5 @@ Join the hero on a thrilling journey filled with adventure, puzzles, and battles
 
 ### Playtesting link:
 https://play.unity.com/en/games/aac7d589-f52e-4e0b-b4bf-6b39da7b0df7/webgl-builds
+
+https://play.unity.com/en/games/e5cb23e2-6f8a-4eff-88e7-74949b5f1afa/pixel-quest-adventure-v3
